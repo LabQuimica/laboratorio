@@ -2,33 +2,36 @@
 
 import { useState } from 'react';
 
-const LoginPage = () => {
+export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(''); // Limpiar errores previos
+    setError('');
+    setSuccess('');
 
     try {
-      const res = await fetch('/api/auth/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json(); // Esto arrojará error si la respuesta no es JSON
+      const data = await response.json();
 
-      if (res.ok) {
-        alert('Inicio de sesión exitoso');
-        // Aquí puedes redirigir al usuario a otra página, por ejemplo:
-        // router.push('/dashboard');
+      if (response.ok) {
+        setSuccess('Inicio de sesión exitoso');
+        localStorage.setItem('token', data.token.token); // Guarda el token para autenticación
+        window.location.href = '/dashboard'; // Redirige al usuario al dashboard
       } else {
-        setError(data.message || 'Error al iniciar sesión');
+        setError(data.error || 'Error al iniciar sesión');
       }
     } catch (err) {
-      console.error('Error:', err);
       setError('No se pudo conectar con el servidor.');
     }
   };
@@ -38,6 +41,7 @@ const LoginPage = () => {
       <h1>Inicio de Sesión</h1>
       <form onSubmit={handleSubmit} style={{ display: 'inline-block', textAlign: 'left' }}>
         {error && <p style={{ color: 'red' }}>{error}</p>}
+        {success && <p style={{ color: 'green' }}>{success}</p>}
         <div>
           <label>Email:</label>
           <input
@@ -47,6 +51,7 @@ const LoginPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            style={{ display: 'block', margin: '10px 0', padding: '10px', width: '100%' }}
           />
         </div>
         <div>
@@ -58,12 +63,13 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            style={{ display: 'block', margin: '10px 0', padding: '10px', width: '100%' }}
           />
         </div>
-        <button type="submit" style={{ marginTop: '10px' }}>Iniciar Sesión</button>
+        <button type="submit" style={{ marginTop: '10px', padding: '10px 20px', cursor: 'pointer' }}>
+          Iniciar Sesión
+        </button>
       </form>
     </div>
   );
-};
-
-export default LoginPage;
+}
