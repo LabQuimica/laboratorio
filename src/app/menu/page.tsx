@@ -1,6 +1,8 @@
 
-export default function Manu() {
+function Menu() {
     return (
-        <div className="bg-slate-600">Manu</div>
+        <div>Menu</div>
     )
 }
+
+export default Menu
