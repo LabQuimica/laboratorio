@@ -5,11 +5,7 @@ function Layout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    return (
-        <>
-            <Navigation children={children} />
-        </>
-    )
+    return <Navigation children={children} />
 }
 
 export default Layout
