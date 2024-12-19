@@ -70,7 +70,7 @@ export default function LoginPage() {
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {success && <p style={{ color: 'green' }}>{success}</p>}
             <div className='w-full inline-grid'>
-              <label className='text-sm'>Nombre De Usuario</label>
+              <label className='text-sm'>Email:</label>
               <input
                 type="email"
                 name="email"
