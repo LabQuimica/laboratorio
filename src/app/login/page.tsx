@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Cookies from 'js-cookie';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -25,9 +26,11 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
+        Cookies.set('token', data.token.token, { expires: 1 }); // Expira en 1 día
         setSuccess('Inicio de sesión exitoso');
-        localStorage.setItem('token', data.token.token); // Guarda el token para autenticación
-        window.location.href = '/dashboard'; // Redirige al usuario al dashboard
+        setTimeout(() => {
+          window.location.href = '/dashboard'; // Redirige a la pantalla de dashboard después de medio segundo
+        }, 500);
       } else {
         setError(data.error || 'Error al iniciar sesión');
       }
