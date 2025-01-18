@@ -10,10 +10,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+
     "@tabler/icons-react": "^3.26.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
     "framer-motion": "^11.14.4",
+    "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "mysql2": "^3.11.5",
     "next": "15.1.0",
