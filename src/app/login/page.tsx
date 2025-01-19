@@ -1,72 +1,68 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Cookies from 'js-cookie';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Cookies from "js-cookie";
+import DarkLightToggle from "@/components/ui/darkModeToggle";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
-        Cookies.set('token', data.token.token, { expires: 1 }); // Expira en 1 día
-        setSuccess('Inicio de sesión exitoso');
+        Cookies.set("token", data.token.token, { expires: 1 }); // Expira en 1 día
+        setSuccess("Inicio de sesión exitoso");
         setTimeout(() => {
-          window.location.href = '/dashboard'; // Redirige a la pantalla de dashboard después de medio segundo
+          window.location.href = "/dashboard"; // Redirige a la pantalla de dashboard después de medio segundo
         }, 500);
       } else {
-        setError(data.error || 'Error al iniciar sesión');
+        setError(data.error || "Error al iniciar sesión");
       }
     } catch (err) {
-      setError('No se pudo conectar con el servidor.');
+      setError("No se pudo conectar con el servidor.");
     }
   };
 
   return (
     <div className="w-full h-dvh flex pl-10 align-middle justify-center items-center bg-light-bg dark:bg-dark-bg dark:text-white">
-      <button
-        onClick={() => setIsDarkMode(!isDarkMode)}
-        className="fixed top-4 right-4 z-50 p-2 bg-blue-400 dark:bg-blue-500 rounded"
-      >
-        {isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}
-      </button>
-
+      {/* <DarkLightToggle /> */}
       <div className="w-1/2">
         <div className="align-middle justify-center">
-          <h1 className="uppercase font-bold text-4xl text-center">¡Bienvenid@ de nuevo!</h1>
-          <p className="font-semibold text-2xl text-center">Estamos Felices Por Tenerte Aquí</p>
+          <h1 className="uppercase font-bold text-4xl text-center">
+            ¡Bienvenid@ de nuevo!
+          </h1>
+          <p className="font-semibold text-2xl text-center">
+            Estamos Felices Por Tenerte Aquí
+          </p>
         </div>
         <div className="flex pt-16 w-full justify-center align-middle items-center">
-          <form onSubmit={handleSubmit} className="w-3/4 align-middle justify-center">
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {success && <p style={{ color: 'green' }}>{success}</p>}
+          <form
+            onSubmit={handleSubmit}
+            className="w-3/4 align-middle justify-center"
+          >
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            {success && <p style={{ color: "green" }}>{success}</p>}
             <div className="w-full inline-grid">
               <label className="text-sm">Email:</label>
               <input
@@ -90,11 +86,18 @@ export default function LoginPage() {
                 required
                 className="bg-[#CCD4DE] rounded-3xl h-10 w-full pl-4 mt-2 placeholder:text-gray-600"
               />
-              <p className="text-sm w-full text-right mt-4">¿Olvidaste Tu Contraseña?</p>
+              <p className="text-sm w-full text-right mt-4">
+                ¿Olvidaste Tu Contraseña?
+              </p>
             </div>
             <div className="w-full flex align-middle items-center justify-center">
-              <button type="submit" className="bg-[#3E53A0] mt-10 rounded-3xl w-1/2 self-center">
-                <p className="text-center font-semibold text-lg">Iniciar Sesión</p>
+              <button
+                type="submit"
+                className="bg-[#3E53A0] mt-10 rounded-3xl w-1/2 self-center"
+              >
+                <p className="text-center font-semibold text-lg">
+                  Iniciar Sesión
+                </p>
               </button>
             </div>
           </form>
@@ -102,8 +105,8 @@ export default function LoginPage() {
       </div>
       <div className="flex w-1/2 items-center justify-center align-middle">
         <Image
-          src={`/assets/${'logo.png'}`}
-          alt={'logo'}
+          src={`/assets/${"logo.png"}`}
+          alt={"logo"}
           className="h-96 w-96"
           width={500}
           height={300}
