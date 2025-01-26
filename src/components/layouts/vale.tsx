@@ -1,4 +1,4 @@
-import { ValesTable } from "../vales/tableVale";
+import { ValesTable } from "./vales/tableVale";
 
 const ValesPage = () => {
   return (

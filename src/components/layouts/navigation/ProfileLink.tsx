@@ -6,9 +6,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import profile from "../../../public/images/profile.jpeg";
+import profile from "/public/images/profile.jpeg";
 import { SidebarLink } from "@/components/ui/sidebar";
 import { ThemeMenu } from "./ui/ThemeMenu";
 import { UserMenu } from "./ui/UserMenu";

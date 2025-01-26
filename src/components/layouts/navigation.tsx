@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { Sidebar, SidebarBody } from "@/components/ui/sidebar";
-import { Logo } from "@/components/navigation/Logo";
-import { ProfileLink } from "@/components/navigation/ProfileLink";
-import { SidebarLinks } from "@/components/navigation/SidebarLinks";
+import { Logo } from "./navigation/Logo";
+import { ProfileLink } from "./navigation/ProfileLink";
+import { SidebarLinks } from "./navigation/SidebarLinks";
 import { cn } from "@/lib/utils";
 
 export default function Navigation({
