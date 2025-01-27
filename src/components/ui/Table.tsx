@@ -9,21 +9,15 @@ import {
   getSortedRowModel,
 } from "@tanstack/react-table";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useState } from "react";
+import TablePagination from "./TablePagination";
 
 interface TableProps<TData> {
   data: TData[];
   columns: ColumnDef<TData>[];
   isLoading?: boolean;
   isError?: boolean;
+  orderBy: string;
 }
 
 export const Table = <TData,>({
@@ -31,6 +25,7 @@ export const Table = <TData,>({
   columns,
   isLoading,
   isError,
+  orderBy,
 }: TableProps<TData>) => {
   const [globalFilter, setGlobalFilter] = useState(""); // Estado para la búsqueda global
   const [rowSelection, setRowSelection] = useState({}); // Estado para la selección de filas
@@ -48,6 +43,9 @@ export const Table = <TData,>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    initialState: {
+      sorting: [{ id: orderBy, desc: false }],
+    },
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -63,24 +61,10 @@ export const Table = <TData,>({
           onChange={(e) => setGlobalFilter(e.target.value)}
           className="max-w-sm"
         />
-        {/* Selector de cantidad de filas por página */}
-        <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Filas por página:</p>
-          <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => table.setPageSize(Number(value))}
-          >
-            <SelectTrigger className="w-[100px]">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent>
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+
+        <div className="text-sm text-gray-700 dark:text-white">
+          Mostrando {table.getRowModel().rows.length} de{" "}
+          {table.getFilteredRowModel().rows.length} filas
         </div>
       </div>
 
@@ -123,28 +107,9 @@ export const Table = <TData,>({
           </tbody>
         </table>
       </div>
-      {/* Paginación */}
-      <div className="flex items-center justify-between mt-4 ">
-        <div className="text-sm text-gray-700 dark:text-white">
-          Mostrando {table.getRowModel().rows.length} de{" "}
-          {table.getFilteredRowModel().rows.length} filas.
-        </div>
-        <div className="flex items-center space-x-2 ">
-          <Button
-            variant="outline"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Siguiente
-          </Button>
-        </div>
+      {/* Footer */}
+      <div>
+        <TablePagination table={table} />
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ export const ValesTable = () => {
       columns={columns}
       isLoading={isLoading}
       isError={isError}
+      orderBy="id_vale"
     />
   );
 };

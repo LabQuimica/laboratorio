@@ -1,5 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
+import { ProjectActions } from "@/components/ui/ProjectActions";
 import { SortableHeader } from "@/components/ui/SortableHeader";
+import TruncatedCell from "@/components/ui/TruncatedCell";
 import { Vale } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -41,17 +43,18 @@ export const columns: ColumnDef<Vale>[] = [
   {
     accessorKey: "alumno",
     header: ({ column }) => <SortableHeader column={column} title="name" />,
-    size: 40,
+    size: 30,
   },
   {
     accessorKey: "grupo",
     header: "Grupo",
-    size: 100,
+    size: 50,
+    cell: ({ row }) => <TruncatedCell text={row.getValue("grupo")} />,
   },
   {
     accessorKey: "semestre",
     header: "Semestre",
-    size: 50,
+    size: 100,
     cell: ({ row }) => (
       <p className="text-center"> {row.getValue("semestre")} </p>
     ),
@@ -64,6 +67,10 @@ export const columns: ColumnDef<Vale>[] = [
   {
     accessorKey: "observaciones_vale",
     header: "Observaciones",
+    cell: ({ row }) => (
+      <TruncatedCell text={row.getValue("observaciones_vale")} />
+    ),
+    size: 100,
   },
   {
     accessorKey: "fecha_solicitada",
@@ -104,5 +111,10 @@ export const columns: ColumnDef<Vale>[] = [
     accessorKey: "estado_practica",
     header: "Estado Práctica",
     size: 50,
+  },
+  {
+    accessorKey: "actions",
+    header: "Actions",
+    size: 10,
   },
 ];

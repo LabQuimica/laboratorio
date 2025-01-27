@@ -12,7 +12,7 @@ export default function Navigation({
 }: {
   children: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [animate, setAnimate] = useState(true);
 
   return (
