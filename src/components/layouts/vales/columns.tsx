@@ -1,26 +1,65 @@
+import { Checkbox } from "@/components/ui/checkbox";
+import { SortableHeader } from "@/components/ui/SortableHeader";
 import { Vale } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<Vale>[] = [
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomePageRowsSelected() && "indeterminate")
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //       className=""
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //       className=" "
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     accessorKey: "id_vale",
-    header: "ID",
+    header: ({ column }) => (
+      <SortableHeader column={column} title="id" className="justify-center" />
+    ),
+    size: 10,
+    cell: ({ row }) => (
+      <p className="text-center"> {row.getValue("id_vale")} </p>
+    ),
   },
   {
     accessorKey: "alumno",
-    header: "Alumno",
+    header: ({ column }) => <SortableHeader column={column} title="name" />,
+    size: 40,
   },
   {
     accessorKey: "grupo",
     header: "Grupo",
+    size: 100,
   },
   {
     accessorKey: "semestre",
     header: "Semestre",
+    size: 50,
+    cell: ({ row }) => (
+      <p className="text-center"> {row.getValue("semestre")} </p>
+    ),
   },
   {
     accessorKey: "estado_vale",
-    header: "Estado Vale",
+    header: "Status",
+    size: 50,
   },
   {
     accessorKey: "observaciones_vale",
@@ -29,17 +68,41 @@ export const columns: ColumnDef<Vale>[] = [
   {
     accessorKey: "fecha_solicitada",
     header: "Fecha Solicitada",
+    cell: ({ row }) => {
+      const fecha = new Date(row.getValue("fecha_solicitada"));
+      return fecha.toLocaleString("es-ES", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+    },
   },
   {
     accessorKey: "fecha_modificacion",
     header: "Fecha Modificación",
+    cell: ({ row }) => {
+      const fecha = new Date(row.getValue("fecha_modificacion"));
+      return fecha.toLocaleString("es-ES", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+    },
   },
   {
     accessorKey: "profesor",
     header: "Profesor",
+    size: 50,
   },
   {
     accessorKey: "estado_practica",
     header: "Estado Práctica",
+    size: 50,
   },
 ];
