@@ -1,7 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { ProjectActions } from "@/components/ui/ProjectActions";
-import { SortableHeader } from "@/components/ui/SortableHeader";
-import TruncatedCell from "@/components/ui/TruncatedCell";
+import { ProjectActions } from "@/components/table/ProjectActions";
+import { SortableHeader } from "@/components/table/SortableHeader";
+import TruncatedCell from "@/components/table/TruncatedCell";
 import { Vale } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 

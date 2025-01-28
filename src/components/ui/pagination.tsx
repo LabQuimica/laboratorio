@@ -51,7 +51,7 @@ const PaginationLink = ({
         variant: isActive ? "default" : "ghost",
         size,
       }),
-      isActive ? "bg-blue-500" : "", // Clases dinámicas de Tailwind
+      isActive ? "bg-blue-500" : "",
 
       className
     )}

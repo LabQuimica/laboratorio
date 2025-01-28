@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-table";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import TablePagination from "./TablePagination";
+import TablePagination from "@/components/table/TablePagination";
 
 interface TableProps<TData> {
   data: TData[];
