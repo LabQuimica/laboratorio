@@ -37,10 +37,12 @@ export const Table = <TData,>({
       globalFilter,
       rowSelection,
     },
+
     onGlobalFilterChange: setGlobalFilter,
     onRowSelectionChange: setRowSelection,
     getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
+
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     initialState: {

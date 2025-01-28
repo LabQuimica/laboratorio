@@ -1,59 +1,58 @@
 import { Table } from "@tanstack/react-table";
 import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 interface TablePaginationProps<TData> {
   table: Table<TData>;
 }
 
 const TablePagination = <TData,>({ table }: TablePaginationProps<TData>) => {
-  // Función para generar el array de páginas a mostrar
   const getPageNumbers = () => {
     const currentPage = table.getState().pagination.pageIndex + 1;
     const totalPages = table.getPageCount();
-    const delta = 1;
 
-    const range = [];
-    for (let i = 1; i <= totalPages; i++) {
-      if (
-        i === 1 || //
-        i === totalPages || // Última página
-        (i >= currentPage - delta && i <= currentPage + delta) // Páginas cercanas a la actual
-      ) {
-        range.push(i);
-      }
+    // Si hay menos de 7 páginas, mostrar todas
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
-    // Agregar elipsis donde sea necesario
-    const withElipsis = [];
-    let prev = 0;
-    for (const i of range) {
-      if (prev + 1 !== i) {
-        withElipsis.push("ellipsis");
-      }
-      withElipsis.push(i);
-      prev = i;
+    let pages = [];
+
+    // Siempre mostrar primera página
+    pages.push(1);
+
+    if (currentPage > 3) {
+      pages.push("...");
     }
 
-    return withElipsis;
+    // Páginas centrales
+    for (
+      let i = Math.max(2, currentPage - 1);
+      i <= Math.min(totalPages - 1, currentPage + 1);
+      i++
+    ) {
+      pages.push(i);
+    }
+
+    if (currentPage < totalPages - 2) {
+      pages.push("...");
+    }
+
+    // Última página
+    if (totalPages > 1) {
+      pages.push(totalPages);
+    }
+
+    return pages;
   };
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
+    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-2">
       <div className="flex items-center gap-3 whitespace-nowrap">
         <p className="text-sm font-medium">Filas por página</p>
         <Select
@@ -73,48 +72,52 @@ const TablePagination = <TData,>({ table }: TablePaginationProps<TData>) => {
         </Select>
       </div>
 
-      <Pagination className="justify-end ">
-        <PaginationContent>
-          <PaginationItem className="cursor-pointer">
-            <PaginationPrevious
-              onClick={() => table.previousPage()}
-              className={
-                !table.getCanPreviousPage()
-                  ? "pointer-events-none opacity-50"
-                  : ""
-              }
-            />
-          </PaginationItem>
+      <div className="flex items-center gap-1">
+        {/* Botón para página anterior */}
+        <button
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:pointer-events-none group"
+        >
+          <IconChevronLeft className="h-4 w-4 text-gray-400 group-hover:text-black dark:text-gray-400 dark:group-hover:text-white" />
+        </button>
 
-          {getPageNumbers().map((page, index) =>
-            page === "ellipsis" ? (
-              <PaginationItem key={`ellipsis-${index}`}>
-                <PaginationEllipsis />
-              </PaginationItem>
-            ) : (
-              <PaginationItem key={page} className="cursor-pointer">
-                <PaginationLink
-                  onClick={() => table.setPageIndex(Number(page) - 1)}
-                  isActive={
-                    table.getState().pagination.pageIndex === Number(page) - 1
-                  }
-                >
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-            )
-          )}
+        {/* Paginación */}
+        <div className="flex items-center">
+          {getPageNumbers().map((page, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                if (typeof page === "number") {
+                  table.setPageIndex(page - 1);
+                }
+              }}
+              disabled={typeof page !== "number"}
+              className={`
+          px-3 py-1 mx-0.5 rounded-md text-sm
+          ${
+            typeof page === "number"
+              ? table.getState().pagination.pageIndex === page - 1
+                ? "bg-primary text-primary-foreground"
+                : "hover:bg-gray-100 hover:text-black dark:hover:bg-gray-800 dark:hover:text-white"
+              : "pointer-events-none"
+          }
+        `}
+            >
+              {page}
+            </button>
+          ))}
+        </div>
 
-          <PaginationItem className="cursor-pointer">
-            <PaginationNext
-              onClick={() => table.nextPage()}
-              className={
-                !table.getCanNextPage() ? "pointer-events-none opacity-50" : ""
-              }
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+        {/* Botón para página siguiente */}
+        <button
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:pointer-events-none group"
+        >
+          <IconChevronRight className="h-4 w-4 text-gray-400 group-hover:text-black dark:text-gray-400 dark:group-hover:text-white" />
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { ProjectActions } from "@/components/table/ProjectActions";
+import { ActionVale } from "@/components/layouts/vales/ActionsVale";
 import { SortableHeader } from "@/components/table/SortableHeader";
 import TruncatedCell from "@/components/table/TruncatedCell";
 import { Vale } from "@/types/types";
@@ -112,9 +112,10 @@ export const columns: ColumnDef<Vale>[] = [
     header: "Estado Práctica",
     size: 50,
   },
-  {
-    accessorKey: "actions",
-    header: "Actions",
-    size: 10,
-  },
+  // {
+  //   accessorKey: "actions",
+  //   header: "Actions",
+  //   size: 10,
+  //   // cell: ({ row }) => <ActionVale row={row} />,
+  // },
 ];
