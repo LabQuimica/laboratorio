@@ -9,6 +9,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { IconFlask2Filled } from "@tabler/icons-react";
 
 interface ProjectActionsProps<TData> {
   row: Row<TData>;
@@ -17,8 +19,12 @@ interface ProjectActionsProps<TData> {
 export function ActionVale<TData>({ row }: ProjectActionsProps<TData>) {
   return (
     <Sheet>
-      <SheetTrigger>Open</SheetTrigger>
-      <SheetContent className="w-[200px] sm:w-[540px]">
+      <div className="flex items-center justify-center">
+        <SheetTrigger>
+          <IconFlask2Filled className=" text-violet-500" />
+        </SheetTrigger>
+      </div>
+      <SheetContent className="w-[200px] sm:w-[540px] ">
         <SheetHeader>
           <SheetTitle>Vale de: {row.getValue("alumno")}</SheetTitle>
           <SheetDescription>

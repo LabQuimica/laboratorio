@@ -61,7 +61,7 @@ export const Table = <TData,>({
           placeholder="Buscar..."
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
-          className="max-w-sm"
+          className="max-w-sm border-gray-300  "
         />
 
         <div className="text-sm text-gray-700 dark:text-white">
@@ -71,7 +71,7 @@ export const Table = <TData,>({
       </div>
 
       {/* Tabla */}
-      <div className="rounded-md border">
+      <div className="">
         <table className="w-full">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -93,13 +93,16 @@ export const Table = <TData,>({
               </tr>
             ))}
           </thead>
-          <tbody className="divide-y ">
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
+          <tbody className="divide-y">
+            {table.getRowModel().rows.map((row, index) => (
+              <tr
+                key={row.id}
+                className={index % 2 === 0 ? "bg-colortable text-white" : ""}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className="px-2 py-4 text-sm text-gray-500 break-words"
+                    className="px-2 py-4 text-sm  black:text-gray-300 break-words"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>

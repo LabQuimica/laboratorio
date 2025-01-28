@@ -4,6 +4,7 @@ import { SortableHeader } from "@/components/table/SortableHeader";
 import TruncatedCell from "@/components/table/TruncatedCell";
 import { Vale } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
+import formatDateCell from "@/components/table/FormatedDate";
 
 export const columns: ColumnDef<Vale>[] = [
   // {
@@ -54,15 +55,24 @@ export const columns: ColumnDef<Vale>[] = [
   {
     accessorKey: "semestre",
     header: "Semestre",
-    size: 100,
+    size: 20,
     cell: ({ row }) => (
-      <p className="text-center"> {row.getValue("semestre")} </p>
+      <div className="flex items-center justify-center">
+        <div className="bg-colortable black:bg-gray-200 h-7 w-7 rounded-md flex items-center justify-center">
+          <p className="text-white uppercase text-sm text-center leading-none">
+            {row.getValue("semestre")}
+          </p>
+        </div>
+      </div>
     ),
   },
   {
     accessorKey: "estado_vale",
     header: "Status",
-    size: 50,
+    size: 150,
+    cell: ({ row }) => (
+      <p className="text-center"> {row.getValue("estado_vale")} </p>
+    ),
   },
   {
     accessorKey: "observaciones_vale",
@@ -75,32 +85,12 @@ export const columns: ColumnDef<Vale>[] = [
   {
     accessorKey: "fecha_solicitada",
     header: "Fecha Solicitada",
-    cell: ({ row }) => {
-      const fecha = new Date(row.getValue("fecha_solicitada"));
-      return fecha.toLocaleString("es-ES", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      });
-    },
+    cell: formatDateCell("fecha_solicitada"),
   },
   {
     accessorKey: "fecha_modificacion",
     header: "Fecha Modificación",
-    cell: ({ row }) => {
-      const fecha = new Date(row.getValue("fecha_modificacion"));
-      return fecha.toLocaleString("es-ES", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      });
-    },
+    cell: formatDateCell("fecha_modificacion"),
   },
   {
     accessorKey: "profesor",
@@ -112,10 +102,10 @@ export const columns: ColumnDef<Vale>[] = [
     header: "Estado Práctica",
     size: 50,
   },
-  // {
-  //   accessorKey: "actions",
-  //   header: "Actions",
-  //   size: 10,
-  //   // cell: ({ row }) => <ActionVale row={row} />,
-  // },
+  {
+    accessorKey: "actions",
+    header: "Actions",
+    size: 10,
+    cell: ({ row }) => <ActionVale row={row} />,
+  },
 ];

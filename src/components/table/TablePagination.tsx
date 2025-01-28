@@ -77,9 +77,9 @@ const TablePagination = <TData,>({ table }: TablePaginationProps<TData>) => {
         <button
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
-          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:pointer-events-none group"
+          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-white disabled:opacity-50 disabled:pointer-events-none group"
         >
-          <IconChevronLeft className="h-4 w-4 text-gray-400 group-hover:text-black dark:text-gray-400 dark:group-hover:text-white" />
+          <IconChevronLeft className="h-4 w-4 text-gray-400 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black" />
         </button>
 
         {/* Paginación */}
@@ -113,9 +113,9 @@ const TablePagination = <TData,>({ table }: TablePaginationProps<TData>) => {
         <button
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:pointer-events-none group"
+          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-white disabled:opacity-50 disabled:pointer-events-none group"
         >
-          <IconChevronRight className="h-4 w-4 text-gray-400 group-hover:text-black dark:text-gray-400 dark:group-hover:text-white" />
+          <IconChevronRight className="h-4 w-4 text-gray-400 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black" />
         </button>
       </div>
     </div>
