@@ -5,6 +5,7 @@ import TruncatedCell from "@/components/table/TruncatedCell";
 import { Vale } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import formatDateCell from "@/components/table/FormatedDate";
+import StatusCell from "./StatusVale";
 
 export const columns: ColumnDef<Vale>[] = [
   // {
@@ -70,9 +71,7 @@ export const columns: ColumnDef<Vale>[] = [
     accessorKey: "estado_vale",
     header: "Status",
     size: 150,
-    cell: ({ row }) => (
-      <p className="text-center"> {row.getValue("estado_vale")} </p>
-    ),
+    cell: ({ row }) => <StatusCell row={row} />,
   },
   {
     accessorKey: "observaciones_vale",

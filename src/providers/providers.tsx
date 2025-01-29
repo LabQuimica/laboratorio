@@ -3,6 +3,7 @@
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/providers/ReactQueryProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function ClientProviders({
   children,
@@ -18,6 +19,7 @@ export default function ClientProviders({
         disableTransitionOnChange
       >
         {children}
+        <Toaster />
       </ThemeProvider>
     </QueryClientProvider>
   );

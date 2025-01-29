@@ -98,7 +98,7 @@ const TablePagination = <TData,>({ table }: TablePaginationProps<TData>) => {
           ${
             typeof page === "number"
               ? table.getState().pagination.pageIndex === page - 1
-                ? "bg-primary text-primary-foreground"
+                ? "bg-blue-600 text-white"
                 : "hover:bg-gray-100 hover:text-black dark:hover:bg-gray-800 dark:hover:text-white"
               : "pointer-events-none"
           }

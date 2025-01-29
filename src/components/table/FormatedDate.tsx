@@ -22,10 +22,10 @@ const formatDateCell = (key: string) => {
 
     return (
       <div className="flex justify-center items-center">
-        <p>{formattedDate}, &nbsp;</p>
-        <p className="bg-sky-800 black:bg-gray-200 h-7 w-14 rounded-md flex items-center justify-center">
-          {formattedTime}
+        <p className="bg-sky-800 text-white h-7 w-24 rounded-md flex justify-center items-center text-center">
+          {formattedDate}
         </p>
+        <p className="ml-2">{formattedTime}</p>
       </div>
     );
   };

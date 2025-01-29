@@ -15,13 +15,13 @@ import { IconFlask2Filled } from "@tabler/icons-react";
 interface ProjectActionsProps<TData> {
   row: Row<TData>;
 }
-
+// text-violet-500
 export function ActionVale<TData>({ row }: ProjectActionsProps<TData>) {
   return (
     <Sheet>
       <div className="flex items-center justify-center">
         <SheetTrigger>
-          <IconFlask2Filled className=" text-violet-500" />
+          <IconFlask2Filled className=" text-blue-600" />
         </SheetTrigger>
       </div>
       <SheetContent className="w-[200px] sm:w-[540px] ">
