@@ -34,7 +34,7 @@ export default function LoginPage() {
         Cookies.set("token", data.token.token, { expires: 1 }); // Expira en 1 día
         setSuccess("Inicio de sesión exitoso");
         setTimeout(() => {
-          window.location.href = "/dashboard"; // Redirige a la pantalla de dashboard después de medio segundo
+          window.location.href = "/menu"; // Redirige a la pantalla principal después de medio segundo
         }, 500);
       } else {
         setError(data.error || "Error al iniciar sesión");
