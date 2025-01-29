@@ -12,7 +12,7 @@ function Menu() {
             height: "400px",
           }}
         />
-        <h1 style={{ fontSize: "38px", marginTop: "30px" }} className="text-center font-bold">
+        <h1 style={{ fontSize: "38px", marginTop: "30px" }} className="font-bold">
           BIENVENIDO/A
         </h1>
       </div>

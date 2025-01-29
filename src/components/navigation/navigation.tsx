@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { Sidebar, SidebarBody } from "@/components/ui/sidebar";
-import { Logo } from "@/components/navigation/Logo";
-import { ProfileLink } from "@/components/navigation/ProfileLink";
-import { SidebarLinks } from "@/components/navigation/SidebarLinks";
+import { Logo } from "./Logo";
+import { ProfileLink } from "./ProfileLink";
+import { SidebarLinks } from "./SidebarLinks";
 import { cn } from "@/lib/utils";
 
 export default function Navigation({
@@ -12,7 +12,7 @@ export default function Navigation({
 }: {
   children: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [animate, setAnimate] = useState(true);
 
   return (

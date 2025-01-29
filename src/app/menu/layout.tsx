@@ -1,11 +1,11 @@
-import Navigation from "@/components/layouts/navigation";
+import Navigation from "@/components/navigation/navigation";
 
 function Layout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return <Navigation children={children} />
+  return <Navigation children={children} />;
 }
 
-export default Layout
+export default Layout;
