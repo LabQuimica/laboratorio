@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Definir tipo de datos
-interface Item {
+type Item = {
   id_item: number;
   fk_marca_item: number;
   num_serie: string;
@@ -20,63 +20,66 @@ export default function ItemsTable() {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [editItem, setEditItem] = useState<Item | null>(null);
 
+  // Cargar ítems desde el backend
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await fetch("/api/items"); // Llama a tu API Next.js
-        const data = await res.json();
-        setItems(data);
+        const res = await axios.get("http://localhost:5000/items");
+        setItems(res.data);
       } catch (error) {
-        console.error("Error fetching items:", error);
+        console.error("Error cargando ítems:", error);
       }
     };
-    
+
     fetchItems();
   }, []);
 
-  const fetchItems = () => {
-    axios.get("http://localhost:5000/items")
-      .then((response) => setItems(response.data))
-      .catch((error) => console.error("Error cargando ítems:", error));
-  };
-
+  // Manejar selección de checkbox
   const handleSelectItem = (id: number) => {
     setSelectedItems((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
-  const handleDelete = () => {
-    axios.post("http://localhost:5000/delete-items", { ids: selectedItems })
-      .then(() => {
-        setItems((prev) => prev.filter((item) => !selectedItems.includes(item.id_item)));
-        setSelectedItems([]);
-      })
-      .catch((error) => console.error("Error eliminando ítems:", error));
+  // Seleccionar/Deseleccionar todos los ítems
+  const handleSelectAll = () => {
+    setSelectedItems(selectedItems.length === items.length ? [] : items.map((i) => i.id_item));
   };
 
+  // Eliminar ítems seleccionados
+  const handleDelete = async () => {
+    try {
+      await axios.post("http://localhost:5000/delete-items", { ids: selectedItems });
+      setItems((prev) => prev.filter((item) => !selectedItems.includes(item.id_item)));
+      setSelectedItems([]);
+    } catch (error) {
+      console.error("Error eliminando ítems:", error);
+    }
+  };
+
+  // Manejar edición
   const handleEdit = (item: Item) => {
     setEditItem(item);
   };
 
-  const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
+  // Actualizar ítem
+  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!editItem) return;
 
-    axios.post("http://localhost:5000/update-item", editItem)
-      .then(() => {
-        setItems((prev) =>
-          prev.map((item) => (item.id_item === editItem.id_item ? editItem : item))
-        );
-        setEditItem(null);
-      })
-      .catch((error) => console.error("Error actualizando ítem:", error));
+    try {
+      await axios.put("http://localhost:5000/update-item", editItem);
+      setItems((prev) => prev.map((item) => (item.id_item === editItem.id_item ? editItem : item)));
+      setEditItem(null);
+    } catch (error) {
+      console.error("Error actualizando ítem:", error);
+    }
   };
 
   return (
     <div className="p-4 bg-light-bg dark:bg-dark-bg dark:text-white">
       <h1 className="text-2xl font-bold mb-4">Gestión de Ítems</h1>
-      
+
       {/* Tabla de Ítems */}
       <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
         <thead>
@@ -84,10 +87,8 @@ export default function ItemsTable() {
             <th>
               <input
                 type="checkbox"
-                onChange={() =>
-                  setSelectedItems(selectedItems.length === items.length ? [] : items.map((i) => i.id_item))
-                }
-                checked={selectedItems.length === items.length}
+                onChange={handleSelectAll}
+                checked={selectedItems.length === items.length && items.length > 0}
               />
             </th>
             <th>ID</th>

@@ -15,11 +15,19 @@ export default function UsersTable() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    fetch("../api/users") // ✅ Ahora llama a la API interna de Next.js
+    fetch("../api/users") // 📌 Verifica la ruta correcta de la API
       .then((res) => res.json())
-      .then((data) => setUsers(data))
-      .catch((err) => console.error("Error:", err));
+      .then((data) => {
+        console.log("📌 Datos recibidos:", data); // Ver qué devuelve la API
+        if (Array.isArray(data)) {
+          setUsers(data); // ✅ Solo actualizar si es un array
+        } else {
+          console.error("❌ La API no devolvió un array:", data);
+        }
+      })
+      .catch((err) => console.error("🔥 Error en fetch:", err));
   }, []);
+  
 
   return (
 <div className="bg-light-bg dark:bg-dark-bg dark:text-white p-4">
