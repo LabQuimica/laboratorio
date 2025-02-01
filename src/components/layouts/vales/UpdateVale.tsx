@@ -12,7 +12,7 @@ import {
 import { IconArrowNarrowRight, IconFlask2Filled } from "@tabler/icons-react";
 import { useStatusStore } from "@/stores/valesStore";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useUpdateVales } from "@/hooks/useUpdateVale";
+import { useUpdateVales } from "@/hooks/Vales/useUpdateVale";
 import { useToast } from "@/hooks/use-toast";
 
 export function UpdateVale() {
@@ -45,7 +45,7 @@ export function UpdateVale() {
       <div className="flex items-center justify-center pr-5">
         <SheetTrigger asChild>
           <Button
-            className="dark:bg-destructive dark:text-white"
+            className="bg-destructive dark:bg-destructive dark:text-white"
             disabled={!hasChanges}
           >
             <IconFlask2Filled className="mr-2" />

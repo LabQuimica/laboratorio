@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import DarkLightToggle from "@/components/ui/darkModeToggle";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");

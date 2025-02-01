@@ -1,5 +1,5 @@
 "use client";
-import { useVales } from "@/hooks/useVale";
+import { useVales } from "@/hooks/Vales/useVale";
 import { columns } from "./columns";
 import { Table } from "@/components/table/Table";
 

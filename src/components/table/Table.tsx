@@ -97,7 +97,7 @@ export const Table = <TData,>({
             {table.getRowModel().rows.map((row, index) => (
               <tr
                 key={row.id}
-                className={index % 2 === 0 ? "bg-colortable text-white" : ""}
+                className={"hover:bg-gray-100 hover:dark:bg-gray-800"}
               >
                 {row.getVisibleCells().map((cell) => (
                   <td

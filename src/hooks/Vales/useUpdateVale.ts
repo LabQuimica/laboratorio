@@ -1,6 +1,6 @@
 // hooks/useValesMutation.ts
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { StatusChange } from '@/types/types';
+import { StatusChange } from '@/types/ValeTypes';
 
 const URL = process.env.NEXT_PUBLIC_API_URL;
 

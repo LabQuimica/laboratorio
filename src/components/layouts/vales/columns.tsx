@@ -2,7 +2,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ActionVale } from "@/components/layouts/vales/ActionsVale";
 import { SortableHeader } from "@/components/table/SortableHeader";
 import TruncatedCell from "@/components/table/TruncatedCell";
-import { Vale } from "@/types/types";
+import { Vale } from "@/types/ValeTypes";
 import { ColumnDef } from "@tanstack/react-table";
 import formatDateCell from "@/components/table/FormatedDate";
 import StatusCell from "./StatusVale";
@@ -44,14 +44,14 @@ export const columns: ColumnDef<Vale>[] = [
   },
   {
     accessorKey: "alumno",
-    header: ({ column }) => <SortableHeader column={column} title="name" />,
+    header: ({ column }) => <SortableHeader column={column} title="ALUMNO" />,
     size: 30,
   },
   {
-    accessorKey: "grupo",
-    header: "Grupo",
+    accessorKey: "nombre",
+    header: "Materia",
     size: 50,
-    cell: ({ row }) => <TruncatedCell text={row.getValue("grupo")} />,
+    cell: ({ row }) => <TruncatedCell text={row.getValue("nombre")} />,
   },
   {
     accessorKey: "semestre",
@@ -59,8 +59,8 @@ export const columns: ColumnDef<Vale>[] = [
     size: 20,
     cell: ({ row }) => (
       <div className="flex items-center justify-center">
-        <div className="bg-colortable black:bg-gray-200 h-7 w-7 rounded-md flex items-center justify-center">
-          <p className="text-white uppercase text-sm text-center leading-none">
+        <div className=" h-7 w-7 rounded-md flex items-center justify-center">
+          <p className=" uppercase text-sm text-center leading-none">
             {row.getValue("semestre")}
           </p>
         </div>
@@ -69,7 +69,7 @@ export const columns: ColumnDef<Vale>[] = [
   },
   {
     accessorKey: "estado_vale",
-    header: "Status",
+    header: "Estatus",
     size: 150,
     cell: ({ row }) => <StatusCell row={row} />,
   },
@@ -103,7 +103,7 @@ export const columns: ColumnDef<Vale>[] = [
   },
   {
     accessorKey: "actions",
-    header: "Actions",
+    header: "Acciones",
     size: 10,
     cell: ({ row }) => <ActionVale row={row} />,
   },

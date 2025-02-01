@@ -1,5 +1,5 @@
 "use client"
-import { Vale } from '@/types/types';
+import { Vale } from '@/types/ValeTypes';
 import { useQuery } from '@tanstack/react-query';
 
 const URL = process.env.NEXT_PUBLIC_API_URL;

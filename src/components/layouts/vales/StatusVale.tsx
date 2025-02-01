@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useStatusStore } from "@/stores/valesStore";
-import { EstadoVale } from "@/types/types";
+import { EstadoVale } from "@/types/ValeTypes";
 import { Row } from "@tanstack/react-table";
 
 interface Vale {
@@ -50,9 +50,6 @@ const StatusVale = ({ row }: StatusValeProps) => {
       oldStatus: row.getValue("estado_vale"),
       newStatus,
     });
-
-    // Mostramos los cambios en consola
-    console.log("Estado Global Actual:", changes);
   };
 
   return (

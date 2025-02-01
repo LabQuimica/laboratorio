@@ -21,7 +21,7 @@ export function ActionVale<TData>({ row }: ProjectActionsProps<TData>) {
     <Sheet>
       <div className="flex items-center justify-center">
         <SheetTrigger>
-          <IconFlask2Filled className=" text-blue-600" />
+          <IconFlask2Filled className=" " />
         </SheetTrigger>
       </div>
       <SheetContent className="w-[200px] sm:w-[540px] ">

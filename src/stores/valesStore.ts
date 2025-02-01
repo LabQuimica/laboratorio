@@ -1,4 +1,4 @@
-import { EstadoVale, StatusChange } from '@/types/types';
+import { EstadoVale, StatusChange } from '@/types/ValeTypes';
 import { create } from 'zustand';
 
 interface StatusStore {

@@ -1,8 +1,8 @@
 export interface Vale {
   id_vale: number;
   alumno: string;
-  grupo: string;
-  semestre: number;
+  nombre: string;
+  semestre: string;
   estado_vale: "pendiente" | "progreso" | "completada" | "cancelada";
   observaciones_vale: string;
   fecha_solicitada: string;
