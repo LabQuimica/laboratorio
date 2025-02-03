@@ -24,7 +24,7 @@ export default function ItemsTable() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/items");
+        const res = await axios.get("http://192.168.22.40:4321/items");
         setItems(res.data);
       } catch (error) {
         console.error("Error cargando ítems:", error);
