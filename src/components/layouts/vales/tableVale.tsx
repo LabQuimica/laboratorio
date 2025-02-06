@@ -2,7 +2,7 @@
 import { useVales } from "@/hooks/Vales/useVale";
 import { columns } from "./columns";
 import { Table } from "@/components/table/Table";
-import { EstadoValeFilter } from "@/components/layouts/vales/EstadoValeFilter";
+import { EstadoValeFilter } from "@/components/layouts/vales/FIlterVale";
 import { Vale } from "@/types/ValeTypes";
 
 export const ValesTable = () => {

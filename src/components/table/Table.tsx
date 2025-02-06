@@ -33,7 +33,7 @@ export const Table = <TData,>({
   FilterComponent,
 }: TableProps<TData>) => {
   const [globalFilter, setGlobalFilter] = useState(""); // Estado para la búsqueda global
-  const [rowSelection, setRowSelection] = useState({}); // Estado para la selección de filas
+  // const [rowSelection, setRowSelection] = useState({}); // Estado para la selección de filas
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
@@ -41,11 +41,11 @@ export const Table = <TData,>({
     columns,
     state: {
       globalFilter,
-      rowSelection,
+      // rowSelection,
       columnFilters,
     },
     onGlobalFilterChange: setGlobalFilter,
-    onRowSelectionChange: setRowSelection,
+    // onRowSelectionChange: setRowSelection,
     onColumnFiltersChange: setColumnFilters,
     getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
@@ -97,7 +97,7 @@ export const Table = <TData,>({
             {table.getRowModel().rows.map((row, index) => (
               <tr
                 key={row.id}
-                className={"hover:bg-gray-100 hover:dark:bg-gray-800"}
+                className={"hover:bg-gray-100 hover:dark:bg-zinc-800"}
               >
                 {row.getVisibleCells().map((cell) => (
                   <td
