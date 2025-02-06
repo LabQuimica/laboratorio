@@ -6,7 +6,10 @@ import {
   IconDeviceDesktop,
   IconHeartCheck,
 } from "@tabler/icons-react";
-import { DropdownMenuItem, DropdownMenuShortcut } from "../../ui/dropdown-menu";
+import {
+  DropdownMenuItem,
+  DropdownMenuShortcut,
+} from "@/components/ui/dropdown-menu";
 
 export const ThemeMenu = () => {
   const { setTheme, theme } = useTheme();

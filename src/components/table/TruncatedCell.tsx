@@ -25,4 +25,8 @@ const TruncatedCell = ({ text }: any) => {
   );
 };
 
+<<<<<<< HEAD
 export default TruncatedCell;
+=======
+export default TruncatedCell;
+>>>>>>> 19bc938835e3e74dbbf191d582104b5ae9371a5b

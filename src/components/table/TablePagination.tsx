@@ -98,7 +98,11 @@ const TablePagination = <TData,>({ table }: TablePaginationProps<TData>) => {
           ${
             typeof page === "number"
               ? table.getState().pagination.pageIndex === page - 1
+<<<<<<< HEAD
                 ? "bg-primary text-primary-foreground"
+=======
+                ? "bg-blue-600 text-white"
+>>>>>>> 19bc938835e3e74dbbf191d582104b5ae9371a5b
                 : "hover:bg-gray-100 hover:text-black dark:hover:bg-gray-800 dark:hover:text-white"
               : "pointer-events-none"
           }
@@ -122,4 +126,8 @@ const TablePagination = <TData,>({ table }: TablePaginationProps<TData>) => {
   );
 };
 
+<<<<<<< HEAD
 export default TablePagination;
+=======
+export default TablePagination;
+>>>>>>> 19bc938835e3e74dbbf191d582104b5ae9371a5b

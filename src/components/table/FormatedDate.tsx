@@ -22,13 +22,24 @@ const formatDateCell = (key: string) => {
 
     return (
       <div className="flex justify-center items-center">
+<<<<<<< HEAD
         <p>{formattedDate}, &nbsp;</p>
         <p className="bg-sky-800 black:bg-gray-200 h-7 w-14 rounded-md flex items-center justify-center">
           {formattedTime}
         </p>
+=======
+        <p className="h-7 w-24 rounded-md flex justify-center items-center text-center">
+          {formattedDate}
+        </p>
+        <p className="ml-2">{formattedTime}</p>
+>>>>>>> 19bc938835e3e74dbbf191d582104b5ae9371a5b
       </div>
     );
   };
 };
 
+<<<<<<< HEAD
 export default formatDateCell;
+=======
+export default formatDateCell;
+>>>>>>> 19bc938835e3e74dbbf191d582104b5ae9371a5b
