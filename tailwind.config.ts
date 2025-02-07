@@ -50,7 +50,15 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+			'bg-active-light': '#F5F5F5',
+			'bg-active-dark': '#262626',
+			'bg-disable-light': '#ECEEF0',
+			'bg-disable-dark': '#0E0E0E',
+			'text-disable-light': '#B4B4B4',
+			'text-disable-dark': '#656565',
+			'btn-assigned': '#91E28E',
+			'btn-not-assigned': '#FF7779',
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
