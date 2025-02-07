@@ -44,7 +44,9 @@ const DropdownFilter = ({
           <DropdownMenuItem
             key={option.value}
             onClick={() => handleFilterChange(option.value)}
-            className={isFilterActive(option.value) ? "bg-gray-100" : ""}
+            className={
+              isFilterActive(option.value) ? "bg-gray-100 text-black" : ""
+            }
           >
             {option.label}
           </DropdownMenuItem>

@@ -34,7 +34,9 @@ export function UpdateVale() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "No se pudieron actualizar los estados.",
+        description: `No se pudieron actualizar los estados. ${
+          (error as any)?.message || ""
+        }`,
         variant: "destructive",
       });
     }

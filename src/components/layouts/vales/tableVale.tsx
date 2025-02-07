@@ -15,6 +15,7 @@ export const ValesTable = () => {
       isLoading={isLoading}
       isError={isError}
       orderBy="id_vale"
+      reactQueryKEY="vales"
       FilterComponent={EstadoValeFilter}
     />
   );
