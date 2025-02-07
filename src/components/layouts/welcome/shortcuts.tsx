@@ -4,7 +4,8 @@ import { links } from "@/constants/links";
 export const Shortcuts = () => {
   return (
     <div className="mt-8 flex flex-col gap-2 items-start">
-      {links.map((link, idx) => (
+      <h2 className="text-lg font-bold mb-2 text-neutral-700 dark:text-neutral-200">Inicio</h2>
+      {links.slice(0, -1).map((link, idx) => (
         <a
           key={idx}
           href={link.href}
@@ -17,3 +18,4 @@ export const Shortcuts = () => {
     </div>
   );
 };
+
