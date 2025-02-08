@@ -4,6 +4,8 @@ import { usePracticas } from "@/hooks/Practicas/usePractica";
 import { docentecolumns, asignadascolumns } from "./columns";
 import DocenteSelector from "./docenteSelector";
 import { Table } from "@/components/table/Table";
+import { Practica } from "@/types/PracticaTypes";
+import { EstadoValeFilter } from "../vales/FilterVale";
 
 interface PracticasTableProps {
   viewType: "creadas" | "asignadas";
@@ -35,12 +37,14 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
       )}
 
       {/* Tabla */}
-      <Table
+      <Table<Practica>
         data={filteredPracticas}
         columns={columns}
         isLoading={practicasData.isLoading}
         isError={practicasData.isError}
         orderBy="id_vale"
+        reactQueryKEY="vales"
+        FilterComponent={EstadoValeFilter}
       />
     </div>
   );
