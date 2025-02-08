@@ -4,6 +4,7 @@ import {
   IconSettings,
   IconUserBolt,
   IconChecklist,
+  IconUsers,
 } from "@tabler/icons-react";
 
 export const links = [
@@ -26,6 +27,13 @@ export const links = [
     href: "/menu/vale",
     icon: (
       <IconChecklist className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    ),
+  },
+  {
+    label: "Usuarios generales",
+    href: "/menu/users",
+    icon: (
+      <IconUsers className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
   {
