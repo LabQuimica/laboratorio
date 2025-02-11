@@ -83,12 +83,24 @@ export const columns: ColumnDef<Vale>[] = [
   },
   {
     accessorKey: "fecha_solicitada",
-    header: "Fecha Solicitada",
+    header: ({ column }) => (
+      <SortableHeader
+        column={column}
+        title="fecha solicitada"
+        className="justify-center"
+      />
+    ),
     cell: formatDateCell("fecha_solicitada"),
   },
   {
     accessorKey: "fecha_modificacion",
-    header: "Fecha Modificación",
+    header: ({ column }) => (
+      <SortableHeader
+        column={column}
+        title="fecha modificacion"
+        className="justify-center"
+      />
+    ),
     cell: formatDateCell("fecha_modificacion"),
   },
   {

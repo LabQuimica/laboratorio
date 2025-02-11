@@ -4,6 +4,8 @@ import {
   IconSettings,
   IconUserBolt,
   IconChecklist,
+  IconFileAnalytics,
+  IconUsers,
 } from "@tabler/icons-react";
 
 export const links = [
@@ -15,13 +17,6 @@ export const links = [
     ),
   },
   {
-    label: "Profile",
-    href: "/menu/profile",
-    icon: (
-      <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-    ),
-  },
-  {
     label: "Vales",
     href: "/menu/vale",
     icon: (
@@ -29,10 +24,17 @@ export const links = [
     ),
   },
   {
-    label: "Logout",
-    href: "/logout",
+    label: "Prácticas",
+    href: "/menu/practica",
     icon: (
-      <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <IconFileAnalytics className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    ),
+  },
+  {
+    label: "Usuarios generales",
+    href: "/menu/users",
+    icon: (
+      <IconUsers className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
 ];

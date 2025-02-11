@@ -1,20 +1,20 @@
 "use client";
-import { useVales } from "@/hooks/Vales/useVale";
+import { useUsers } from "@/hooks/Users/useUser";
 import { columns } from "./columns";
 import { Table } from "@/components/table/Table";
-import { EstadoValeFilter } from "@/components/layouts/vales/FilterVale";
-import { Vale } from "@/types/ValeTypes";
+import { User } from "@/types/userTypes";
+import { EstadoValeFilter } from "../vales/FilterVale";
 
-export const ValesTable = () => {
-  const { data, isLoading, isError } = useVales();
+export const UsersTable = () => {
+  const { data, isLoading, isError } = useUsers();
 
   return (
-    <Table<Vale>
+    <Table<User>
       data={data || []}
       columns={columns}
       isLoading={isLoading}
       isError={isError}
-      orderBy="id_vale"
+      orderBy="id_user"
       reactQueryKEY="vales"
       FilterComponent={EstadoValeFilter}
     />
