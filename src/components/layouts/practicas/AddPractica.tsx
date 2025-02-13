@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
+import { useToast } from "@/hooks/use-toast";
 import { usePracticas } from "@/hooks/Practicas/usePractica";
 
 function AddPractica() {
@@ -24,6 +25,8 @@ function AddPractica() {
 
     const { createPractica } = usePracticas();
 
+    const { toast } = useToast();
+
     const handleCreatePractica = async () => {
         setIsSubmitting(true);
         try {
@@ -32,13 +35,22 @@ function AddPractica() {
                 descripcion,
                 creadorId: 5,
             });
-            alert("Práctica creada exitosamente");
-            setNombre(""); // Limpia los campos después de guardar
+            toast({
+                title: "Operación exitosa",
+                description: "Práctica creada exitosamente",
+            });
+
+            setNombre("");
             setDescripcion("");
         } catch (error) {
             console.error("Error al crear la práctica", error);
+            toast({
+                title: "Error",
+                description: "No se pudo crear la práctica.",
+                variant: "destructive",
+            });
         } finally {
-            setIsSubmitting(false); // Habilita el botón nuevamente
+            setIsSubmitting(false);
         }
     };    
 
@@ -46,37 +58,42 @@ function AddPractica() {
         <div className="z-50">
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button className="bg-bg-active-light text-black hover:bg-bg-disable-light dark:bg-bg-active-dark dark:text-white dark:hover:bg-bg-disable-dark text-sm font-semibold py-5 px-4 rounded-xl ml-10">
-                        Añadir +
+                    <Button className="flex flex-row rounded-sm text-white dark:text-black items-center justify-center align-middle">
+                        <span className="text-xl">+</span>
+                        <p className="h-full">Nueva Práctica</p>
                     </Button>
                 </DialogTrigger>
+
                 <DialogContent className="sm:max-w-[500px] p-14 rounded-3xl">
                     <DialogHeader>
-                    <DialogTitle>Crear nueva práctica</DialogTitle>
-                    <DialogDescription>Ingrese los detalles de la práctica.</DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="nombre" className="text-right">
-                        Nombre
-                      </Label>
-                      <Input id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} className="col-span-3" />
+                        <DialogTitle>Crear nueva práctica</DialogTitle>
+                        <DialogDescription>Ingrese los detalles de la práctica.</DialogDescription>
+                    </DialogHeader>
+
+                    <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="nombre" className="text-right">
+                                Nombre
+                            </Label>
+                            <Input id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} className="col-span-3" />
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="descripcion" className="text-right">
+                                Descripción
+                            </Label>
+                            <Textarea id="descripcion" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} className="col-span-3" />
+                        </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="descripcion" className="text-right">
-                        Descripción
-                      </Label>
-                      <Textarea id="descripcion" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} className="col-span-3" />
-                    </div>
-                </div>
-                <DialogFooter>
-                    <Button onClick={handleCreatePractica} disabled=    {isSubmitting} className="bg-bg-active-light text-black hover:bg-secondary-blue-light dark:hover:bg-secondary-blue-dark dark:text-white">
-                      {isSubmitting ? "Guardando..." : "Guardar"}
-                    </Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    </div>
+
+                    <DialogFooter>
+                        <Button onClick={handleCreatePractica} disabled={isSubmitting} className="bg-bg-active-light text-white hover:bg-secondary-blue-light dark:hover:bg-secondary-blue-dark dark:text-black">
+                            {isSubmitting ? "Guardando..." : "Guardar"} 
+                        </Button>
+                    </DialogFooter>
+                    
+                </DialogContent>
+            </Dialog>
+        </div>
     );
 }
 

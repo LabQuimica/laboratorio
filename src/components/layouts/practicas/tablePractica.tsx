@@ -31,10 +31,6 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
 
   return (
     <div>
-      {/* Selector de docente */}
-      {viewType === "creadas" && (
-        <DocenteSelector onDocenteSelect={handleDocenteSelect} />
-      )}
 
       {/* Tabla */}
       <Table<Practica>
@@ -42,7 +38,7 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
         columns={columns}
         isLoading={practicasData.isLoading}
         isError={practicasData.isError}
-        orderBy="id_vale"
+        orderBy="id_practica"
         reactQueryKEY="vales"
         FilterComponent={EstadoValeFilter}
       />
