@@ -17,13 +17,6 @@ export const links = [
     ),
   },
   {
-    label: "Profile",
-    href: "/menu/profile",
-    icon: (
-      <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-    ),
-  },
-  {
     label: "Vales",
     href: "/menu/vale",
     icon: (
@@ -42,13 +35,6 @@ export const links = [
     href: "/menu/users",
     icon: (
       <IconUsers className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-    ),
-  },
-  {
-    label: "Logout",
-    href: "/logout",
-    icon: (
-      <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
 ];
