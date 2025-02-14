@@ -23,7 +23,7 @@ function AddPractica() {
     const [descripcion, setDescripcion] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const { createPractica } = usePracticas();
+    const { createPractica } = usePracticas("creadas");
 
     const { toast } = useToast();
 
@@ -33,6 +33,7 @@ function AddPractica() {
             await createPractica({
                 nombre,
                 descripcion,
+                num_equipos: 5,
                 creadorId: 5,
             });
             toast({

@@ -12,33 +12,22 @@ interface PracticasTableProps {
 }
 
 export const PracticasTable = ({ viewType }: PracticasTableProps) => {
-  const { practicasData } = usePracticas();
+
+  const { practicasData } = usePracticas(viewType);
+  //const { practicasData } = usePracticas();
 
   const columns = viewType === "creadas" ? docentecolumns : asignadascolumns;
-
-  const filteredPracticas =
-    viewType === "creadas"
-      ? practicasData.data || []
-      : practicasData.data?.filter((practica) => practica.esta_asignada) || [];
-
-  const [selectedDocente, setSelectedDocente] = useState<{
-    id: number;
-    name: string;
-  } | null>(null);
-  const handleDocenteSelect = (id: number, name: string) => {
-    setSelectedDocente({ id, name });
-  };
 
   return (
     <div>
 
       {/* Tabla */}
       <Table<Practica>
-        data={filteredPracticas}
+        data={practicasData.data || []}
         columns={columns}
         isLoading={practicasData.isLoading}
         isError={practicasData.isError}
-        orderBy="id_practica"
+        orderBy="fecha_creacion"
         reactQueryKEY="vales"
         FilterComponent={EstadoValeFilter}
       />

@@ -2,84 +2,39 @@
 import { Practica } from "@/types/PracticaTypes";
 import { Docente } from "@/types/DocenteTypes";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { fetchPracticas, fetchDocentes, createPractica, deletePractica } from "@/services/practicasService";
 
-const URL = process.env.NEXT_PUBLIC_API_URL;
+export const usePracticas = (tipo: "creadas" | "asignadas") => {
+    const queryClient = useQueryClient();
 
-const fetchPracticas = async (): Promise<Practica[]> => {
-  const response = await fetch(`http://${URL}/practicas/getPracticas`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-};
+    const practicasData = useQuery<Practica[], Error>({
+        queryKey: ["practicas", tipo],
+        queryFn: () => fetchPracticas(tipo),
+    });
 
-const fetchDocentes = async (): Promise<Docente[]> => {
-  const response = await fetch(`http://${URL}/docentes/getDocentes`);
-  if (!response.ok) {
-    throw new Error("Error al obtener los docentes");
-  }
-  return response.json();
-};
+    const docentesData = useQuery<Docente[], Error>({
+        queryKey: ["docentes"],
+        queryFn: fetchDocentes,
+    });
 
-const createPractica = async (newPractica: { nombre: string; descripcion: string; creadorId: number }) => {
-  const response = await fetch(`http://${URL}/practicas/crearPractica`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newPractica),
-  });
+    const createPracticaMutation = useMutation({
+        mutationFn: createPractica,
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["practicas"] });
+        },
+    });
 
-  if (!response.ok) {
-    throw new Error("Error al crear la práctica");
-  }
+    const deletePracticaMutation = useMutation({
+        mutationFn: deletePractica,
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["practicas"] });
+        },
+    });
 
-  return response.json();
-};
-
-const deletePractica = async ({ idPractica, profesorId }: { idPractica: number; profesorId: number }) => {
-  const response = await fetch(`http://${URL}/practicas/deletePractica/${idPractica}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ profesorId }),
-  });
-
-  if (!response.ok) {
-    throw new Error("Error al eliminar la práctica");
-  }
-
-  return response.json();
-};
-
-
-export const usePracticas = () => {
-  const queryClient = useQueryClient();
-
-  const practicasData = useQuery<Practica[], Error>({
-    queryKey: ["practicas"],
-    queryFn: fetchPracticas,
-  });
-
-  const docentesData = useQuery<Docente[], Error>({
-    queryKey: ["docentes"],
-    queryFn: fetchDocentes,
-  });
-
-  const createPracticaMutation = useMutation({
-    mutationFn: createPractica,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["practicas"] });
-    },
-  });
-
-  const deletePracticaMutation = useMutation({
-    mutationFn: deletePractica,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["practicas"] });
-    },
-  });
-
-  return { practicasData, docentesData, createPractica: createPracticaMutation.mutateAsync, deletePractica: deletePracticaMutation.mutateAsync  };
-};
+    return {
+        practicasData, 
+        docentesData, 
+        createPractica: createPracticaMutation.mutateAsync, 
+        deletePractica: deletePracticaMutation.mutateAsync
+    };
+}

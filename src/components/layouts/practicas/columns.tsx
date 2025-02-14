@@ -32,7 +32,9 @@ export const docentecolumns: ColumnDef<Practica>[] = [
   },
   {
     accessorKey: "fecha_creacion",
-    header: "Fecha Creación",
+    header: ({ column }) => (
+      <SortableHeader column={column} title="Fecha Creación" className="justify-center" />
+    ),
     cell: formatDateCell("fecha_creacion"),
   },
   {
