@@ -1,5 +1,5 @@
-function Alumno() {
-  return <div>Alumno</div>;
-}
+import { redirect } from "next/navigation";
 
-export default Alumno;
+export default function Alumno() {
+  redirect("/menu/vale/alumno/pendiente");
+}

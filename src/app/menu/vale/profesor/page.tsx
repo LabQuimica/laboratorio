@@ -1,5 +1,7 @@
+import ValeProfesor from "@/layouts/vales/profesor/valeProfesor";
+
 function Profesor() {
-  return <div>Profesor</div>;
+  return <ValeProfesor />;
 }
 
 export default Profesor;

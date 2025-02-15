@@ -1,20 +1,22 @@
 "use client"
+import { fetchAllVales, fetchVales } from '@/services/valeService';
 import { Vale } from '@/types/ValeTypes';
 import { useQuery } from '@tanstack/react-query';
 
-const URL = process.env.NEXT_PUBLIC_API_URL;
+interface ValesParams {
+  status?: string;
+}
 
-const fetchVales = async (): Promise<Vale[]> => {
-  const response = await fetch(`http://${URL}/vales/getVales`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
+export const useVales = (params?: ValesParams) => {
+  return useQuery<Vale[], Error>({
+    queryKey: ['vales', params],
+    queryFn: () => fetchVales(params),
+  });
 };
 
-export const useVales = () => {
+export const useAllVales = () => {
   return useQuery<Vale[], Error>({
     queryKey: ['vales'],
-    queryFn: fetchVales,
+    queryFn: () => fetchAllVales(),
   });
 };

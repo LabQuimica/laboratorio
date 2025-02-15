@@ -1,12 +1,14 @@
 "use client";
-import { useAllVales } from "@/hooks/Vales/useVale";
-import { columns } from "./columns";
+import { useVales } from "@/hooks/Vales/useVale";
+import { columns } from "../columns";
 import { Table } from "@/components/table/Table";
 import { EstadoValeFilter } from "@/layouts/vales/FilterVale";
 import { Vale } from "@/types/ValeTypes";
 
-export const ValesTable = () => {
-  const { data, isLoading, isError } = useAllVales();
+export const ValesAlumnoTable = ({ queryStatus }: { queryStatus: string }) => {
+  const { data, isLoading, isError } = useVales({
+    status: queryStatus,
+  });
   return (
     <Table<Vale>
       data={data || []}
@@ -14,7 +16,7 @@ export const ValesTable = () => {
       isLoading={isLoading}
       isError={isError}
       orderBy="id_vale"
-      reactQueryKEY="vales"
+      reactQueryKEY={`vales`}
       FilterComponent={EstadoValeFilter}
     />
   );
