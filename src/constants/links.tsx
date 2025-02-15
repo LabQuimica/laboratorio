@@ -18,7 +18,7 @@ export const links = [
   },
   {
     label: "Vales",
-    href: "/menu/vale",
+    href: "/menu/vale/profesor",
     icon: (
       <IconChecklist className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
