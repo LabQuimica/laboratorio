@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { UpdateVale } from "@/layouts/vales/UpdateVale";
+import { UpdateVale } from "@/components/layouts/vales/UpdateVale";
 
 function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();

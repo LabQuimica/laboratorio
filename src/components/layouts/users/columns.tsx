@@ -1,11 +1,11 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { ActionUser } from "@/layouts/users/ActionsUsers";
+import { ActionUser } from "@/components/layouts/users/ActionsUsers";
 import { SortableHeader } from "@/components/table/SortableHeader";
 import TruncatedCell from "@/components/table/TruncatedCell";
 import { User } from "@/types/userTypes";
 import { ColumnDef } from "@tanstack/react-table";
 import formatDateCell from "@/components/table/FormatedDate";
-import PasswordCell from "@/layouts/users/showPassword";
+import PasswordCell from "@/components/layouts/users/showPassword";
 
 export const columns: ColumnDef<User>[] = [
   // {

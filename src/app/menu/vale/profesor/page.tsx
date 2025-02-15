@@ -1,4 +1,4 @@
-import ValeProfesor from "@/layouts/vales/profesor/valeProfesor";
+import ValeProfesor from "@/components/layouts/vales/profesor/valeProfesor";
 
 function Profesor() {
   return <ValeProfesor />;

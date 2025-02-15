@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
-import { ValesAlumnoTable } from "@/layouts/vales/alumno/valeAlumno";
-import { ValesTable } from "@/layouts/vales/tableVale";
+import { ValesAlumnoTable } from "@/components/layouts/vales/alumno/valeAlumno";
+import { ValesTable } from "@/components/layouts/vales/tableVale";
 
 export default function ValeAlumnoStatus() {
   const { status } = useParams();

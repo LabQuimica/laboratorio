@@ -1,4 +1,4 @@
-import Navigation from "@/layouts/navigation/navigation";
+import Navigation from "@/components/layouts/navigation/navigation";
 
 function Layout({
   children,
