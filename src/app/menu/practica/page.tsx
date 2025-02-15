@@ -1,4 +1,4 @@
-import PracticasPage from "@/components/layouts/practicas/practica";
+import PracticasPage from "@/layouts/practicas/practica";
 
 export default function Vales() {
   return <PracticasPage />;

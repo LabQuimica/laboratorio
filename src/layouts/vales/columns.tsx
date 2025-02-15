@@ -1,5 +1,5 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { ActionVale } from "@/components/layouts/vales/ActionsVale";
+import { ActionVale } from "@/layouts/vales/ActionsVale";
 import { SortableHeader } from "@/components/table/SortableHeader";
 import TruncatedCell from "@/components/table/TruncatedCell";
 import { Vale } from "@/types/ValeTypes";

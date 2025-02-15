@@ -1,11 +1,11 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { ActionUser } from "@/components/layouts/users/ActionsUsers";
+import { ActionUser } from "@/layouts/users/ActionsUsers";
 import { SortableHeader } from "@/components/table/SortableHeader";
 import TruncatedCell from "@/components/table/TruncatedCell";
 import { User } from "@/types/userTypes";
 import { ColumnDef } from "@tanstack/react-table";
 import formatDateCell from "@/components/table/FormatedDate";
-import PasswordCell from "@/components/layouts/users/showPassword";
+import PasswordCell from "@/layouts/users/showPassword";
 
 export const columns: ColumnDef<User>[] = [
   // {
@@ -74,11 +74,13 @@ export const columns: ColumnDef<User>[] = [
     header: "Estado",
     size: 10,
     cell: ({ row }) => {
-      const value = row.getValue("active"); 
-      return <p className="text-center">{value === 1 ? "Activo" : "No activo"}</p>;
+      const value = row.getValue("active");
+      return (
+        <p className="text-center">{value === 1 ? "Activo" : "No activo"}</p>
+      );
     },
   },
-  
+
   {
     accessorKey: "actions",
     header: "Actions",
