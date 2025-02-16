@@ -1,7 +1,7 @@
-import { ValesTable } from "../tableVale";
+import { ValesAlumnoTable } from "./tableVale";
 
 function ValeAlumno() {
-  return <ValesTable />;
+  return <ValesAlumnoTable />;
 }
 
 export default ValeAlumno;
