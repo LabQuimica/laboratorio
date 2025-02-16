@@ -1,5 +1,5 @@
-import ValesPage from "@/components/layouts/vales/vale";
+import { redirect } from "next/navigation";
 
 export default function Vales() {
-  return <ValesPage />;
+  redirect("/menu/vale/profesor");
 }

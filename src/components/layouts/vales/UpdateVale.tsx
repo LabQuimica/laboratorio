@@ -44,7 +44,7 @@ export function UpdateVale() {
 
   return (
     <Sheet>
-      <div className="flex items-center justify-center pr-5">
+      <div className="flex items-center justify-center ">
         <SheetTrigger asChild>
           <Button
             className="bg-destructive dark:bg-destructive dark:text-white"
