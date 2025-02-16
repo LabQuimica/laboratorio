@@ -11,7 +11,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"  
 
-import { usePracticas } from "@/hooks/Practicas/usePractica";
+import { usePracticas } from "@/hooks/Practicas/usePractica2";
 
 type DocenteSelectorProps = {
     onDocenteSelect: (id: number, name: string) => void;

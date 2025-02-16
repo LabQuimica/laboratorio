@@ -6,7 +6,7 @@ import NameBadge from "./NameBadge";
 import { SortableHeader } from "@/components/table/SortableHeader";
 import StatusPractica from "./StatusPractica";
 import PracticaActions from "./AccionesPractica";
-import { usePracticas } from "@/hooks/Practicas/usePractica";
+import { usePracticas } from "@/hooks/Practicas/usePractica2";
 
 
 export const docentecolumns: ColumnDef<Practica>[] = [

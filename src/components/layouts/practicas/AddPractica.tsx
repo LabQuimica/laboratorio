@@ -16,21 +16,21 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 import { useToast } from "@/hooks/use-toast";
-import { usePracticas } from "@/hooks/Practicas/usePractica";
+import { useCreatePractica } from "@/hooks/Practicas/usePractica2";
 
 function AddPractica() {
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const { createPractica } = usePracticas("creadas");
+    const createPractica = useCreatePractica();
 
     const { toast } = useToast();
 
     const handleCreatePractica = async () => {
         setIsSubmitting(true);
         try {
-            await createPractica({
+            await createPractica.mutateAsync({
                 nombre,
                 descripcion,
                 num_equipos: 5,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { usePracticas } from '@/hooks/Practicas/usePractica';
+import { useDeletePractica} from '@/hooks/Practicas/usePractica2';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -26,28 +26,26 @@ interface PracticaActionsProps {
 
 const PracticaActions = ({ idPractica}: PracticaActionsProps) => {
 
-  const { deletePractica } = usePracticas();
+  const deletePractica = useDeletePractica();
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
 
   const handleDeleteConfirm = async () => {
-    if (window.confirm("¿Estás seguro de que quieres eliminar esta práctica?")) {
-      try {
-        await deletePractica({ idPractica, profesorId: 5 });
-        toast({
-          title: "Operación exitosa",
-          description: "Práctica eliminada correctamente",
-        });
-      } catch (error) {
-        console.error("Error eliminando la práctica:", error);
-        toast({
-          title: "Error",
-          description: "No se pudo eliminar la práctica.",
-          variant: "destructive",
-        });
-      } finally {
-        setOpen(false);
-      }
+    try {
+      await deletePractica.mutateAsync({ idPractica, profesorId: 5 });
+      toast({
+        title: "Operación exitosa",
+        description: "Práctica eliminada correctamente",
+      });
+    } catch (error) {
+      console.error("Error eliminando la práctica:", error);
+      toast({
+        title: "Error",
+        description: "No se pudo eliminar la práctica.",
+        variant: "destructive",
+      });
+    } finally {
+      setOpen(false);
     }
   };
 
@@ -55,7 +53,7 @@ const PracticaActions = ({ idPractica}: PracticaActionsProps) => {
     <div className='flex justify-center w-full'>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Button variant="outline" className='h-7 hover:bg-gray-100 dark:hover:bg-gray-700'>Opciones</Button>
+          <div className='p-2 rounded-sm bg-gray-200 dark:bg-bg-disable-dark hover:bg-gray-300 dark:hover:bg-gray-700'>Opciones</div>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
