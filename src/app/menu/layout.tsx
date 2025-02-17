@@ -12,7 +12,7 @@
 
 "use client";
 
-import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute from "@/providers/ProtectedRoute";
 import Navigation from "@/components/layouts/navigation/navigation";
 
 function Layout({ children }: { children: React.ReactNode }) {

@@ -116,13 +116,143 @@
 // }
 
 
+// "use client";
+
+// import { useState, useContext } from "react";
+// import Image from "next/image";
+// import Cookies from "js-cookie";
+// import { useRouter } from "next/navigation";
+// import { UserContext } from "@/context/UserContext";
+
+// export default function LoginPage() {
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [error, setError] = useState("");
+//   const [success, setSuccess] = useState("");
+
+//   const { setUser } = useContext(UserContext);
+//   const router = useRouter();
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     setError("");
+//     setSuccess("");
+
+//     try {
+//       const response = await fetch(
+//         `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({ email, password }),
+//         }
+//       );
+
+//       const data = await response.json();
+
+//       if (response.ok) {
+//         // Actualiza el contexto global del usuario
+//         setUser(data.user);
+
+//         // Guarda el token en una cookie
+//         Cookies.set("token", data.token, { expires: 1 }); // Expira en 1 día
+
+//         setSuccess("Inicio de sesión exitoso");
+
+//         // Redirige al menu después de 100ms
+//         setTimeout(() => {
+//           router.push("/menu");
+//         }, 100);
+//       } else {
+//         setError(data.error || "Error al iniciar sesión");
+//       }
+//     } catch (err) {
+//       setError("No se pudo conectar con el servidor.");
+//     }
+//   };
+
+//   return (
+//     <div className="w-full h-dvh flex pl-10 align-middle justify-center items-center bg-light-bg dark:bg-dark-bg dark:text-white">
+//       {/* <DarkLightToggle /> */}
+//       <div className="w-1/2">
+//         <div className="align-middle justify-center">
+//           <h1 className="uppercase font-bold text-4xl text-center">
+//             ¡BienvenidO de nuevo!
+//           </h1>
+//           <p className="font-semibold text-2xl text-center">
+//             Estamos Felices Por Tenerte Aquí
+//           </p>
+//         </div>
+//         <div className="flex pt-16 w-full justify-center align-middle items-center">
+//           <form
+//             onSubmit={handleSubmit}
+//             className="w-3/4 align-middle justify-center"
+//           >
+//             {error && <p style={{ color: "red" }}>{error}</p>}
+//             {success && <p style={{ color: "green" }}>{success}</p>}
+//             <div className="w-full inline-grid">
+//               <label className="text-sm">Correo:</label>
+//               <input
+//                 type="email"
+//                 name="email"
+//                 placeholder="Correo"
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//                 required
+//                 className="bg-[#CCD4DE] rounded-3xl h-10 w-full pl-4 mt-2 placeholder:text-gray-600"
+//               />
+//             </div>
+//             <div className="w-full inline-grid mt-5">
+//               <label className="text-sm">Contraseña:</label>
+//               <input
+//                 type="password"
+//                 name="password"
+//                 placeholder="Contraseña"
+//                 value={password}
+//                 onChange={(e) => setPassword(e.target.value)}
+//                 required
+//                 className="bg-[#CCD4DE] rounded-3xl h-10 w-full pl-4 mt-2 placeholder:text-gray-600"
+//               />
+//               {/* <p className="text-sm w-full text-right mt-4">
+//                 ¿Olvidaste Tu Contraseña?
+//               </p> */}
+//             </div>
+//             <div className="w-full flex align-middle items-center justify-center">
+//               <button
+//                 type="submit"
+//                 className="bg-[#3E53A0] mt-10 rounded-3xl w-1/2 self-center h-10"
+//               >
+//                 <p className="text-center font-semibold text-lg">
+//                   Iniciar Sesión
+//                 </p>
+//               </button>
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//       <div className="flex w-1/2 items-center justify-center align-middle">
+//         <Image
+//           src={`/assets/logo.png`}
+//           alt={"logo"}
+//           className="h-96 w-96"
+//           width={500}
+//           height={300}
+//         />
+//       </div>
+//     </div>
+//   );
+// }
+
 "use client";
 
 import { useState, useContext } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { UserContext } from "@/context/UserContext"; // Asegúrate de que la ruta sea correcta
+import { UserContext } from "@/context/UserContext";
+import { login } from "@/stores/authService"; // Importa el servicio
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -139,65 +269,43 @@ export default function LoginPage() {
     setSuccess("");
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Actualiza el contexto global del usuario
-        setUser(data.user);
-
-        // Si tu servidor no configura la cookie, puedes configurarla desde el cliente
-        Cookies.set("token", data.token, { expires: 1 }); // Expira en 1 día
-
-        setSuccess("Inicio de sesión exitoso");
-
-        // Redirige al dashboard (o a la ruta que desees) usando el router de Next.js
-        setTimeout(() => {
-          router.push("/menu");
-        }, 500);
-      } else {
-        setError(data.error || "Error al iniciar sesión");
-      }
-    } catch (err) {
-      setError("No se pudo conectar con el servidor.");
-    }
+      const data = await login(email, password);
+      // Actualiza el contexto global del usuario
+      setUser(data.user);
+      // Guarda el token en una cookie
+      Cookies.set("token", data.token, { expires: 1 });
+      // Guarda el usuario en localStorage
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setSuccess("Inicio de sesión exitoso");
+      setTimeout(() => {
+        router.push("/menu");
+      }, 100);
+    } catch (err: any) {
+      setError(err.message);
+    }    
   };
 
   return (
     <div className="w-full h-dvh flex pl-10 align-middle justify-center items-center bg-light-bg dark:bg-dark-bg dark:text-white">
-      {/* <DarkLightToggle /> */}
       <div className="w-1/2">
         <div className="align-middle justify-center">
           <h1 className="uppercase font-bold text-4xl text-center">
-            ¡Bienvenid@ de nuevo!
+            ¡BienvenidO de nuevo!
           </h1>
           <p className="font-semibold text-2xl text-center">
             Estamos Felices Por Tenerte Aquí
           </p>
         </div>
         <div className="flex pt-16 w-full justify-center align-middle items-center">
-          <form
-            onSubmit={handleSubmit}
-            className="w-3/4 align-middle justify-center"
-          >
+          <form onSubmit={handleSubmit} className="w-3/4 align-middle justify-center">
             {error && <p style={{ color: "red" }}>{error}</p>}
             {success && <p style={{ color: "green" }}>{success}</p>}
             <div className="w-full inline-grid">
-              <label className="text-sm">Email:</label>
+              <label className="text-sm">Correo:</label>
               <input
                 type="email"
                 name="email"
-                placeholder="Correo electrónico"
+                placeholder="Correo"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -215,14 +323,11 @@ export default function LoginPage() {
                 required
                 className="bg-[#CCD4DE] rounded-3xl h-10 w-full pl-4 mt-2 placeholder:text-gray-600"
               />
-              <p className="text-sm w-full text-right mt-4">
-                ¿Olvidaste Tu Contraseña?
-              </p>
             </div>
             <div className="w-full flex align-middle items-center justify-center">
               <button
                 type="submit"
-                className="bg-[#3E53A0] mt-10 rounded-3xl w-1/2 self-center"
+                className="bg-[#3E53A0] mt-10 rounded-3xl w-1/2 self-center h-10"
               >
                 <p className="text-center font-semibold text-lg">
                   Iniciar Sesión
@@ -234,8 +339,8 @@ export default function LoginPage() {
       </div>
       <div className="flex w-1/2 items-center justify-center align-middle">
         <Image
-          src={`/assets/logo.png`}
-          alt={"logo"}
+          src="/assets/logo.png"
+          alt="logo"
           className="h-96 w-96"
           width={500}
           height={300}

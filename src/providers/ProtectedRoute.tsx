@@ -1,4 +1,3 @@
-// laboratorio/src/components/ProtectedRoute.tsx
 "use client";
 
 import { useContext, useEffect } from "react";
@@ -14,21 +13,14 @@ const ProtectedRoute: React.FC<Props> = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // Solo redirigimos si ya terminó de cargar y no hay usuario o es "alumno"
     if (!loading && (!user || user.rol === "alumno")) {
       router.push("/login");
     }
   }, [user, loading, router]);
 
-  // Mientras se carga el estado, opcionalmente muestra un spinner
-  if (loading) {
-    return <div>Cargando...</div>;
-  }
+  if (loading) return <div>Cargando...</div>;
 
-  // Si no hay usuario o tiene rol "alumno", también podríamos retornar null (ya se redirigirá)
-  if (!user || user.rol === "alumno") {
-    return null;
-  }
+  if (!user || user.rol === "alumno") return null;
 
   return <>{children}</>;
 };

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ClientProviders from "@/providers/providers";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "Laboratorio",
@@ -15,7 +17,9 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <body className={"bg-background font-sans antialiased h-screen"}>
-        <ClientProviders>{children}</ClientProviders>
+        <ClientProviders>{children}
+          <ToastContainer />
+        </ClientProviders>
       </body>
     </html>
   );

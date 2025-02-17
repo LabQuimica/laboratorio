@@ -33,7 +33,9 @@ export const UserMenu = () => {
   const handleLogout = () => {
     // Remueve la cookie del token
     Cookies.remove("token");
-    // Actualiza el estado global del usuario (puedes establecerlo en null o en el valor que corresponda)
+    // Elimina el usuario del localStorage
+    localStorage.removeItem("user");
+    // Actualiza el contexto global del usuario a null
     setUser(null);
     // Redirige al login
     router.push("/login");
