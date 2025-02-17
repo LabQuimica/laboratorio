@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { StatusChange } from '@/types/ValeTypes';
 
 const URL = process.env.NEXT_PUBLIC_API_URL;
-const queryClient = useQueryClient();
 
 interface UpdateValeDTO {
   id_vale: number;
@@ -37,6 +36,7 @@ const updateVales = async (changes: UpdateValeDTO[]): Promise<void> => {
 };
 
 export const useUpdateVales = () => {
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (changes: StatusChange[]) => {

@@ -1,12 +1,27 @@
 "use client";
-import { useVales } from "@/hooks/Vales/useVale";
-import { columns } from "../columns";
+import { useAlumnoVales } from "@/hooks/Vales/useAlumnoVales";
 import { Table } from "@/components/table/Table";
 import { EstadoValeFilter } from "@/components/layouts/vales/FilterVale";
-import { Vale } from "@/types/ValeTypes";
+import { EstadoVale, Vale } from "@/types/ValeTypes";
+import {
+  columsPendiente,
+  columsProgreso,
+  columsCompletada,
+  columsCancelada,
+} from "./columnsVale";
 
-export const ValesAlumnoTable = () => {
-  const { data, isLoading, isError } = useVales();
+export const ValesAlumnoTable = ({ viewType }: { viewType: EstadoVale }) => {
+  const { data, isLoading, isError } = useAlumnoVales(viewType);
+
+  // Selección dinámica de columnas según el estado
+  const columns =
+    viewType === "pendiente"
+      ? columsPendiente
+      : viewType === "progreso"
+      ? columsProgreso
+      : viewType === "completada"
+      ? columsCompletada
+      : columsCancelada;
 
   return (
     <Table<Vale>
