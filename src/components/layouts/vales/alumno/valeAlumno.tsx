@@ -1,7 +1,10 @@
 "use client";
 import {
-  IconClockCheck,
-  IconRosetteDiscountCheckFilled,
+  IconHourglassLow,
+  IconSwitch2,
+  IconCircleDashedCheck,
+  IconSkull,
+  IconCircleDashedX,
 } from "@tabler/icons-react";
 import { ValesAlumnoTable } from "./tableVale";
 import { useState } from "react";
@@ -14,23 +17,28 @@ function ValeAlumno() {
   const tabs = [
     {
       id: "pendiente",
-      label: "pendiente",
-      icon: <IconClockCheck />,
+      label: "Pendiente",
+      icon: <IconHourglassLow />,
     },
     {
       id: "progreso",
-      label: "progreso",
-      icon: <IconRosetteDiscountCheckFilled />,
+      label: "En progreso",
+      icon: <IconSwitch2 />,
     },
     {
       id: "completada",
-      label: "completada",
-      icon: <IconRosetteDiscountCheckFilled />,
+      label: "Completada",
+      icon: <IconCircleDashedCheck />,
     },
     {
       id: "cancelada",
-      label: "cancelada",
-      icon: <IconRosetteDiscountCheckFilled />,
+      label: "Cancelada",
+      icon: <IconSkull />,
+    },
+    {
+      id: "incompleto",
+      label: "Incompleto",
+      icon: <IconCircleDashedX />,
     },
   ];
 

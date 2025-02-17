@@ -13,7 +13,7 @@ const TruncatedCell = ({ text }: any) => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
+          <div className="max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
             {text}
           </div>
         </TooltipTrigger>

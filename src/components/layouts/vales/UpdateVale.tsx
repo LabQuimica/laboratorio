@@ -15,6 +15,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useUpdateVales } from "@/hooks/Vales/useUpdateVale";
 import { useToast } from "@/hooks/use-toast";
 
+const statusStyles = {
+  pendiente: "bg-yellow-100 text-yellow-800 border-yellow-200",
+  progreso: "bg-sky-100 text-blue-800 border-blue-200",
+  completada: "bg-green-100 text-green-800 border-green-200",
+  cancelada: "bg-red-100 text-red-800 border-red-200",
+  incompleto: "bg-gray-100 text-gray-800 border-gray-200",
+} as const;
+
 export function UpdateVale() {
   const changes = useStatusStore((state) => state.changes);
   const clearChanges = useStatusStore((state) => state.clearChanges);
@@ -134,10 +142,3 @@ export function UpdateVale() {
     </Sheet>
   );
 }
-
-const statusStyles = {
-  pendiente: "bg-yellow-100 text-yellow-800 border-yellow-200",
-  progreso: "bg-blue-100 text-blue-800 border-blue-200",
-  completada: "bg-green-100 text-green-800 border-green-200",
-  cancelada: "bg-red-100 text-red-800 border-red-200",
-} as const;

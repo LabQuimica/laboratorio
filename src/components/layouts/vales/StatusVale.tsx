@@ -10,16 +10,12 @@ import { useStatusStore } from "@/stores/valesStore";
 import { EstadoVale } from "@/types/ValeTypes";
 import { Row } from "@tanstack/react-table";
 
-interface Vale {
-  id_vale: number;
-  estado_vale: EstadoVale;
-}
-
 const statusStyles = {
-  pendiente: "bg-yellow-100 text-yellow-800 border-yellow-200",
-  progreso: "bg-blue-100 text-blue-800 border-blue-200",
-  completada: "bg-green-100 text-green-800 border-green-200",
-  cancelada: "bg-red-100 text-red-800 border-red-200",
+  pendiente: "bg-amber-300 text-amber-950",
+  progreso: "bg-sky-300 text-sky-950",
+  completada: "bg-green-300 text-green-950 ",
+  cancelada: "bg-rose-300 text-red-950 ",
+  incompleto: "bg-stone-300 text-stone-950 ",
 } as const;
 
 const statusOptions: EstadoVale[] = [
@@ -27,7 +23,13 @@ const statusOptions: EstadoVale[] = [
   "progreso",
   "completada",
   "cancelada",
+  "incompleto",
 ];
+
+interface Vale {
+  id_vale: number;
+  estado_vale: EstadoVale;
+}
 
 interface StatusValeProps {
   row: Row<Vale>;
@@ -53,24 +55,26 @@ const StatusVale = ({ row }: StatusValeProps) => {
   };
 
   return (
-    <Select onValueChange={handleStatusChange} value={currentStatus}>
-      <SelectTrigger
-        className={`w-32 h-8 border rounded-full ${statusStyles[currentStatus]}`}
-      >
-        <SelectValue>{currentStatus}</SelectValue>
-      </SelectTrigger>
-      <SelectContent>
-        {statusOptions.map((status) => (
-          <SelectItem
-            key={status}
-            value={status}
-            className={`${statusStyles[status]} m-1 rounded-full hover:opacity-100 transition-opacity`}
-          >
-            {status}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div className="flex items-center justify-center">
+      <Select onValueChange={handleStatusChange} value={currentStatus}>
+        <SelectTrigger
+          className={`w-32 h-8 border rounded-full ${statusStyles[currentStatus]}`}
+        >
+          <SelectValue>{currentStatus}</SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {statusOptions.map((status) => (
+            <SelectItem
+              key={status}
+              value={status}
+              className={`${statusStyles[status]} mt-2 rounded-full hover:opacity-100 transition-opacity`}
+            >
+              {status}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 };
 

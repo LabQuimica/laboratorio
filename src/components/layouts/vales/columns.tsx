@@ -8,30 +8,6 @@ import formatDateCell from "@/components/table/FormatedDate";
 import StatusCell from "./StatusVale";
 
 export const columns: ColumnDef<Vale>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() ||
-  //         (table.getIsSomePageRowsSelected() && "indeterminate")
-  //       }
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //       className=""
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //       className=" "
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     accessorKey: "id_vale",
     header: ({ column }) => (
@@ -44,7 +20,7 @@ export const columns: ColumnDef<Vale>[] = [
   },
   {
     accessorKey: "alumno",
-    header: ({ column }) => <SortableHeader column={column} title="ALUMNO" />,
+    header: ({ column }) => <SortableHeader column={column} title="alumno" />,
     size: 30,
   },
   {
