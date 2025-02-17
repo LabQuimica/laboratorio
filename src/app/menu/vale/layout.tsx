@@ -11,7 +11,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <header className="flex space-x-4 p-4  justify-between">
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 items-center">
           <h1 className="text-lg inline  ">Vale de:</h1>
           <Button
             variant={pathname.includes("profesor") ? "default" : "outline"}
