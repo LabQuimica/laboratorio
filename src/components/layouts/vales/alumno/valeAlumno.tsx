@@ -36,15 +36,6 @@ function ValeAlumno() {
 
   return (
     <div className="p-4">
-      {/* <div className="flex justify-between items-center mb-7">
-        <h1 className="text-2xl font-bold mb-2 font-sans">Prácticas</h1>
-      </div> */}
-
-      {/* Boton para añadir práctica
-    <div className="fixed top-20 right-12">
-      <AddPractica />
-    </div> */}
-
       <Tabs
         tabs={tabs}
         activeTab={viewType}
