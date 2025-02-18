@@ -3,7 +3,6 @@
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import Cookies from "js-cookie";
-import { toast } from "react-toastify"; // Asegúrate de tener instalado react-toastify
 import { User } from "@/types/user";
 import { getUserFromToken } from "@/stores/userService";
 
@@ -28,7 +27,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   // Función que se encarga de rehidratar el usuario
   const rehydrateUser = () => {
     // Evita rehidratar si estamos en la página de login
-    if (typeof window !== "undefined" && window.location.pathname === "/login") {
+    if (
+      typeof window !== "undefined" &&
+      window.location.pathname === "/login"
+    ) {
       setLoading(false);
       return;
     }
@@ -49,7 +51,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setUser(userFromToken);
         localStorage.setItem("user", JSON.stringify(userFromToken));
       } else {
-        toast.error("Error decodificando el token");
         Cookies.remove("token");
       }
     }

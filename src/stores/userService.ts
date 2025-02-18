@@ -1,4 +1,3 @@
-// src/services/userService.ts
 import { jwtDecode } from "jwt-decode";
 import { User } from "@/types/user";
 
