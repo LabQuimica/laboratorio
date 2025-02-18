@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { usePracticas } from "@/hooks/Practicas/usePractica";
+import { usePracticas } from "@/hooks/Practicas/usePractica2";
 import { docentecolumns, asignadascolumns } from "./columns";
 import DocenteSelector from "./docenteSelector";
 import { Table } from "@/components/table/Table";
@@ -12,37 +12,22 @@ interface PracticasTableProps {
 }
 
 export const PracticasTable = ({ viewType }: PracticasTableProps) => {
-  const { practicasData } = usePracticas();
+
+  const { data: practicas, isLoading, isError } = usePracticas(viewType);
+  //const { practicasData } = usePracticas();
 
   const columns = viewType === "creadas" ? docentecolumns : asignadascolumns;
 
-  const filteredPracticas =
-    viewType === "creadas"
-      ? practicasData.data || []
-      : practicasData.data?.filter((practica) => practica.esta_asignada) || [];
-
-  const [selectedDocente, setSelectedDocente] = useState<{
-    id: number;
-    name: string;
-  } | null>(null);
-  const handleDocenteSelect = (id: number, name: string) => {
-    setSelectedDocente({ id, name });
-  };
-
   return (
     <div>
-      {/* Selector de docente */}
-      {viewType === "creadas" && (
-        <DocenteSelector onDocenteSelect={handleDocenteSelect} />
-      )}
 
       {/* Tabla */}
       <Table<Practica>
-        data={filteredPracticas}
+        data={practicas || []}
         columns={columns}
-        isLoading={practicasData.isLoading}
-        isError={practicasData.isError}
-        orderBy="id_vale"
+        isLoading={isLoading}
+        isError={isError}
+        orderBy="fecha_creacion"
         reactQueryKEY="vales"
         FilterComponent={EstadoValeFilter}
       />
