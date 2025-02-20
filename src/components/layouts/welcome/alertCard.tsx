@@ -15,7 +15,7 @@ const getFranjaColor = (cantidad: number): string => {
 
 const ItemCard: React.FC<{ item: ItemProps }> = ({ item }) => {
   return (
-    <div className="flex hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-lg overflow-hidden border border-gray-300 w-full max-w-3xl">
+    <div className="flex hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-lg overflow-hidden border w-full max-w-3xl">
       {/* Franja de color */}
       <div className={`w-3 ${getFranjaColor(item.cantidad)}`}></div>
 
