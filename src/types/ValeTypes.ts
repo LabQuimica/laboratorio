@@ -12,8 +12,18 @@ export interface Vale {
 
 export type EstadoVale = "pendiente" | "progreso" | "completada" | "cancelada" | "incompleto";
 
+// Tipo para el cambio de estado
 export interface StatusChange {
   id_vale: number;
   oldStatus: EstadoVale;
-  newStatus: EstadoVale;
+  newStatus: EstadoVale; 
+  tableType: "ValeAlumno" | "ValeProfesor";
+}
+
+// Tipo para el cambio de comentario
+export interface CommentChange {
+  id_vale: number; 
+  oldObservation: string; 
+  newObservation: string; 
+  tableType: "ValeAlumno" | "ValeProfesor";
 }

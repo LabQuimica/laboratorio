@@ -42,6 +42,9 @@ export const Table = <TData,>({
     columns,
     state: {
       globalFilter,
+      columnVisibility: {
+        id_vale: false,
+      },
       // rowSelection,
       columnFilters,
     },

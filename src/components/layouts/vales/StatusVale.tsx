@@ -30,27 +30,27 @@ interface Vale {
   id_vale: number;
   estado_vale: EstadoVale;
 }
-
 interface StatusValeProps {
   row: Row<Vale>;
+  tableType: "ValeAlumno" | "ValeProfesor";
 }
-const StatusVale = ({ row }: StatusValeProps) => {
-  const addChange = useStatusStore((state) => state.addChange);
-  const changes = useStatusStore((state) => state.changes);
 
-  // Obtener el estado actual desde el store
-  const storedChange = changes.find(
-    (c) => c.id_vale === row.getValue("id_vale")
-  );
+const StatusVale = ({ row, tableType }: StatusValeProps) => {
+  const addChange = useStatusStore((state) => state.addStatusChange);
+  const changes = useStatusStore((state) => state.statusChanges);
+  const id_vale = Number(row.getValue("id_vale"));
+  const storedChange = changes.find((c) => c.id_vale === id_vale);
+
   const currentStatus: EstadoVale = storedChange
     ? storedChange.newStatus
     : row.getValue("estado_vale");
 
   const handleStatusChange = (newStatus: EstadoVale) => {
     addChange({
-      id_vale: row.getValue("id_vale"),
+      id_vale: id_vale,
       oldStatus: row.getValue("estado_vale"),
       newStatus,
+      tableType,
     });
   };
 

@@ -61,7 +61,7 @@ export const TableControls = ({
           placeholder="Buscar..."
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
-          className="max-w-sm border-gray-300"
+          className="max-w-sm border-gray-300 rounded-2xl"
         />
 
         {/* Componente de filtros personalizado */}

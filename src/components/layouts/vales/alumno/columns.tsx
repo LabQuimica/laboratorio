@@ -1,23 +1,23 @@
-import { Checkbox } from "@/components/ui/checkbox";
 import { ActionVale } from "@/components/layouts/vales/ActionsVale";
 import { SortableHeader } from "@/components/table/SortableHeader";
 import TruncatedCell from "@/components/table/TruncatedCell";
 import { Vale } from "@/types/ValeTypes";
 import { ColumnDef } from "@tanstack/react-table";
-import formatDateCell from "@/components/table/FormatedDate";
 import StatusCell from "../StatusVale";
+import ObservacionesVale from "../observacionesVale";
 
 export const columsAlumnoVale: ColumnDef<Vale>[] = [
-  // {
-  //   accessorKey: "id_vale",
-  //   header: ({ column }) => (
-  //     <SortableHeader column={column} title="id" className="justify-center" />
-  //   ),
-  //   size: 10,
-  //   cell: ({ row }) => (
-  //     <p className="text-center"> {row.getValue("id_vale")} </p>
-  //   ),
-  // },
+  {
+    accessorKey: "id_vale",
+
+    // header: ({ column }) => (
+    //   <SortableHeader column={column} title="id" className="justify-center" />
+    // ),
+    // size: 10,
+    // cell: ({ row }) => (
+    //   <p className="text-center"> {row.getValue("id_vale")} </p>
+    // ),
+  },
   {
     accessorKey: "alumno",
     header: ({ column }) => <SortableHeader column={column} title="ALUMNO" />,
@@ -45,14 +45,12 @@ export const columsAlumnoVale: ColumnDef<Vale>[] = [
     accessorKey: "estado_vale",
     header: "Estatus",
     size: 150,
-    cell: ({ row }) => <StatusCell row={row} />,
+    cell: ({ row }) => <StatusCell row={row} tableType="ValeAlumno" />,
   },
   {
     accessorKey: "observaciones_vale",
     header: "Observaciones",
-    cell: ({ row }) => (
-      <TruncatedCell text={row.getValue("observaciones_vale")} />
-    ),
+    cell: ({ row }) => <ObservacionesVale row={row} tableType="ValeAlumno" />,
   },
   {
     accessorKey: "fecha_solicitada",
