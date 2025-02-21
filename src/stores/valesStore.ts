@@ -4,14 +4,17 @@ import { create } from "zustand";
 import { StatusChange, CommentChange } from "@/types/ValeTypes";
 
 interface StatusStore {
-  statusChanges: StatusChange[]; 
+  statusChanges: StatusChange[];
   commentChanges: CommentChange[];
 
-  addStatusChange: (change: StatusChange) => void; 
-  addCommentChange: (change: CommentChange) => void; 
+  addStatusChange: (change: StatusChange) => void;
+  addCommentChange: (change: CommentChange) => void;
 
-  clearStatusChanges: () => void; 
-  clearCommentChanges: () => void; 
+  clearStatusChanges: () => void;
+  clearCommentChanges: () => void;
+
+  removeStatusChangeById: (id: number) => void;
+  removeCommentChangeById: (id: number) => void;
 }
 
 export const useStatusStore = create<StatusStore>((set) => ({
@@ -51,4 +54,14 @@ export const useStatusStore = create<StatusStore>((set) => ({
 
   clearStatusChanges: () => set({ statusChanges: [] }),
   clearCommentChanges: () => set({ commentChanges: [] }),
+
+  removeStatusChangeById: (id) =>
+    set((state) => ({
+      statusChanges: state.statusChanges.filter((change) => change.id_vale !== id),
+    })),
+
+  removeCommentChangeById: (id) =>
+    set((state) => ({
+      commentChanges: state.commentChanges.filter((change) => change.id_vale !== id),
+    })),
 }));
