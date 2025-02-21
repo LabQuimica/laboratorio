@@ -1,6 +1,8 @@
-import DropdownFilter from "@/components/table/DropdownFilter";
+import { semestre } from "@/constants/semestr";
+import ComboboxFilter from "./ComboboxFilter";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { useState } from "react";
+import { grupos } from "@/constants/grupos";
 
 interface EstadoValeFilterProps {
   onFilterChange: (filters: ColumnFiltersState) => void;
@@ -16,31 +18,21 @@ export const EstadoValeFilter = ({ onFilterChange }: EstadoValeFilterProps) => {
 
   return (
     <div className="flex space-x-4">
-      <DropdownFilter
-        label="Filtrar por Estado Vale"
-        filterId="estado_vale"
+      <ComboboxFilter
+        label="Filtrar por Grupo"
+        placeholder="Buscar grupo..."
+        filterId="nombre"
+        items={grupos}
         filters={filters}
         onFilterChange={handleFiltersChange}
-        options={[
-          { label: "Todos", value: "" },
-          { label: "Pendiente", value: "pendiente" },
-          { label: "En progreso", value: "progreso" },
-          { label: "Completada", value: "completada" },
-          { label: "Cancelada", value: "cancelada" },
-        ]}
       />
-      <DropdownFilter
-        label="Filtrar por Estado Práctica"
-        filterId="estado_practica"
+      <ComboboxFilter
+        label="Filtrar por Semestre"
+        placeholder="Buscar semestre..."
+        filterId="semestre"
+        items={semestre}
         filters={filters}
         onFilterChange={handleFiltersChange}
-        options={[
-          { label: "Todos", value: "" },
-          { label: "Pendiente", value: "pendiente" },
-          { label: "En progreso", value: "progreso" },
-          { label: "Completada", value: "completada" },
-          { label: "Cancelada", value: "cancelada" },
-        ]}
       />
     </div>
   );
