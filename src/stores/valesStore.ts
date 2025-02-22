@@ -36,7 +36,6 @@ export const useStatusStore = create<StatusStore>((set) => ({
       return { statusChanges: [...filteredChanges, change] };
     }),
 
-  // Agregar un cambio de comentario
   addCommentChange: (change) =>
     set((state) => {
       // Filtrar cambios existentes para el mismo ID

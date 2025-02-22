@@ -5,7 +5,15 @@ import { useQuery } from '@tanstack/react-query';
 
 export const useAlumnoVales = (estado: EstadoVale) => {
   return useQuery<Vale[], Error>({
-    queryKey: ["vales", estado],
+    queryKey: ["valesAlumnos", estado],
     queryFn: () => fetchAlumnoVales(estado),
   });
 };
+
+// export const useValeDetails = (valeId: string | null) => {
+//   return useQuery<ValeDetail, Error>({
+//     queryKey: ["valeAlumnoDetails", valeId],
+//     queryFn: () => fetchValeDetails(valeId!), // Asegúrate de que valeId no sea null antes de llamar a la función
+//     enabled: !!valeId, // Habilita la consulta solo si valeId no es null
+//   });
+// };
