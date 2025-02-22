@@ -12,7 +12,6 @@ export interface Vale {
 
 export type EstadoVale = "pendiente" | "progreso" | "completada" | "cancelada" | "incompleto";
 
-// Tipo para el cambio de estado
 export interface StatusChange {
   id_vale: number;
   oldStatus: EstadoVale;
@@ -20,10 +19,36 @@ export interface StatusChange {
   tableType: "ValeAlumno" | "ValeProfesor";
 }
 
-// Tipo para el cambio de comentario
 export interface CommentChange {
   id_vale: number; 
   oldObservation: string; 
   newObservation: string; 
   tableType: "ValeAlumno" | "ValeProfesor";
+}
+
+export interface ValeAlumnoDetails {
+  id_vale: number
+  nombre_alumno: string
+  email_alumno: string
+  estado_vale: string
+  observaciones_vale: string
+  fecha_solicitadaVale: string
+  fecha_asignadaPA: string
+  fecha_entregaPA: string
+  practica: ValeAlumnoDetailsPractica
+}
+
+export interface ValeAlumnoDetailsPractica {
+  id_practica: number
+  nombre_practica: string
+  nombre_profesor: string
+  materiales: ValeAlumnoDetailsMateriale[]
+}
+
+export interface ValeAlumnoDetailsMateriale {
+  cantidad_material: string
+  nombre_item: string
+  tipo_item: string
+  cantidad_disponible: string
+  observacion_item: string
 }

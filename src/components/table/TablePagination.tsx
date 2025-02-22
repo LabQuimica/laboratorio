@@ -98,7 +98,7 @@ const TablePagination = <TData,>({ table }: TablePaginationProps<TData>) => {
           ${
             typeof page === "number"
               ? table.getState().pagination.pageIndex === page - 1
-                ? "bg-blue-600 text-white"
+                ? "bg-black text-white dark:bg-white dark:text-black"
                 : "hover:bg-gray-100 hover:text-black dark:hover:bg-gray-800 dark:hover:text-white"
               : "pointer-events-none"
           }
@@ -113,7 +113,7 @@ const TablePagination = <TData,>({ table }: TablePaginationProps<TData>) => {
         <button
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-white disabled:opacity-50 disabled:pointer-events-none group"
+          className="p-2 rounded-md  hover:bg-gray-950 dark:hover:bg-white disabled:opacity-50 disabled:pointer-events-none group"
         >
           <IconChevronRight className="h-4 w-4 text-gray-400 group-hover:text-black dark:text-gray-400 dark:group-hover:text-black" />
         </button>

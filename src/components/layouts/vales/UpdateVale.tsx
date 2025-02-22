@@ -68,8 +68,9 @@ export function UpdateVale() {
     <Sheet>
       <SheetTrigger asChild>
         <Button
-          className="bg-destructive dark:bg-destructive dark:text-white"
+          variant={"destructive"}
           disabled={!hasChanges}
+          className="font-bold"
         >
           <IconFlask2Filled className="mr-2" />
           Actualizar Registros
