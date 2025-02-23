@@ -2,10 +2,13 @@
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { UpdateVale } from "./UpdateVale";
+import { useContext } from "react";
+import { UserContext } from "@/context/UserContext";
 
 function ValeNavigation() {
   const router = useRouter();
   const pathname = usePathname();
+  const { user } = useContext(UserContext);
 
   return (
     <>
@@ -25,9 +28,13 @@ function ValeNavigation() {
             Alumno
           </Button>
         </div>
-        <div className="pr-4">
-          <UpdateVale />
-        </div>
+        {user?.rol === "profesor" ? (
+          <></>
+        ) : (
+          <div className="pr-4">
+            <UpdateVale />
+          </div>
+        )}
       </header>
     </>
   );
