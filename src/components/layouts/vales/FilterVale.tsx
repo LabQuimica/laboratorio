@@ -1,5 +1,5 @@
 import { semestre } from "@/constants/semestr";
-import ComboboxFilter from "./ComboboxFilter";
+import ComboboxFilter from "../../table/ComboboxFilter";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { useState } from "react";
 import { grupos } from "@/constants/grupos";
@@ -19,8 +19,8 @@ export const EstadoValeFilter = ({ onFilterChange }: EstadoValeFilterProps) => {
   return (
     <div className="flex space-x-4">
       <ComboboxFilter
-        label="Filtrar por Grupo"
-        placeholder="Buscar grupo..."
+        label="Filtrar por Materia"
+        placeholder="Buscar materia..."
         filterId="nombre"
         items={grupos}
         filters={filters}
