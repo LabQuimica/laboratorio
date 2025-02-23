@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -30,17 +29,17 @@ interface Vale {
   id_vale: number;
   estado_vale: EstadoVale;
 }
+
 interface StatusValeProps {
   row: Row<Vale>;
   tableType: "ValeAlumno" | "ValeProfesor";
 }
 
-const StatusVale = ({ row, tableType }: StatusValeProps) => {
+const StatusAlumnoAdministrador = ({ row, tableType }: StatusValeProps) => {
   const addChange = useStatusStore((state) => state.addStatusChange);
   const changes = useStatusStore((state) => state.statusChanges);
   const id_vale = Number(row.getValue("id_vale"));
   const storedChange = changes.find((c) => c.id_vale === id_vale);
-
   const currentStatus: EstadoVale = storedChange
     ? storedChange.newStatus
     : row.getValue("estado_vale");
@@ -78,4 +77,4 @@ const StatusVale = ({ row, tableType }: StatusValeProps) => {
   );
 };
 
-export default StatusVale;
+export default StatusAlumnoAdministrador;

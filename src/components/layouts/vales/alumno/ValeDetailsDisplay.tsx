@@ -15,6 +15,9 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 const statusStyles = {
   pendiente: "bg-amber-300 text-amber-950",
   progreso: "bg-sky-300 text-sky-950",
@@ -37,7 +40,6 @@ export default function ValeDetailsDisplay({
   if (isLoading) {
     return <p className="text-center">Cargando...</p>;
   }
-
   if (isError) {
     return (
       <p className="text-center text-red-500">
@@ -45,7 +47,6 @@ export default function ValeDetailsDisplay({
       </p>
     );
   }
-
   if (!data) {
     return (
       <p className="text-center text-gray-500">
@@ -61,70 +62,113 @@ export default function ValeDetailsDisplay({
   };
 
   return (
-    <div className="space-y-4">
-      {/* Detalles Generales */}
-      <Card>
+    <div className="space-y-6 pt-2">
+      {/* Información Principal */}
+      <Card className="bg-neutral-900 ">
         <CardHeader>
-          <CardTitle>ID del Vale: {data.id_vale}</CardTitle>
-          <CardDescription>
-            {data.nombre_alumno} ({data.email_alumno})
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <p>
-            <strong>Estado:</strong>{" "}
-            <span
-              className={`inline-block px-2 py-1 rounded ${getStatusStyle(
-                data.estado_vale
-              )}`}
-            >
+          <div className="flex items-center justify-between">
+            <CardTitle>Vale #{data.id_vale}</CardTitle>
+            <Badge className={`${getStatusStyle(data.estado_vale)}`}>
               {data.estado_vale}
-            </span>
-          </p>
-          <p>
-            <strong>Observaciones:</strong>{" "}
-            {data.observaciones_vale || "Ninguna"}
-          </p>
+            </Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h3 className="font-medium text-sm text-gray-500">Alumno</h3>
+              <p className="text-lg">{data.nombre_alumno}</p>
+              <p className="text-sm text-gray-600">{data.email_alumno}</p>
+            </div>
+            <div>
+              <h3 className="font-medium text-sm text-gray-500 mb-1">
+                Observaciones
+              </h3>
+              <p className="text-sm p-3 rounded-md">
+                {data.observaciones_vale}
+              </p>
+            </div>
+          </div>
           <div>
-            <strong>Fechas:</strong>
-            <ul className="list-disc pl-5">
-              <li>Solicitada: {data.fecha_solicitadaVale}</li>
-              <li>Asignada: {data.fecha_asignadaPA}</li>
-              <li>Entrega: {data.fecha_entregaPA}</li>
-            </ul>
+            <h3 className="font-medium text-sm text-gray-500 pb-2">Fechas</h3>
+            <div className="space-y-2 pl-2 text-sm">
+              <p>
+                <span className="text-gray-600">Solicitada:</span>
+                {data.fecha_solicitadaVale}
+              </p>
+              <p>
+                <span className="text-gray-600">Asignada:</span>
+                {data.fecha_asignadaPA}
+              </p>
+              <p>
+                <span className="text-gray-600">Entrega:</span>
+                {data.fecha_entregaPA}
+              </p>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Materiales */}
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="materiales">
-          <AccordionTrigger>Materiales Solicitados</AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-2">
-              {data.practica.materiales.map((material: any, index: number) => (
-                <Card key={index} className="p-4 border rounded-lg shadow-sm">
-                  <p>
-                    <strong>Material:</strong> {material.nombre_item} (
-                    {material.tipo_item})
-                  </p>
-                  <p>
-                    <strong>Cantidad Solicitada:</strong>{" "}
-                    {material.cantidad_material}
-                  </p>
-                  <p>
-                    <strong>Disponible:</strong> {material.cantidad_disponible}
-                  </p>
-                  <p>
-                    <strong>Observaciones:</strong>{" "}
-                    {material.observacion_item || "Ninguna"}
-                  </p>
-                </Card>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      {/* Detalles de la Práctica */}
+      <Card className="bg-neutral-900 ">
+        <CardHeader>
+          <CardTitle>Detalles de la Práctica</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <p className="text-lg font-medium">
+              #{data.practica.id_practica} {data.practica.nombre_practica}
+            </p>
+            <p className="text-sm text-gray-600">
+              Profesor: {data.practica.nombre_profesor}
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-medium mb-3">Materiales Requeridos</h3>
+            <ScrollArea className="h-[300px] pr-4">
+              <Accordion type="single" collapsible className="space-y-2">
+                {data.practica.materiales.map((material, index) => (
+                  <AccordionItem
+                    key={index}
+                    value={`item-${index}`}
+                    className="border rounded-lg px-4"
+                  >
+                    <AccordionTrigger className="py-2">
+                      <div className="flex items-center justify-between w-full pr-4">
+                        <span>{material.nombre_item}</span>
+                        <Badge variant="outline" className="ml-2">
+                          {material.cantidad_material}{" "}
+                          {material.tipo_item === "liquidos" ? "ml" : "g"}
+                        </Badge>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-3">
+                      <div className="space-y-2 text-sm">
+                        <p>
+                          <span className="text-gray-600">Tipo:</span>{" "}
+                          {material.tipo_item}
+                        </p>
+                        <p>
+                          <span className="text-gray-600">Disponible:</span>{" "}
+                          {material.cantidad_disponible}{" "}
+                          {material.tipo_item === "liquidos" ? "ml" : "g"}
+                        </p>
+                        {material.observacion_item && (
+                          <p>
+                            <span className="text-gray-600">Observación:</span>{" "}
+                            {material.observacion_item}
+                          </p>
+                        )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </ScrollArea>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

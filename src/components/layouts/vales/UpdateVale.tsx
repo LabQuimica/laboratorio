@@ -70,12 +70,12 @@ export function UpdateVale() {
         <Button
           variant={"destructive"}
           disabled={!hasChanges}
-          className="font-bold"
+          className="font-bold "
         >
           <IconFlask2Filled className="mr-2" />
           Actualizar Registros
           {hasChanges && (
-            <span className="ml-2 bg-white dark:bg-gray-800 text-destructive dark:text-white px-2 py-0.5 rounded-full text-xs">
+            <span className="ml-2 bg-white dark:bg-gray-800 text-destructive dark:text-white px-2 py-0.5 rounded-full text-xs ">
               {allChanges.length}
             </span>
           )}
@@ -94,7 +94,7 @@ export function UpdateVale() {
             allChanges.map((change, index) => (
               <div
                 key={`${change.id_vale}-${index}`}
-                className="mb-4 p-3 border rounded-lg bg-gray-50 dark:bg-gray-800"
+                className="mb-4 p-3 border rounded-lg "
               >
                 <div className="flex justify-between items-center content-center">
                   <span className="text-sm">Vale ID: {change.id_vale}</span>

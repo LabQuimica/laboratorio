@@ -2,9 +2,9 @@ import { SortableHeader } from "@/components/table/SortableHeader";
 import TruncatedCell from "@/components/table/TruncatedCell";
 import { Vale } from "@/types/ValeTypes";
 import { ColumnDef } from "@tanstack/react-table";
-import StatusCell from "../StatusVale";
 import ObservacionesVale from "../observacionesVale";
 import { ActionValeAlumno } from "./ActionsVale";
+import StatusValeAlumno from "./status/Status.vale.alumno";
 
 export const columsAlumnoVale: ColumnDef<Vale>[] = [
   {
@@ -37,7 +37,7 @@ export const columsAlumnoVale: ColumnDef<Vale>[] = [
     accessorKey: "estado_vale",
     header: "Estatus",
     size: 150,
-    cell: ({ row }) => <StatusCell row={row} tableType="ValeAlumno" />,
+    cell: ({ row }) => <StatusValeAlumno row={row} tableType="ValeAlumno" />,
   },
   {
     accessorKey: "observaciones_vale",
