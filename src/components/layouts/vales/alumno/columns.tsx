@@ -2,9 +2,9 @@ import { SortableHeader } from "@/components/table/SortableHeader";
 import TruncatedCell from "@/components/table/TruncatedCell";
 import { Vale } from "@/types/ValeTypes";
 import { ColumnDef } from "@tanstack/react-table";
-import ObservacionesVale from "../observacionesVale";
 import { ActionValeAlumno } from "./ActionsVale";
 import StatusValeAlumno from "./status/Status.vale.alumno";
+import ObservacionesVale from "./observaciones/Observaciones.vale.alumno";
 
 export const columsAlumnoVale: ColumnDef<Vale>[] = [
   {

@@ -5,7 +5,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
 import { Input } from "@/components/ui/input";
 import { Row } from "@tanstack/react-table";
 import {
@@ -26,44 +25,36 @@ interface ProjectActionsProps<TData> {
   tableType: "ValeAlumno" | "ValeProfesor";
 }
 
-function ObservacionesVale<TData>({
+function ObservacionesValeAdministrador<TData>({
   row,
   tableType,
 }: ProjectActionsProps<TData>) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const commentChanges = useStatusStore((state) => state.commentChanges);
   const addCommentChange = useStatusStore((state) => state.addCommentChange);
-
   const idVale = Number(row.getValue("id_vale"));
   const existingChange = commentChanges.find(
     (change) => change.id_vale === idVale
   );
   const originalComment =
     String(row.getValue("observaciones_vale")) || "Ningún comentario";
-
   const [editedComment, setEditedComment] = useState<string>(
     existingChange ? existingChange.newObservation : originalComment
   );
-
   const currentComment = existingChange
     ? existingChange.newObservation
     : originalComment;
 
   const handleSave = () => {
-    // Si el comentario está vacío, usar "Ningún comentario"
     const finalComment =
       editedComment.trim() === "" ? "Ningún comentario" : editedComment;
-
     setEditedComment(finalComment);
-
     const change: CommentChange = {
       id_vale: idVale,
       oldObservation: originalComment,
       newObservation: finalComment,
       tableType,
     };
-
     addCommentChange(change);
     setIsDialogOpen(false);
   };
@@ -80,7 +71,6 @@ function ObservacionesVale<TData>({
           <p>{currentComment}</p>
         </TooltipContent>
       </Tooltip>
-
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -110,4 +100,5 @@ function ObservacionesVale<TData>({
     </TooltipProvider>
   );
 }
-export default ObservacionesVale;
+
+export default ObservacionesValeAdministrador;

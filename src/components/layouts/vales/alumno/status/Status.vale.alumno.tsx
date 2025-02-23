@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 import { EstadoVale } from "@/types/ValeTypes";
 import { Row } from "@tanstack/react-table";
-import StatusAlumnoProfesor from "./Profesor.vale.alumno";
-import StatusAlumnoAdministrador from "./Administrador.vale.alumno";
+import StatusAlumnoProfesor from "./ProfesorStatus.vale.alumno";
+import StatusAlumnoAdministrador from "./AdministradorStatus.vale.alumno";
 
 interface Vale {
   id_vale: number;
