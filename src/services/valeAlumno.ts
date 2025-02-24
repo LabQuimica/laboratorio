@@ -1,4 +1,4 @@
-import { Vale, ValeAlumnoDetails } from "@/types/ValeTypes";
+import { Vale, ValeAlumnoDetails, ValeProfesor } from "@/types/ValeTypes";
 
 const URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -19,3 +19,12 @@ export const fetchAlumnoValesDetails = async (id: number): Promise<ValeAlumnoDet
 
   return response.json();
 };
+export const fetchProfesorVales = async (estado: string): Promise<ValeProfesor[]> => {
+  const response = await fetch(`http://${URL}/vales/getProfesorValeStatus?estado=${estado}`);
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  return response.json();
+};
+

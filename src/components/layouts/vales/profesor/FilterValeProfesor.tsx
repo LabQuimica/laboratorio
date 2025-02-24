@@ -1,5 +1,5 @@
 import { semestre } from "@/constants/semestr";
-import ComboboxFilter from "../../table/ComboboxFilter";
+import ComboboxFilter from "../../../table/ComboboxFilter";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { useState } from "react";
 import { grupos } from "@/constants/grupos";
@@ -8,7 +8,9 @@ interface EstadoValeFilterProps {
   onFilterChange: (filters: ColumnFiltersState) => void;
 }
 
-export const EstadoValeFilter = ({ onFilterChange }: EstadoValeFilterProps) => {
+export const FilterProfesorVale = ({
+  onFilterChange,
+}: EstadoValeFilterProps) => {
   const [filters, setFilters] = useState<ColumnFiltersState>([]);
 
   const handleFiltersChange = (updatedFilters: ColumnFiltersState) => {
@@ -21,7 +23,7 @@ export const EstadoValeFilter = ({ onFilterChange }: EstadoValeFilterProps) => {
       <ComboboxFilter
         label="Filtrar por Materia"
         placeholder="Buscar materia..."
-        filterId="nombre"
+        filterId="nombre_materia"
         items={grupos}
         filters={filters}
         onFilterChange={handleFiltersChange}

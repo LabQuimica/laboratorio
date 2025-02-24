@@ -8,7 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useValeDetails } from "@/hooks/Vales/useAlumnoVales";
+import { useValeDetails } from "@/hooks/Vales/useVales";
 import { useState } from "react";
 import ValeDetailsDisplay from "./ValeDetailsDisplay";
 import { Button } from "@/components/ui/button";

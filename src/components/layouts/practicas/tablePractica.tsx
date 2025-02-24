@@ -5,14 +5,13 @@ import { docentecolumns, asignadascolumns } from "./columns";
 import DocenteSelector from "./docenteSelector";
 import { Table } from "@/components/table/Table";
 import { Practica } from "@/types/PracticaTypes";
-import { EstadoValeFilter } from "../vales/FilterVale";
+import { EstadoValeFilter } from "../vales/alumno/FilterVale";
 
 interface PracticasTableProps {
   viewType: "creadas" | "asignadas";
 }
 
 export const PracticasTable = ({ viewType }: PracticasTableProps) => {
-
   const { data: practicas, isLoading, isError } = usePracticas(viewType);
   //const { practicasData } = usePracticas();
 
@@ -20,7 +19,6 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
 
   return (
     <div>
-
       {/* Tabla */}
       <Table<Practica>
         data={practicas || []}

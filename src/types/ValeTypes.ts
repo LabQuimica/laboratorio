@@ -1,16 +1,17 @@
+export type EstadoVale = "pendiente" | "progreso" | "completada" | "cancelada" | "incompleto";
+
 export interface Vale {
   id_vale: number;
   alumno: string;
   nombre: string;
   semestre: string;
-  estado_vale: "pendiente" | "progreso" | "completada" | "cancelada" | "incompleto";
+  estado_vale: EstadoVale;
   observaciones_vale: string;
   fecha_solicitada: string;
   profesor: string;
   nombre_practica: string;
 }
 
-export type EstadoVale = "pendiente" | "progreso" | "completada" | "cancelada" | "incompleto";
 
 export interface StatusChange {
   id_vale: number;
@@ -52,3 +53,17 @@ export interface ValeAlumnoDetailsMateriale {
   cantidad_disponible: string
   observacion_item: string
 }
+// Profesor
+export type EstadoValeProfesor = "pendiente" | "progreso" | "completada" | "cancelada" ;
+
+export interface ValeProfesor {
+  id_pa: number
+  nombre_profesor: string
+  nombre_materia: string
+  semestre: string
+  fecha_asignada: string
+  fecha_entrega: string
+  nombre_practica: string
+  status_practica: EstadoValeProfesor
+}
+

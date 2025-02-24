@@ -1,7 +1,7 @@
 "use client";
-import { useAlumnoVales } from "@/hooks/Vales/useAlumnoVales";
+import { useAlumnoVales } from "@/hooks/Vales/useVales";
 import { Table } from "@/components/table/Table";
-import { EstadoValeFilter } from "@/components/layouts/vales/FilterVale";
+import { EstadoValeFilter } from "@/components/layouts/vales/alumno/FilterVale";
 import { EstadoVale, Vale } from "@/types/ValeTypes";
 import { columsAlumnoVale } from "./columns";
 
