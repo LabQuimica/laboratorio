@@ -3,6 +3,7 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -20,7 +21,6 @@ export function ActionValeAlumno({ id_vale }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const { data, isLoading, isError } = useValeDetails(id_vale, isOpen);
-
   return (
     <div>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -31,22 +31,24 @@ export function ActionValeAlumno({ id_vale }: Props) {
             </Button>
           </div>
         </SheetTrigger>
-        <SheetContent className="w-[30rem]">
+        <SheetContent className="w-[30rem] flex flex-col">
           <SheetHeader>
             <SheetTitle>Detalles del Vale</SheetTitle>
-            <SheetDescription>
-              Información detallada del vale seleccionado.
-            </SheetDescription>
           </SheetHeader>
-          {data ? (
-            <ValeDetailsDisplay
-              data={data}
-              isLoading={isLoading}
-              isError={isError}
-            />
-          ) : (
-            <p>No se encontraron detalles para este vale.</p>
-          )}
+          <div className="flex-1 overflow-y-auto">
+            {data ? (
+              <ValeDetailsDisplay
+                data={data}
+                isLoading={isLoading}
+                isError={isError}
+              />
+            ) : (
+              <p>No se encontraron detalles para este vale.</p>
+            )}
+          </div>
+          <SheetFooter>
+            <Button>Descargar</Button>
+          </SheetFooter>
         </SheetContent>
       </Sheet>
     </div>

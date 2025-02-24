@@ -63,7 +63,6 @@ export default function ValeDetailsDisplay({
 
   return (
     <div className="space-y-6 pt-2">
-      {/* Información Principal */}
       <Card className="bg-neutral-900 ">
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -96,10 +95,10 @@ export default function ValeDetailsDisplay({
                 <span className="text-gray-600">Solicitada:</span>
                 {data.fecha_solicitadaVale}
               </p>
-              <p>
+              {/* <p>
                 <span className="text-gray-600">Asignada:</span>
                 {data.fecha_asignadaPA}
-              </p>
+              </p> */}
               <p>
                 <span className="text-gray-600">Entrega:</span>
                 {data.fecha_entregaPA}
@@ -109,18 +108,18 @@ export default function ValeDetailsDisplay({
         </CardContent>
       </Card>
 
-      {/* Detalles de la Práctica */}
       <Card className="bg-neutral-900 ">
         <CardHeader>
           <CardTitle>Detalles de la Práctica</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <p className="text-lg font-medium">
-              #{data.practica.id_practica} {data.practica.nombre_practica}
+            <p className="font-medium">
+              {data.practica.nombre_practica} #{data.practica.id_practica}
             </p>
-            <p className="text-sm text-gray-600">
-              Profesor: {data.practica.nombre_profesor}
+            <p>
+              <span className="text-gray-600">Profesor: </span>
+              {data.practica.nombre_profesor}
             </p>
           </div>
 
@@ -137,9 +136,13 @@ export default function ValeDetailsDisplay({
                     <AccordionTrigger className="py-2">
                       <div className="flex items-center justify-between w-full pr-4">
                         <span>{material.nombre_item}</span>
-                        <Badge variant="outline" className="ml-2">
+                        <Badge className="ml-2">
                           {material.cantidad_material}{" "}
-                          {material.tipo_item === "liquidos" ? "ml" : "g"}
+                          {material.tipo_item === "solidos"
+                            ? "gr"
+                            : material.tipo_item === "liquidos"
+                            ? "ml"
+                            : ""}
                         </Badge>
                       </div>
                     </AccordionTrigger>
