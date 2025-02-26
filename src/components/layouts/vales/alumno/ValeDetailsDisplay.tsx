@@ -123,7 +123,7 @@ export default function ValeDetailsDisplay({
 
           <div>
             <h3 className="font-medium mb-3">Materiales Requeridos</h3>
-            <ScrollArea className="h-[300px] pr-4">
+            <ScrollArea className="h-full pr-4">
               <Accordion type="single" collapsible className="space-y-2">
                 {data.practica.materiales.map((material, index) => (
                   <AccordionItem
