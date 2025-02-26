@@ -14,7 +14,7 @@ const ItemsAlertList: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:1234/alerts/getItemsAlert`) // Cambia la URL a la de tu API
+    fetch(`http://localhost:1234/alerts/getItemsAlert`)
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
