@@ -9,28 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-
-// Tipos para los datos de la práctica asignada
-interface ItemPractica {
-  id_item: number;
-  nombre_item: string;
-  tipo_item: string;
-  cantidad_disponible: string;
-  ubicacion: string;
-  cantidad_unitaria: string;
-  contable: number;
-  cantidad_total_necesaria: string;
-}
-
-interface PracticaAsignadaDetails {
-  id_practica_asignada: number;
-  status_practica: string;
-  fecha_asignada: string;
-  fecha_entrega: string;
-  nombre_grupo: string;
-  semestre_grupo: string;
-  items: ItemPractica[];
-}
+import { ValeProfesorDetails } from "@/types/ValeTypes";
 
 const statusStyles = {
   pendiente: "bg-amber-300 text-amber-950",
@@ -41,7 +20,7 @@ const statusStyles = {
 } as const;
 
 interface PracticaAsignadaDisplayProps {
-  data: PracticaAsignadaDetails;
+  data: ValeProfesorDetails;
   isLoading: boolean;
   isError: boolean;
 }
@@ -75,7 +54,6 @@ export default function PracticaAsignadaDetails({
     );
   };
 
-  // Función para determinar el tipo de unidad según el tipo de ítem
   const getUnidad = (tipoItem: string) => {
     switch (tipoItem.toLowerCase()) {
       case "solidos":
@@ -94,7 +72,11 @@ export default function PracticaAsignadaDetails({
       <Card className="dark:bg-neutral-900">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Práctica #{data.id_practica_asignada}</CardTitle>
+            <div className="flex items-center space-x-2">
+              <CardTitle>
+                {data.nombre_practica} (#{data.id_practica})
+              </CardTitle>
+            </div>
             <Badge className={`${getStatusStyle(data.status_practica)}`}>
               {data.status_practica}
             </Badge>
@@ -103,12 +85,28 @@ export default function PracticaAsignadaDetails({
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h3 className="font-medium text-sm text-gray-500">Grupo</h3>
-              <p className="text-lg">{data.nombre_grupo}</p>
-              <p className="text-sm">{data.semestre_grupo}</p>
+              <h3 className=" text-sm text-gray-500">Grupo</h3>
+              <p className="">{data.nombre_grupo}</p>
+              <p className="">{data.semestre_grupo}</p>
+            </div>
+            <div>
+              <h3 className=" text-sm text-gray-500">Asignación</h3>
+              <p className="">#{data.id_practica_asignada}</p>
             </div>
           </div>
+
           <Separator />
+
+          <div className="flex items-center space-x-4">
+            <div>
+              <h3 className="font-medium text-sm text-gray-500">Profesor</h3>
+              <p className="">{data.nombre_usuario}</p>
+              <p className="">{data.email}</p>
+            </div>
+          </div>
+
+          <Separator />
+
           <div>
             <h3 className="font-medium text-sm text-gray-500 pb-2">Fechas</h3>
             <div className="space-y-2 pl-2 text-sm">
@@ -128,6 +126,9 @@ export default function PracticaAsignadaDetails({
       <Card className="dark:bg-neutral-900">
         <CardHeader>
           <CardTitle>Materiales Requeridos</CardTitle>
+          <p className=" text-gray-500">
+            {data.items.length} materiales en total
+          </p>
         </CardHeader>
         <CardContent>
           <ScrollArea className="h-full pr-4">
@@ -163,7 +164,7 @@ export default function PracticaAsignadaDetails({
                       </p>
                       <p>
                         <span className="text-gray-600">
-                          Cantidad unitaria:
+                          Cantidad solicitada:
                         </span>{" "}
                         {item.cantidad_unitaria} {getUnidad(item.tipo_item)}
                       </p>

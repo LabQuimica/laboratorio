@@ -108,7 +108,10 @@ export default function ValeDetailsDisplay({
 
       <Card className="dark:bg-neutral-900 ">
         <CardHeader>
-          <CardTitle>Detalles de la Práctica</CardTitle>
+          <CardTitle>Materiales Requeridos</CardTitle>
+          <p className=" text-gray-500">
+            {data.practica.materiales.length} materiales en total
+          </p>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">

@@ -67,8 +67,11 @@ export interface ValeProfesor {
   status_practica: EstadoValeProfesor
 }
 
-
 export interface ValeProfesorDetails {
+  nombre_usuario: string
+  email: string
+  nombre_practica: string
+  id_practica: number
   id_practica_asignada: number
   status_practica: string
   fecha_asignada: string
