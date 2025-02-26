@@ -1,14 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
-import { fetchDriveFiles } from "./fetchManuales";
-import DriveFile from "./showFile";
+import { fetchManualFile } from "./fetchManuales";
+import ManualFile from "./showFile"; 
 
-const DriveFileList = () => {
+const ManualFileList = () => {
   const [files, setFiles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchDriveFiles().then((files) => {
+    fetchManualFile().then((files) => {
       setFiles(files);
       setLoading(false);
     });
@@ -16,20 +16,19 @@ const DriveFileList = () => {
 
   return (
     <div>
-      <h2>Archivos en Google Drive</h2>
       {loading ? (
         <p>Cargando archivos...</p>
       ) : files.length === 0 ? (
         <p>No hay archivos disponibles.</p>
       ) : (
-        <ul>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {files.map((file) => (
-            <DriveFile key={file.id} file={file} />
+            <ManualFile key={file.id} file={file} />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
 };
 
-export default DriveFileList;
+export default ManualFileList;

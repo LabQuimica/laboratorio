@@ -1,10 +1,10 @@
-export const fetchDriveFiles = async () => {
+export const fetchManualFile = async () => {
     try {
-      const response = await fetch("http://localhost:1234/api/drive-files"); // Ahora llama a tu backend
+      const response = await fetch("http://localhost:1234/api/drive-files"); 
       const data = await response.json();
       return data || [];
     } catch (error) {
-      console.error("Error al obtener archivos desde el backend:", error);
+      console.error("Error al obtener archivos desde el servidor:", error);
       return [];
     }
   };

@@ -1,9 +1,9 @@
-import DriveFileList from "@/components/layouts/manuales/list";
+import ManualPage from "@/components/layouts/manuales/manual"; 
 
 export default function Home() {
   return (
     <main>
-      <DriveFileList />
+      <ManualPage />
     </main>
   );
 }
