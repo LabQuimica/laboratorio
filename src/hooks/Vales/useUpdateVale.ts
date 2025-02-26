@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { StatusChange,CommentChange } from '@/types/ValeTypes';
+import { updateVales } from '@/services/valeAlumno';
 
 const URL = process.env.NEXT_PUBLIC_API_URL;
 
-interface CombinedChange {
+export interface CombinedChange {
   id_vale: number;
   newStatus?: string;
   newObservation?: string;
@@ -32,22 +33,7 @@ function  compactChanges(statusChanges: StatusChange[], commentChanges: CommentC
 }
 
 
-const updateVales = async (changes: CombinedChange[]): Promise<void> => {
-  console.log('changes', changes);
 
-  const response = await fetch(`http://${URL}/vales/updateVales`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(changes),
-  });
-
-  if (!response.ok) {
-    throw new Error('Error actualizando los vales');
-  }
-  return response.json();
-};
 
 export const useUpdateVales = () => {
   const queryClient = useQueryClient();
