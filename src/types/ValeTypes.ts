@@ -67,3 +67,24 @@ export interface ValeProfesor {
   status_practica: EstadoValeProfesor
 }
 
+
+export interface ValeProfesorDetails {
+  id_practica_asignada: number
+  status_practica: string
+  fecha_asignada: string
+  fecha_entrega: string
+  nombre_grupo: string
+  semestre_grupo: string
+  items: ItemProfesor[]
+}
+
+export interface ItemProfesor {
+  id_item: number
+  nombre_item: string
+  tipo_item: string
+  cantidad_disponible: string
+  ubicacion: string
+  cantidad_unitaria: string
+  contable: number
+  cantidad_total_necesaria: string
+}

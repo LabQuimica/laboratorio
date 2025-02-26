@@ -2,7 +2,7 @@ import { SortableHeader } from "@/components/table/SortableHeader";
 import TruncatedCell from "@/components/table/TruncatedCell";
 import { ValeProfesor } from "@/types/ValeTypes";
 import { ColumnDef } from "@tanstack/react-table";
-import { ActionValeAlumno } from "../alumno/ActionsVale";
+import { ActionValeProfesor } from "./ActionsValeProfesor";
 
 export const columsProfesorVale: ColumnDef<ValeProfesor>[] = [
   {
@@ -74,6 +74,8 @@ export const columsProfesorVale: ColumnDef<ValeProfesor>[] = [
     accessorKey: "actions",
     header: "Acciones",
     size: 10,
-    cell: ({ row }) => <ActionValeAlumno id_vale={row.getValue("id_pa")} />,
+    cell: ({ row }) => (
+      <ActionValeProfesor id_practica_asignada={row.getValue("id_pa")} />
+    ),
   },
 ];

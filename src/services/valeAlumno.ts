@@ -1,5 +1,5 @@
 import { CombinedChange } from "@/hooks/Vales/useUpdateVale";
-import { Vale, ValeAlumnoDetails, ValeProfesor } from "@/types/ValeTypes";
+import { Vale, ValeAlumnoDetails, ValeProfesor, ValeProfesorDetails } from "@/types/ValeTypes";
 
 const URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -41,5 +41,14 @@ export const updateVales = async (changes: CombinedChange[]): Promise<void> => {
   if (!response.ok) {
     throw new Error('Error actualizando los vales');
   }
+  return response.json();
+};
+
+export const fetchProfesorValesDetails = async (id_practica_asignada: number): Promise<ValeProfesorDetails> => {
+  const response = await fetch(`http://${URL}/vales/getValeProfesorDetails?id_practica_asignada=${id_practica_asignada}`);
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
   return response.json();
 };

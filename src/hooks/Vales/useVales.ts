@@ -1,6 +1,6 @@
 "use client"
-import { fetchAlumnoVales,fetchAlumnoValesDetails, fetchProfesorVales } from '@/services/valeAlumno';
-import { EstadoVale, EstadoValeProfesor, Vale, ValeAlumnoDetails, ValeProfesor } from '@/types/ValeTypes';
+import { fetchAlumnoVales,fetchAlumnoValesDetails, fetchProfesorVales, fetchProfesorValesDetails } from '@/services/valeAlumno';
+import { EstadoVale, EstadoValeProfesor, Vale, ValeAlumnoDetails, ValeProfesor, ValeProfesorDetails } from '@/types/ValeTypes';
 import { useQuery } from '@tanstack/react-query';
 
 export const useAlumnoVales = (estado: EstadoVale) => {
@@ -22,5 +22,13 @@ export const useProfesorVales = (estado: EstadoValeProfesor) => {
   return useQuery<ValeProfesor[], Error>({
     queryKey: ["valesProfesor", estado],
     queryFn: () => fetchProfesorVales(estado),
+  });
+};
+
+export const useValeDetailsProfesor = (id_practica_asignada: number, enabled = false) => {
+  return useQuery<ValeProfesorDetails, Error>({
+    queryKey: ["valeProfesorDetails", id_practica_asignada],
+    queryFn: () => fetchProfesorValesDetails(id_practica_asignada),
+    enabled: enabled && id_practica_asignada !== null, 
   });
 };
