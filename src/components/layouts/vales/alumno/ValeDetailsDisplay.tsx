@@ -63,7 +63,7 @@ export default function ValeDetailsDisplay({
 
   return (
     <div className="space-y-6 pt-2">
-      <Card className="bg-neutral-900 ">
+      <Card className="dark:bg-neutral-900 ">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Vale #{data.id_vale}</CardTitle>
@@ -77,22 +77,20 @@ export default function ValeDetailsDisplay({
             <div>
               <h3 className="font-medium text-sm text-gray-500">Alumno</h3>
               <p className="text-lg">{data.nombre_alumno}</p>
-              <p className="text-sm text-gray-600">{data.email_alumno}</p>
+              <p className="text-sm ">{data.email_alumno}</p>
             </div>
             <div>
               <h3 className="font-medium text-sm text-gray-500 mb-1">
                 Observaciones
               </h3>
-              <p className="text-sm p-3 rounded-md">
-                {data.observaciones_vale}
-              </p>
+              <p className="text-sm rounded-md">{data.observaciones_vale}</p>
             </div>
           </div>
           <div>
             <h3 className="font-medium text-sm text-gray-500 pb-2">Fechas</h3>
             <div className="space-y-2 pl-2 text-sm">
               <p>
-                <span className="text-gray-600">Solicitada:</span>
+                <span className="text-gray-500">Solicitada:</span>
                 {data.fecha_solicitadaVale}
               </p>
               {/* <p>
@@ -100,7 +98,7 @@ export default function ValeDetailsDisplay({
                 {data.fecha_asignadaPA}
               </p> */}
               <p>
-                <span className="text-gray-600">Entrega:</span>
+                <span className="text-gray-500">Entrega:</span>
                 {data.fecha_entregaPA}
               </p>
             </div>
@@ -108,7 +106,7 @@ export default function ValeDetailsDisplay({
         </CardContent>
       </Card>
 
-      <Card className="bg-neutral-900 ">
+      <Card className="dark:bg-neutral-900 ">
         <CardHeader>
           <CardTitle>Detalles de la Práctica</CardTitle>
         </CardHeader>
