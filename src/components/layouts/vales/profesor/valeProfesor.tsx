@@ -4,7 +4,6 @@ import {
   IconSwitch2,
   IconCircleDashedCheck,
   IconSkull,
-  IconCircleDashedX,
 } from "@tabler/icons-react";
 import { useState } from "react";
 import Tabs from "@/components/tabs/Tabs";

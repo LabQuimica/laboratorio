@@ -16,8 +16,8 @@ import {
 } from "@tabler/icons-react";
 import { useStatusStore } from "@/stores/valesStore";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useUpdateVales } from "@/hooks/Vales/useUpdateVale";
 import { useToast } from "@/hooks/use-toast";
+import { useUpdateVales } from "@/hooks/Vales/useUpdateVale";
 
 const statusStyles = {
   pendiente: "bg-amber-300 text-amber-950",
@@ -45,7 +45,7 @@ export function UpdateVale() {
 
   const handleUpdate = async () => {
     try {
-      // await updateMutation.mutateAsync({ statusChanges, commentChanges });
+      await updateMutation.mutateAsync({ statusChanges, commentChanges });
       toast({
         title: "Actualización exitosa",
         description:
