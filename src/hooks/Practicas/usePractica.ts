@@ -2,39 +2,48 @@
 import { Practica } from "@/types/PracticaTypes";
 import { Docente } from "@/types/DocenteTypes";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchPracticas, fetchDocentes, createPractica, deletePractica } from "@/services/practicasService";
+import { fetchPracticas, fetchDocentes, createPractica, deletePractica, asignarPractica } from "@/services/Practicas/practicasService";
 
-export const usePracticas = (tipo: "creadas" | "asignadas") => {
-    const queryClient = useQueryClient();
-
-    const practicasData = useQuery<Practica[], Error>({
+export const usePracticas = (tipo: "creadas" | "asignadas" | "archivadas") => {
+    return useQuery<Practica[], Error>({
         queryKey: ["practicas", tipo],
         queryFn: () => fetchPracticas(tipo),
     });
+}
 
-    const docentesData = useQuery<Docente[], Error>({
+export const useDocentes =  () => {
+    return useQuery<Docente[], Error>({
         queryKey: ["docentes"],
         queryFn: fetchDocentes,
     });
+};
 
-    const createPracticaMutation = useMutation({
+export const useCreatePractica = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
         mutationFn: createPractica,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
         },
     });
+};
 
-    const deletePracticaMutation = useMutation({
-        mutationFn: deletePractica,
+export const useDeletePractica = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({ idPractica, profesorId }: { idPractica: number; profesorId: number }) => deletePractica({ idPractica, profesorId }),
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
         },
     });
+};
 
-    return {
-        practicasData, 
-        docentesData, 
-        createPractica: createPracticaMutation.mutateAsync, 
-        deletePractica: deletePracticaMutation.mutateAsync
-    };
-}
+export const useAsignarPractica = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: asignarPractica,
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["practicas"] });
+        },
+    });
+};

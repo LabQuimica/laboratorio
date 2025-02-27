@@ -4,7 +4,7 @@ import { Docente } from "@/types/DocenteTypes";
 
 const URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchPracticas = async (tipo: "creadas" | "asignadas") => {
+export const fetchPracticas = async (tipo: "creadas" | "asignadas" | "archivadas") => {
     const endpoint = tipo === "creadas"
     ? `http://${URL}/practicas/getPracticasCreadas`
     : `http://${URL}/practicas/getPracticasAsignadas`;
@@ -24,7 +24,7 @@ export const fetchDocentes = async (): Promise<Docente[]> => {
   return response.json();
 };
 
-export const createPractica = async (newPractica: { nombre: string; descripcion: string; num_equipos: number, creadorId: number }) => {
+export const createPractica = async (newPractica: { nombre: string; descripcion: string; num_equipos: number; creadorId: number; materiales: { itemId: number; cantidad: number }[] }) => {
     const response = await fetch(`http://${URL}/practicas/crearPractica`, {
       method: "POST",
       headers: {
@@ -55,4 +55,20 @@ export const deletePractica = async ({ idPractica, profesorId }: { idPractica: n
     }
   
     return response.json();
+};
+
+export const asignarPractica = async (newPracticaAsignada: { practica: number; grupo: number; fecha_inicio: string; fecha_fin: string }) => {
+  const response = await fetch(`http://${URL}/practicas/asignarPractica`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newPracticaAsignada),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al crear la práctica");
+  }
+
+  return response.json();
 };

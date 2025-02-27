@@ -1,53 +1,22 @@
 import { useState } from "react";
-import { useDeletePractica} from '@/hooks/Practicas/usePractica2';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from '@/components/ui/button';
-import { useToast } from "@/hooks/use-toast";
-import { IconEdit, IconTrash } from '@tabler/icons-react';
+import { IconEdit, IconTrash, IconHandFinger } from '@tabler/icons-react';
+import DeletePractica from "./actionsPractica/DeletePractica";
+import AsignarPractica from "./actionsPractica/AsignarPractica";
 
 interface PracticaActionsProps {
   idPractica: number;
+  estaAsignada: number;
 }
 
-const PracticaActions = ({ idPractica}: PracticaActionsProps) => {
-
-  const deletePractica = useDeletePractica();
-  const [open, setOpen] = useState(false);
-  const { toast } = useToast();
-
-  const handleDeleteConfirm = async () => {
-    try {
-      await deletePractica.mutateAsync({ idPractica, profesorId: 5 });
-      toast({
-        title: "Operación exitosa",
-        description: "Práctica eliminada correctamente",
-      });
-    } catch (error) {
-      console.error("Error eliminando la práctica:", error);
-      toast({
-        title: "Error",
-        description: "No se pudo eliminar la práctica.",
-        variant: "destructive",
-      });
-    } finally {
-      setOpen(false);
-    }
-  };
+const PracticaActions = ({ idPractica, estaAsignada}: PracticaActionsProps) => {
+  const [openDelete, setOpenDelete] = useState(false);
+  const [openAsignar, setOpenAsignar] = useState(false);
 
   return (
     <div className='flex justify-center w-full'>
@@ -61,28 +30,33 @@ const PracticaActions = ({ idPractica}: PracticaActionsProps) => {
             <IconEdit className="h-5 w-5 mr-2" /> Modificar
           </DropdownMenuItem>
 
-          <DropdownMenuItem onSelect={() => setOpen(true)} className="text-red-600">
+          {!estaAsignada && (
+          <DropdownMenuItem onSelect={() => setOpenAsignar(true)}>
+            <IconHandFinger className="h-5 w-5 mr-2" /> Asignar
+          </DropdownMenuItem>
+          )}
+
+          <DropdownMenuItem onSelect={() => setOpenDelete(true)} className="text-red-600">
             <IconTrash className="h-5 w-5 mr-2" /> Eliminar
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
+      {/* Modal para eliminar practica*/}
+      <DeletePractica 
+        open={openDelete} 
+        onOpenChange={setOpenDelete} 
+        idPractica={idPractica} 
+      />
 
-      {/* Para comfirmar practica eliminada */}
-      <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>¿Está seguro de eliminar la práctica?</AlertDialogTitle>
-            <AlertDialogDescription>
-              No es posible deshacer esta acción.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction className="text-white dark:text-black" onClick={handleDeleteConfirm}>Eliminar</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      {/* Modal para asignar practica */}
+      {!estaAsignada && (
+        <AsignarPractica 
+          open={openAsignar} 
+          onOpenChange={setOpenAsignar} 
+          idPractica={idPractica} 
+        />
+      )}
     </div>
   );
 };

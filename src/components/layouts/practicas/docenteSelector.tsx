@@ -11,14 +11,14 @@ import {
     SelectValue,
 } from "@/components/ui/select"  
 
-import { usePracticas } from "@/hooks/Practicas/usePractica2";
+import { useDocentes } from "@/hooks/Practicas/usePractica";
 
 type DocenteSelectorProps = {
     onDocenteSelect: (id: number, name: string) => void;
 };
 
 const DocenteSelector = ({ onDocenteSelect }: DocenteSelectorProps) => {
-    const { docentesData } = usePracticas();
+    const docentesData = useDocentes();
 
     const options = docentesData.data?.map((docente) => ({
         value: docente.id_user, 

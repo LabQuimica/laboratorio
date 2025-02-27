@@ -6,56 +6,44 @@ import NameBadge from "./NameBadge";
 import { SortableHeader } from "@/components/table/SortableHeader";
 import StatusPractica from "./StatusPractica";
 import PracticaActions from "./AccionesPractica";
-import { usePracticas } from "@/hooks/Practicas/usePractica2";
-
+import { usePracticas } from "@/hooks/Practicas/usePractica";
+import { useState } from "react";
 
 export const docentecolumns: ColumnDef<Practica>[] = [
-    {
+  {
     accessorKey: "id_practica",
-    header: ({ column }) => (
-      <SortableHeader column={column} title="id" className="justify-center" />
-    ),
-    size: 10,
-    cell: ({ row }) => (
-      <p className="text-center"> {row.getValue("id_practica")} </p>
-    ),
   },
   {
     accessorKey: "nombre",
     header: "Nombre",
+    size: 70,
   },
   {
     accessorKey: "descripcion",
     header: "Descripcion",
-    size: 60,
-    cell: ({ row }) => <TruncatedCell text={row.getValue("descripcion")} />,
+    //cell: ({ row }) => <TruncatedCell text={row.getValue("descripcion")} />,
   },
   {
     accessorKey: "fecha_creacion",
+    size: 20,
     header: ({ column }) => (
       <SortableHeader column={column} title="Fecha Creación" className="justify-center" />
     ),
     cell: formatDateCell("fecha_creacion"),
   },
   {
-    accessorKey: "fecha_modificacion",
-    header: "Fecha Modificación",
-    size: 40,
-    cell: formatDateCell("fecha_modificacion"),
-  },
-  {
     accessorKey: "esta_asignada",
     header: "Estatus",
-    size: 30,
+    size: 20,
     cell: ({ row }) => <StatusPractica value={row.getValue("esta_asignada")}/>,
   },
   {
     accessorKey: "acciones",
     header: "Acciones",
-    size: 30,
+    size: 20,
     cell: ({ row }) => (
       <div className="items-center justify-center w-full">
-        <PracticaActions idPractica={row.getValue("id_practica")}/>
+        <PracticaActions idPractica={row.getValue("id_practica")} estaAsignada={row.getValue("esta_asignada")}/>
       </div>
     ),
   }
@@ -66,14 +54,7 @@ export const docentecolumns: ColumnDef<Practica>[] = [
 export const asignadascolumns: ColumnDef<Practica>[] = [
     {
         accessorKey: "id_practica",
-        header: ({ column }) => (
-          <SortableHeader column={column} title="id" className="justify-center" />
-        ),
-        size: 10,
-        cell: ({ row }) => (
-          <p className="text-center"> {row.getValue("id_practica")} </p>
-        ),
-      },
+    },
     {
       accessorKey: "docente",
       header: "Docente",
@@ -87,18 +68,12 @@ export const asignadascolumns: ColumnDef<Practica>[] = [
     {
         accessorKey: "descripcion",
         header: "Descripcion",
-        size: 60,
-        cell: ({ row }) => <TruncatedCell text={row.getValue("descripcion")} />,
+        //cell: ({ row }) => <TruncatedCell text={row.getValue("descripcion")} />,
     },
     {
       accessorKey: "fecha_creacion",
       header: "Fecha Creación",
       cell: formatDateCell("fecha_creacion"),
-    },
-    {
-      accessorKey: "fecha_modificacion",
-      header: "Fecha Modificación",
-      cell: formatDateCell("fecha_modificacion"),
     },
     {
       accessorKey: "grupo",
