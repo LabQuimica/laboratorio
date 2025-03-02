@@ -38,7 +38,7 @@ export default {
   				foreground: 'hsl(var(--accent-foreground))'
   			},
   			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
+  				DEFAULT: '#AE0606',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
   			border: 'hsl(var(--border))',
@@ -58,7 +58,13 @@ export default {
   			'text-disable-light': '#B4B4B4',
   			'text-disable-dark': '#656565',
   			'btn-assigned': '#91E28E',
-  			'btn-not-assigned': '#FF7779'
+  			'btn-not-assigned': '#FF7779',
+			'kit-badge' : '#0B7D31',
+			'btn-details': '#EBEBEB',
+			'text-details': '#05696A',
+			'btn-less-light': '#2563EB',
+			'btn-less-dark': '#2563EB',
+			'btn-add': '#2563EB',
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

@@ -8,6 +8,7 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
   ColumnFiltersState,
+  VisibilityState,
 } from "@tanstack/react-table";
 import { useState } from "react";
 import TablePagination from "@/components/table/TablePagination";
@@ -37,6 +38,9 @@ export const Table = <TData,>({
   const [globalFilter, setGlobalFilter] = useState(""); // Estado para la búsqueda global
   // const [rowSelection, setRowSelection] = useState({}); // Estado para la selección de filas
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const initialColumnVisibility: VisibilityState = {};
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(initialColumnVisibility);
+
   const table = useReactTable({
     data,
     columns,
@@ -45,6 +49,7 @@ export const Table = <TData,>({
       columnVisibility: {
         id_vale: false,
         id_pa: false,
+        id_practica: false,
       },
       // rowSelection,
       columnFilters,
@@ -52,6 +57,7 @@ export const Table = <TData,>({
     onGlobalFilterChange: setGlobalFilter,
     // onRowSelectionChange: setRowSelection,
     onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
     getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -125,4 +131,4 @@ export const Table = <TData,>({
       </div>
     </div>
   );
-};
+};  
