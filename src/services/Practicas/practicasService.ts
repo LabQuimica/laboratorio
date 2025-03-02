@@ -24,7 +24,7 @@ export const fetchDocentes = async (): Promise<Docente[]> => {
   return response.json();
 };
 
-export const createPractica = async (newPractica: { nombre: string; descripcion: string; num_equipos: number; creadorId: number; materiales: { itemId: number; cantidad: number }[] }) => {
+export const createPractica = async (newPractica: { nombre: string; descripcion: string; num_equipos: number; creadorId?: number; materiales: { itemId: number; cantidad: number }[] }) => {
     const response = await fetch(`http://${URL}/practicas/crearPractica`, {
       method: "POST",
       headers: {
@@ -41,7 +41,7 @@ export const createPractica = async (newPractica: { nombre: string; descripcion:
 };
 
 
-export const deletePractica = async ({ idPractica, profesorId }: { idPractica: number; profesorId: number }) => {
+export const deletePractica = async ({ idPractica, profesorId }: { idPractica: number; profesorId?: number }) => {
     const response = await fetch(`http://${URL}/practicas/deletePractica/${idPractica}`, {
       method: "DELETE",
       headers: {

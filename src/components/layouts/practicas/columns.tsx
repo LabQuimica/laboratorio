@@ -29,7 +29,11 @@ export const docentecolumns: ColumnDef<Practica>[] = [
     header: ({ column }) => (
       <SortableHeader column={column} title="Fecha Creación" className="justify-center" />
     ),
-    cell: formatDateCell("fecha_creacion"),
+    cell: ({ row }) => (
+      <div className="flex items-center justify-center">
+        {row.getValue("fecha_creacion")}
+      </div>
+    )
   },
   {
     accessorKey: "esta_asignada",
@@ -59,7 +63,11 @@ export const asignadascolumns: ColumnDef<Practica>[] = [
       accessorKey: "docente",
       header: "Docente",
       size: 8,
-      cell: ({ row }) => <NameBadge nombre={row.getValue("docente")} />,
+      cell: ({ row }) => (
+        <div className="flex items-center justify-center">
+          <NameBadge nombre={row.getValue("docente")} />
+        </div>
+      )
     },
     {
         accessorKey: "nombre",
@@ -72,8 +80,14 @@ export const asignadascolumns: ColumnDef<Practica>[] = [
     },
     {
       accessorKey: "fecha_creacion",
-      header: "Fecha Creación",
-      cell: formatDateCell("fecha_creacion"),
+      header: ({ column }) => (
+        <SortableHeader column={column} title="Fecha Creación" className="justify-center" />
+      ),
+      cell: ({ row }) => (
+        <div className="flex items-center justify-center">
+          {row.getValue("fecha_creacion")}
+        </div>
+      )
     },
     {
       accessorKey: "grupo",

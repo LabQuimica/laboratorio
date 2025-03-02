@@ -24,10 +24,10 @@ const NameBadge = ({ nombre }: { nombre: string }) => {
   return (
     <div className="items-center justify-center align-middle text-center">
         <span
-        className="px-2 py-2.5 text-white text-xs font-bold rounded-3xl"
+        className="block px-1 py-4 h-12 w-12 items-center justify-center align-middle text-white text-sm font-bold rounded-3xl"
         style={{ backgroundColor: color }}
         >
-        {initials}
+        <p>{initials}</p>
         </span>
     </div>
   );

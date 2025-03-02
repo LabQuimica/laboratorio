@@ -9,10 +9,12 @@ import { Button } from "@/components/ui/button";
 import { AlertDialog } from '@radix-ui/react-alert-dialog';
 import { X } from 'lucide-react';
 
-import { useStoreItems } from "@/hooks/Items/useStoreItems";
+import { useStoreItems } from "@/stores/useStoreItems";
 import { usePracticaStore } from '@/stores/practicasStore';
 import { useCreatePractica } from '@/hooks/Practicas/usePractica';
 import { useToast } from '@/hooks/use-toast';
+import { useContext } from 'react';
+import { UserContext } from "@/context/UserContext";
 
 const MaterialesReview = () => {
     const { nombre, descripcion, numEquipos } = usePracticaStore();
@@ -25,6 +27,7 @@ const MaterialesReview = () => {
     const removeMaterial = useStoreItems(state => state.removeMaterial);
     const error = useStoreItems(state => state.error);
     const updateMaterialQuantity = useStoreItems(state => state.updateMaterialQuantity);
+    const { user } = useContext(UserContext);
 
     const { toast } = useToast();
 
@@ -90,6 +93,7 @@ const MaterialesReview = () => {
 
 
     const handleCreatePractica = async () => {
+
         if (!nombre || !descripcion || !numEquipos) {
             toast({
                 title: "Error",
@@ -127,7 +131,7 @@ const MaterialesReview = () => {
             nombre,
             descripcion,
             num_equipos: numEquipos,
-            creadorId: 1,
+            creadorId: user?.id_user,
             materiales: materiales.map(material => ({
                 itemId: material.itemId,
                 cantidad: Number(material.cantidad) || 0,

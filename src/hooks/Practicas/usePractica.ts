@@ -31,7 +31,7 @@ export const useCreatePractica = () => {
 export const useDeletePractica = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: ({ idPractica, profesorId }: { idPractica: number; profesorId: number }) => deletePractica({ idPractica, profesorId }),
+        mutationFn: ({ idPractica, profesorId }: { idPractica: number; profesorId?: number }) => deletePractica({ idPractica, profesorId }),
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
         },

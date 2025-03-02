@@ -32,7 +32,6 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
         orderBy="fecha_creacion"
         reactQueryKEY="vales"
         FilterComponent={EstadoValeFilter}
-        hiddenColumns={["id_practica"]}
       />
     </div>
   );

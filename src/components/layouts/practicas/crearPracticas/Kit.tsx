@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from "react";
-import { useStoreItems } from '@/hooks/Items/useStoreItems';
+import { useStoreItems } from '@/stores/useStoreItems';
 import { Kit } from '@/types/MaterialesTypes';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";

@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useStoreItems } from '@/hooks/Items/useStoreItems';
+import { useStoreItems } from '@/stores/useStoreItems';
 import { Material } from '@/types/MaterialesTypes';
 
 interface MaterialComponentProps {

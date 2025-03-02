@@ -10,6 +10,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
+import { useContext } from 'react';
+import { UserContext } from "@/context/UserContext";
 
 interface DeletePracticaProps {
   open: boolean;
@@ -20,10 +22,11 @@ interface DeletePracticaProps {
 const DeletePractica = ({ open, onOpenChange, idPractica }: DeletePracticaProps) => {
   const deletePractica = useDeletePractica();
   const { toast } = useToast();
+  const { user } = useContext(UserContext);
 
   const handleDeleteConfirm = async () => {
     try {
-      await deletePractica.mutateAsync({ idPractica, profesorId: 1 });
+      await deletePractica.mutateAsync({ idPractica, profesorId: user?.id_user });
       toast({
         title: "Operación exitosa",
         description: "Práctica eliminada correctamente",

@@ -1,7 +1,5 @@
 "use client"
 
-import { log } from "console";
-
 const URL = process.env.NEXT_PUBLIC_API_URL;
 
 type TipoMaterial = "kits" | "sensores" | "liquidos" | "solidos";
