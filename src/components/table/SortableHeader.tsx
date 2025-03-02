@@ -54,7 +54,7 @@ export function SortableHeader<TData, TValue>({
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => column.clearSorting()}>
             <X className="h-3.5 w-3.5 text-muted-foreground/70" />
-            Remove
+            Quitar
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
