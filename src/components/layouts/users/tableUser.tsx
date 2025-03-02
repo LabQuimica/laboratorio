@@ -3,7 +3,7 @@ import { useUsers } from "@/hooks/Users/useUser";
 import { columns } from "./columns";
 import { Table } from "@/components/table/Table";
 import { User } from "@/types/userTypes";
-import { EstadoValeFilter } from "../vales/FilterVale";
+import { EstadoValeFilter } from "../vales/alumno/FilterVale";
 
 export const UsersTable = () => {
   const { data, isLoading, isError } = useUsers();

@@ -42,6 +42,10 @@ export const Table = <TData,>({
     columns,
     state: {
       globalFilter,
+      columnVisibility: {
+        id_vale: false,
+        id_pa: false,
+      },
       // rowSelection,
       columnFilters,
     },
@@ -61,7 +65,7 @@ export const Table = <TData,>({
   if (isError) return <div>Error fetching data</div>;
 
   return (
-    <div className="p-4">
+    <div className="py-3">
       {/* Controles de la tabla (búsqueda, filtros, información) */}
       <TableControls
         globalFilter={globalFilter}

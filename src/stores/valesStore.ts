@@ -1,29 +1,66 @@
-import { EstadoVale, StatusChange } from '@/types/ValeTypes';
-import { create } from 'zustand';
+import { create } from "zustand";
+
+// Tipos importados
+import { StatusChange, CommentChange } from "@/types/ValeTypes";
 
 interface StatusStore {
-  changes: StatusChange[];
-  addChange: (change: StatusChange) => void;
-  clearChanges: () => void;
+  statusChanges: StatusChange[];
+  commentChanges: CommentChange[];
+
+  addStatusChange: (change: StatusChange) => void;
+  addCommentChange: (change: CommentChange) => void;
+
+  clearStatusChanges: () => void;
+  clearCommentChanges: () => void;
+
+  removeStatusChangeById: (id: number) => void;
+  removeCommentChangeById: (id: number) => void;
 }
 
 export const useStatusStore = create<StatusStore>((set) => ({
-  changes: [],
-  addChange: (change) =>
+  statusChanges: [],
+  commentChanges: [],
+
+  addStatusChange: (change) =>
     set((state) => {
-      // Si oldStatus y newStatus son iguales, eliminamos el cambio si ya existe
+      // Filtrar cambios existentes para el mismo ID
+      const filteredChanges = state.statusChanges.filter(
+        (c) => c.id_vale !== change.id_vale
+      );
+
+      // Si el estado no cambió, eliminamos el cambio
       if (change.oldStatus === change.newStatus) {
-        const filteredChanges = state.changes.filter(c => c.id_vale !== change.id_vale);
-        return {
-          changes: filteredChanges,
-        };
+        return { statusChanges: filteredChanges };
       }
 
-      // Si oldStatus y newStatus son diferentes, actualizamos el cambio
-      const filteredChanges = state.changes.filter(c => c.id_vale !== change.id_vale);
-      return {
-        changes: [...filteredChanges, change],
-      };
+      return { statusChanges: [...filteredChanges, change] };
     }),
-  clearChanges: () => set({ changes: [] }),
+
+  addCommentChange: (change) =>
+    set((state) => {
+      // Filtrar cambios existentes para el mismo ID
+      const filteredChanges = state.commentChanges.filter(
+        (c) => c.id_vale !== change.id_vale
+      );
+
+      // Si el comentario no cambió, eliminamos el cambio
+      if (change.oldObservation === change.newObservation) {
+        return { commentChanges: filteredChanges };
+      }
+
+      return { commentChanges: [...filteredChanges, change] };
+    }),
+
+  clearStatusChanges: () => set({ statusChanges: [] }),
+  clearCommentChanges: () => set({ commentChanges: [] }),
+
+  removeStatusChangeById: (id) =>
+    set((state) => ({
+      statusChanges: state.statusChanges.filter((change) => change.id_vale !== id),
+    })),
+
+  removeCommentChangeById: (id) =>
+    set((state) => ({
+      commentChanges: state.commentChanges.filter((change) => change.id_vale !== id),
+    })),
 }));

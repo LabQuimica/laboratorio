@@ -5,7 +5,7 @@ import Image from "next/image";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/context/UserContext";
-import { login } from "@/stores/authService";
+import { login } from "@/services/authService";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
