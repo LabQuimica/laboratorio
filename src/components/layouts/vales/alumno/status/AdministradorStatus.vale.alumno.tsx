@@ -23,12 +23,15 @@ interface Vale {
   estado_vale: EstadoVale;
 }
 
-interface StatusValeProps {
-  row: Row<Vale>;
+interface StatusValeProps<TData> {
+  row: Row<TData>;
   tableType: "ValeAlumno" | "ValeProfesor";
 }
 
-const StatusAlumnoAdministrador = ({ row, tableType }: StatusValeProps) => {
+function StatusAlumnoAdministrador<TData>({
+  row,
+  tableType,
+}: StatusValeProps<TData>) {
   const addChange = useStatusStore((state) => state.addStatusChange);
   const changes = useStatusStore((state) => state.statusChanges);
   const id_vale = Number(row.getValue("id_vale"));
@@ -68,6 +71,6 @@ const StatusAlumnoAdministrador = ({ row, tableType }: StatusValeProps) => {
       </Select>
     </div>
   );
-};
+}
 
 export default StatusAlumnoAdministrador;

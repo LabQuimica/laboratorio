@@ -10,12 +10,12 @@ interface Vale {
   estado_vale: EstadoVale;
 }
 
-interface StatusValeProps {
-  row: Row<Vale>;
+interface StatusValeProps<TData> {
+  row: Row<TData>;
   tableType: "ValeAlumno" | "ValeProfesor";
 }
 
-const StatusValeAlumno = ({ row, tableType }: StatusValeProps) => {
+function StatusValeAlumno<TData>({ row, tableType }: StatusValeProps<TData>) {
   const { user } = useContext(UserContext);
 
   if (user?.rol === "profesor") {
@@ -27,6 +27,6 @@ const StatusValeAlumno = ({ row, tableType }: StatusValeProps) => {
   }
 
   return null;
-};
+}
 
 export default StatusValeAlumno;

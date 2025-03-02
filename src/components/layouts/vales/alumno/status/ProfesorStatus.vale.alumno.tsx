@@ -9,12 +9,15 @@ interface Vale {
   estado_vale: EstadoVale;
 }
 
-interface StatusValeProps {
-  row: Row<Vale>;
+interface StatusValeProps<TData> {
+  row: Row<TData>;
   tableType: "ValeAlumno" | "ValeProfesor";
 }
 
-const StatusAlumnoProfesor = ({ row }: StatusValeProps) => {
+function StatusAlumnoProfesor<TData>({
+  row,
+  tableType,
+}: StatusValeProps<TData>) {
   const currentStatus: EstadoVale = row.getValue("estado_vale");
 
   return (
@@ -26,6 +29,6 @@ const StatusAlumnoProfesor = ({ row }: StatusValeProps) => {
       </Badge>
     </div>
   );
-};
+}
 
 export default StatusAlumnoProfesor;

@@ -12,7 +12,8 @@ export const columsAlumnoVale: ColumnDef<Vale>[] = [
   },
   {
     accessorKey: "alumno",
-    header: ({ column }) => <SortableHeader column={column} title="ALUMNO" />,
+    header: "alumno",
+    // header: ({ column }) => <SortableHeader column={column} title="ALUMNO" />,
     size: 30,
   },
   {

@@ -14,7 +14,7 @@ export const ValesAlumnoTable = ({ viewType }: { viewType: EstadoVale }) => {
       columns={columsAlumnoVale}
       isLoading={isLoading}
       isError={isError}
-      orderBy="alumno"
+      orderBy="fecha_solicitada"
       reactQueryKEY="valesAlumnos"
       FilterComponent={EstadoValeFilter}
     />
