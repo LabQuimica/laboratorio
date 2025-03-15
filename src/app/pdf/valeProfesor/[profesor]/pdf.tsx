@@ -3,6 +3,8 @@ import { styles } from "./styles";
 import { ValeProfesorDetails } from "@/types/ValeTypes";
 import ReactivoTable from "./reactivoTable";
 import EquipoKitSensorTable from "./EquipoKitSensorTable";
+import MaterialTable from "./MaterialTable";
+import ResiduosTable from "./ResiduosTable";
 
 interface MyDocumentProps {
   data?: ValeProfesorDetails;
@@ -103,6 +105,11 @@ const MyDocument = ({ data }: MyDocumentProps) => {
 
         {/* Tabla de equipos, kits y sensores */}
         <EquipoKitSensorTable items={data.items} />
+        {/* Tabla de materiales */}
+        <MaterialTable items={data.items} />
+
+        {/* Tabla de residuos */}
+        <ResiduosTable />
 
         {/* Tabla de reactivos */}
       </Page>
