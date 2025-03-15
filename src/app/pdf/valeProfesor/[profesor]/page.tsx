@@ -1,6 +1,8 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useValeDetailsProfesor } from "@/hooks/Vales/useVales";
+import { PDFViewer } from "@react-pdf/renderer";
+import MyDocument from "./pdf";
 
 export default function ValePDFPage() {
   const params = useParams();
@@ -20,8 +22,8 @@ export default function ValePDFPage() {
   if (!data) return <p>No se encontraron datos para este vale</p>;
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Vale de Profesor</h1>
-    </div>
+    <PDFViewer style={{ width: "100%", height: "100%" }}>
+      <MyDocument data={data} />
+    </PDFViewer>
   );
 }
