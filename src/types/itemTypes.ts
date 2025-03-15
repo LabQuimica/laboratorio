@@ -13,4 +13,11 @@ export interface Item {
     fecha_modificacion: string;
   }
 
+export interface ItemAlert {
+    id_item: number;
+    nombre: string;
+    cantidad: number;
+    marca: string;
+  }
+
 export type tipoItem = "kits" | "sensores" | "materiales" | "liquidos" | "solidos";

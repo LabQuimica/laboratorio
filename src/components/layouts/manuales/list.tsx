@@ -1,32 +1,32 @@
 "use client";
-import { useState, useEffect } from "react";
-import { fetchManualFile } from "./fetchManuales";
-import ManualFile from "./showFile"; 
+import { useQuery } from "@tanstack/react-query";
+import { fetchManualFile } from "../../../services/fetchManuales";
+import ManualFile from "./showFile";
+import { Manual } from "../../../types/archivoTypes";
 
 const ManualFileList = () => {
-  const [files, setFiles] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: files, isLoading, isError } = useQuery<Manual[], Error>({
+    queryKey: ["manualFiles"],
+    queryFn: fetchManualFile,
+  });
 
-  useEffect(() => {
-    fetchManualFile().then((files) => {
-      setFiles(files);
-      setLoading(false);
-    });
-  }, []);
+  if (isLoading) {
+    return <p>Cargando archivos...</p>;
+  }
+
+  if (isError) {
+    return <p>Hubo un error al cargar los archivos.</p>;
+  }
+
+  if (!files || files.length === 0) {
+    return <p>No hay archivos disponibles.</p>;
+  }
 
   return (
-    <div>
-      {loading ? (
-        <p>Cargando archivos...</p>
-      ) : files.length === 0 ? (
-        <p>No hay archivos disponibles.</p>
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {files.map((file) => (
-            <ManualFile key={file.id} file={file} />
-          ))}
-        </div>
-      )}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {files.map((file) => (
+        <ManualFile key={file.id} file={file} />
+      ))}
     </div>
   );
 };

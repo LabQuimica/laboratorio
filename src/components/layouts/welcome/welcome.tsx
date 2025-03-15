@@ -13,7 +13,6 @@ const WelcomePage = () => {
 
   return (
     <div className="p-4 max-w-7xl mx-auto">
-      {/* Título en la parte superior */}
       <h1 className="pt-10 text-3xl font-bold mb-4 font-sans text-neutral-700 dark:text-neutral-200">
         QuimiLab - Hola {user?.name}
       </h1>

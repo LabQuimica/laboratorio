@@ -1,9 +1,9 @@
 
 import WelcomePage from "@/components/layouts/welcome/welcome";
 
-export function welcome() {
+export function Welcome() {
   return <WelcomePage />;
 }
 
-export default welcome;
+export default Welcome;
 
