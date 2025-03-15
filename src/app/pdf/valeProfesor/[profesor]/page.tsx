@@ -2,9 +2,9 @@
 import { useParams } from "next/navigation";
 import { useValeDetailsProfesor } from "@/hooks/Vales/useVales";
 import { PDFViewer } from "@react-pdf/renderer";
-import PDFProfesor from "@/components/layouts/pdf/profesor/pdfProfesor";
+import PDFProfesor from "@/components/layouts/pdf/profesor/pdf";
 
-export default function ValePDFPage() {
+export default function ValePDFProfesor() {
   const params = useParams();
   const id_practica_asignada = params.profesor
     ? parseInt(params.profesor as string)

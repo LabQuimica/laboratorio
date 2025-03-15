@@ -12,6 +12,7 @@ import { useValeDetails } from "@/hooks/Vales/useVales";
 import { useState } from "react";
 import ValeDetailsDisplay from "./ValeDetailsDisplay";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface Props {
   id_vale: number;
@@ -34,6 +35,9 @@ export function ActionValeAlumno({ id_vale }: Props) {
         <SheetContent className="w-[30rem] flex flex-col">
           <SheetHeader>
             <SheetTitle>Detalles del Vale</SheetTitle>
+            <SheetDescription>
+              Información detallada del vale de alumno
+            </SheetDescription>
           </SheetHeader>
           <div className="flex-1 overflow-y-auto">
             {data ? (
@@ -47,7 +51,9 @@ export function ActionValeAlumno({ id_vale }: Props) {
             )}
           </div>
           <SheetFooter>
-            <Button>Descargar</Button>
+            <Link href={`/pdf/valeAlumno/${id_vale}`} target="_blank">
+              <Button>Descargar</Button>
+            </Link>
           </SheetFooter>
         </SheetContent>
       </Sheet>
