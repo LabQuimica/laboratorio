@@ -5,7 +5,7 @@ import { styles } from "./styles";
 const ResiduosTable = () => {
   // Función para renderizar las filas vacías
   const renderEmptyRows = () => {
-    return Array(4)
+    return Array(3)
       .fill(null) // Creamos un array de 4 elementos vacíos
       .map((_, index) => (
         <View key={index} style={styles.row}>

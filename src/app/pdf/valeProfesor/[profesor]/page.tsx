@@ -19,8 +19,6 @@ export default function ValePDFPage() {
 
   if (isError) return <p>Error al cargar los datos del vale</p>;
 
-  if (!data) return <p>No se encontraron datos para este vale</p>;
-
   return (
     <PDFViewer style={{ width: "100%", height: "100%" }}>
       <MyDocument data={data} />

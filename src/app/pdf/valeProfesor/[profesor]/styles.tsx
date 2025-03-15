@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   leftImage: {
     width: 85,
@@ -72,5 +72,15 @@ export const styles = StyleSheet.create({
   },
   headerRow: {
     backgroundColor: "#f0f0f0", // Color de fondo para el encabezado
+  },
+  bold: {
+    fontWeight: "bold",
+  },
+  flex: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
   },
 });

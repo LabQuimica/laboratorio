@@ -5,6 +5,7 @@ import ReactivoTable from "./reactivoTable";
 import EquipoKitSensorTable from "./EquipoKitSensorTable";
 import MaterialTable from "./MaterialTable";
 import ResiduosTable from "./ResiduosTable";
+import FirmasTable from "./FirmasTable";
 
 interface MyDocumentProps {
   data?: ValeProfesorDetails;
@@ -100,18 +101,23 @@ const MyDocument = ({ data }: MyDocumentProps) => {
           </View>
         </View>
 
-        {/* Tabla de reactivos */}
-        <ReactivoTable items={data.items} />
+        <View style={styles.container}>
+          {/* Tabla de reactivos */}
+          <ReactivoTable items={data.items} />
 
-        {/* Tabla de equipos, kits y sensores */}
-        <EquipoKitSensorTable items={data.items} />
-        {/* Tabla de materiales */}
-        <MaterialTable items={data.items} />
+          {/* Tabla de equipos, kits y sensores */}
+          <EquipoKitSensorTable items={data.items} />
+          {/* Tabla de materiales */}
+          <MaterialTable items={data.items} />
 
-        {/* Tabla de residuos */}
-        <ResiduosTable />
+          {/* Tabla de residuos */}
+          <ResiduosTable />
 
-        {/* Tabla de reactivos */}
+          <View style={styles.flex} />
+
+          {/* Tabla de firmas */}
+          <FirmasTable items={data.nombre_usuario} />
+        </View>
       </Page>
     </Document>
   );
