@@ -1,8 +1,7 @@
 "use client";
-
-import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useValeDetailsProfesor } from "@/hooks/Vales/useVales";
+import { useState } from "react";
 
 export default function ValePDFPage() {
   const params = useParams();
@@ -10,8 +9,10 @@ export default function ValePDFPage() {
     ? parseInt(params.profesor as string)
     : 0;
 
-  const { data, isLoading, isError } =
-    useValeDetailsProfesor(id_practica_asignada);
+  const { data, isLoading, isError } = useValeDetailsProfesor(
+    id_practica_asignada,
+    true
+  );
 
   if (isLoading) return <p>Cargando datos del vale...</p>;
 
