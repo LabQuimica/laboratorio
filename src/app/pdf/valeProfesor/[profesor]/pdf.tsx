@@ -1,13 +1,17 @@
-import { Page, Text, View, Document } from "@react-pdf/renderer";
+import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
 import { styles } from "./styles";
 import { ValeProfesorDetails } from "@/types/ValeTypes";
 
-const MyDocument = ({ data }: { data?: ValeProfesorDetails }) => {
+interface MyDocumentProps {
+  data?: ValeProfesorDetails;
+}
+
+const MyDocument = ({ data }: MyDocumentProps) => {
   if (!data) {
     return (
       <Document>
         <Page size="LETTER" style={styles.page}>
-          <View style={styles.section}>
+          <View style={styles.header}>
             <Text>No se encontraron datos para este vale</Text>
           </View>
         </Page>
@@ -17,11 +21,18 @@ const MyDocument = ({ data }: { data?: ValeProfesorDetails }) => {
   return (
     <Document>
       <Page size="LETTER" style={styles.page}>
-        <View style={styles.section}>
-          <Text>{data.email}</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>Section #2</Text>
+        <View style={styles.header}>
+          <Image src="/images/ipn.png" style={styles.leftImage} />
+
+          <View style={styles.centerText}>
+            <Text style={styles.title}>INSTITUTO POLITÉCNICO NACIONAL</Text>
+            <Text style={styles.subtitle}>
+              Unidad Profesional Interdisciplinaria de Ingeniería Campus
+              Tlaxcala
+            </Text>
+          </View>
+
+          <Image src="/images/upiit.png" style={styles.rightImage} />
         </View>
       </Page>
     </Document>
