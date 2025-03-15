@@ -84,6 +84,9 @@ export interface ValeProfesorDetails {
 export interface ItemProfesor {
   id_item: number
   nombre_item: string
+  num_serie: string,
+  observacion: string,
+  especial: string,
   tipo_item: string
   cantidad_disponible: string
   ubicacion: string

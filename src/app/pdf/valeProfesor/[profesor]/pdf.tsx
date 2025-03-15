@@ -1,12 +1,18 @@
 import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
 import { styles } from "./styles";
 import { ValeProfesorDetails } from "@/types/ValeTypes";
+import ReactivoTable from "./reactivoTable";
+import EquipoKitSensorTable from "./EquipoKitSensorTable";
 
 interface MyDocumentProps {
   data?: ValeProfesorDetails;
 }
 
 const MyDocument = ({ data }: MyDocumentProps) => {
+  const getCurrentDateTime = (): string => {
+    return new Date().toLocaleString();
+  };
+
   if (!data) {
     return (
       <Document>
@@ -34,6 +40,71 @@ const MyDocument = ({ data }: MyDocumentProps) => {
 
           <Image src="/images/upiit.png" style={styles.rightImage} />
         </View>
+        <Text style={[styles.subtitle, styles.centerSubtitle]}>
+          Vale de préstamo para docentes - Laboratorio de Química
+        </Text>
+
+        {/* Tabla de datos */}
+        <View style={styles.table}>
+          {/* Primera fila */}
+          <View style={styles.row}>
+            <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
+              <Text>Nombre del Docente</Text>
+            </View>
+            <View style={[styles.cell]}>
+              <Text>{data.nombre_usuario}</Text>
+              <Text>{data.email}</Text>
+            </View>
+            <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
+              <Text>UA</Text>
+            </View>
+            <View style={[styles.cell, styles.cellText]}>
+              <Text>Lab de Bioingeniería</Text>
+            </View>
+          </View>
+
+          {/* Segunda fila */}
+          <View style={styles.row}>
+            <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
+              <Text>Nombre de la práctica</Text>
+            </View>
+            <View style={[styles.cell]}>
+              <Text>{data.nombre_practica}</Text>
+            </View>
+            <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
+              <Text>Grupo</Text>
+            </View>
+            <View style={styles.cell}>
+              <Text>{`${data.semestre_grupo}`}</Text>
+              <Text>{`${data.nombre_grupo}`}</Text>
+            </View>
+          </View>
+
+          {/* Tercera fila */}
+          <View style={styles.row}>
+            <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
+              <Text>Fecha y hora</Text>
+            </View>
+            <View style={[styles.cell]}>
+              <Text>{`De: ${data.fecha_asignada}`}</Text>
+              <Text>{`A: ${data.fecha_entrega}`}</Text>
+            </View>
+            <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
+              <Text>Fecha de solicitud</Text>
+            </View>
+            <View style={[styles.cell, styles.cellText]}>
+              <Text>{getCurrentDateTime()}</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Tabla de reactivos */}
+        <ReactivoTable items={data.items} />
+
+        {/* Tabla de equipos, kits y sensores */}
+        <EquipoKitSensorTable items={data.items} />
+
+        {/* Tabla de reactivos */}
       </Page>
     </Document>
   );
