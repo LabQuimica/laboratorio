@@ -1,6 +1,6 @@
 import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
-import { styles } from "./styles";
 import { ValeProfesorDetails } from "@/types/ValeTypes";
+import { styles } from "./styles";
 import ReactivoTable from "./reactivoTable";
 import EquipoKitSensorTable from "./EquipoKitSensorTable";
 import MaterialTable from "./MaterialTable";
@@ -11,7 +11,7 @@ interface MyDocumentProps {
   data?: ValeProfesorDetails;
 }
 
-const MyDocument = ({ data }: MyDocumentProps) => {
+const PDFProfesor = ({ data }: MyDocumentProps) => {
   const getCurrentDateTime = (): string => {
     return new Date().toLocaleString();
   };
@@ -123,4 +123,4 @@ const MyDocument = ({ data }: MyDocumentProps) => {
   );
 };
 
-export default MyDocument;
+export default PDFProfesor;

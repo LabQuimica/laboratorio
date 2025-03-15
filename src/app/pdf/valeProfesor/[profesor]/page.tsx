@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 import { useValeDetailsProfesor } from "@/hooks/Vales/useVales";
 import { PDFViewer } from "@react-pdf/renderer";
-import MyDocument from "./pdf";
+import PDFProfesor from "@/components/layouts/pdf/profesor/pdfProfesor";
 
 export default function ValePDFPage() {
   const params = useParams();
@@ -21,7 +21,7 @@ export default function ValePDFPage() {
 
   return (
     <PDFViewer style={{ width: "100%", height: "100%" }}>
-      <MyDocument data={data} />
+      <PDFProfesor data={data} />
     </PDFViewer>
   );
 }

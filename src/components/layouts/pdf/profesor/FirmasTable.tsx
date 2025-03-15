@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text } from "@react-pdf/renderer";
 import { styles } from "./styles";
-import { ItemProfesor } from "@/types/ValeTypes";
 
 const FirmasTable = ({ items }: { items: string }) => {
   return (
