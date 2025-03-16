@@ -2,6 +2,9 @@ import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
 import { ValeAlumnoDetails, ValeProfesorDetails } from "@/types/ValeTypes";
 
 import { styles } from "./styles";
+import ItemsTable from "./ItemsTable";
+import FirmasTable from "./FirmasTable";
+import FirmaAlumnoTable from "./FirmaAlumnoTable";
 
 interface MyDocumentProps {
   data?: ValeAlumnoDetails;
@@ -40,7 +43,8 @@ const PDFAlumno = ({ data }: MyDocumentProps) => {
           <Image src="/images/upiit.png" style={styles.rightImage} />
         </View>
         <Text style={[styles.subtitle, styles.centerSubtitle]}>
-          Vale de préstamo para docentes - Laboratorio de Química
+          Vale de préstamo para <Text style={styles.bold}>alumno</Text> -
+          Laboratorio de Química
         </Text>
 
         {/* Tabla de datos */}
@@ -48,17 +52,17 @@ const PDFAlumno = ({ data }: MyDocumentProps) => {
           {/* Primera fila */}
           <View style={styles.row}>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-              <Text>Nombre del Docente</Text>
+              <Text>Nombre del Alumno</Text>
             </View>
             <View style={[styles.cell]}>
               <Text>{data.nombre_alumno}</Text>
               <Text>{data.email_alumno}</Text>
             </View>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-              <Text>UA</Text>
+              <Text>Nombre del Profesor</Text>
             </View>
             <View style={[styles.cell, styles.cellText]}>
-              <Text>Lab de Bioingeniería</Text>
+              <Text>{data.practica.nombre_profesor}</Text>
             </View>
           </View>
 
@@ -71,12 +75,12 @@ const PDFAlumno = ({ data }: MyDocumentProps) => {
               <Text>{data.practica.nombre_practica}</Text>
             </View>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-              <Text>Grupo</Text>
+              <Text>Grupo y Unidad</Text>
             </View>
-            {/* <View style={styles.cell}>
-              <Text>{`${data.}`}</Text>
-              <Text>{`${data.nombre_grupo}`}</Text>
-            </View> */}
+            <View style={styles.cell}>
+              <Text>{data.practica.nombre_semestre}</Text>
+              <Text>{`${data.practica.semestre}`}</Text>
+            </View>
           </View>
 
           {/* Tercera fila */}
@@ -85,8 +89,8 @@ const PDFAlumno = ({ data }: MyDocumentProps) => {
               <Text>Fecha y hora</Text>
             </View>
             <View style={[styles.cell]}>
-              <Text>{`De: ${data.fecha_asignadaPA}`}</Text>
-              <Text>{`A: ${data.fecha_entregaPA}`}</Text>
+              <Text>{`De: ${data.fecha_inicio}`}</Text>
+              <Text>{`A: ${data.fecha_fin}`}</Text>
             </View>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
               <Text>Fecha de solicitud</Text>
@@ -95,6 +99,16 @@ const PDFAlumno = ({ data }: MyDocumentProps) => {
               <Text>{getCurrentDateTime()}</Text>
             </View>
           </View>
+        </View>
+        <View style={styles.container}>
+          <ItemsTable items={data.practica.materiales} />
+          <View style={styles.flex} />
+
+          <FirmasTable items={data.practica.nombre_profesor} />
+          <FirmaAlumnoTable
+            boleta={data.boleta}
+            nombreAlumno={data.nombre_alumno}
+          />
         </View>
       </Page>
     </Document>

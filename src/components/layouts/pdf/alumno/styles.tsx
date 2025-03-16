@@ -70,6 +70,9 @@ export const styles = StyleSheet.create({
   maxWidth: {
     maxWidth: "20%",
   },
+  lessMaxWidth: {
+    maxWidth: "10%",
+  },
   headerRow: {
     backgroundColor: "#f0f0f0", // Color de fondo para el encabezado
   },

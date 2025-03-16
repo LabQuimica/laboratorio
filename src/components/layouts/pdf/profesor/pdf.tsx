@@ -44,7 +44,8 @@ const PDFProfesor = ({ data }: MyDocumentProps) => {
           <Image src="/images/upiit.png" style={styles.rightImage} />
         </View>
         <Text style={[styles.subtitle, styles.centerSubtitle]}>
-          Vale de préstamo para docentes - Laboratorio de Química
+          Vale de préstamo para <Text style={styles.bold}>profesor</Text> -
+          Laboratorio de Química
         </Text>
 
         {/* Tabla de datos */}
