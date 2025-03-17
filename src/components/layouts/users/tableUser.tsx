@@ -15,7 +15,7 @@ export const UsersTable = () => {
       isLoading={isLoading}
       isError={isError}
       orderBy="id_user"
-      reactQueryKEY="vales"
+      reactQueryKEY={["users"]}
       FilterComponent={EstadoValeFilter}
     />
   );

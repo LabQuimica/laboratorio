@@ -16,14 +16,24 @@ function ValeNavigation() {
         <div className="flex space-x-4 items-center  pl-4 ">
           <h1 className="text-lg inline  ">Vale de:</h1>
           <Button
-            variant={pathname.includes("profesor") ? "default" : "outline"}
+            variant="outline"
             onClick={() => router.push("/menu/vale/profesor")}
+            className={
+              pathname.includes("profesor")
+                ? "bg-black text-white dark:bg-white dark:text-black"
+                : ""
+            }
           >
             Profesor
           </Button>
           <Button
-            variant={pathname.includes("alumno") ? "default" : "outline"}
+            variant="outline"
             onClick={() => router.push("/menu/vale/alumno")}
+            className={
+              pathname.includes("alumno")
+                ? "bg-black text-white dark:bg-white dark:text-black"
+                : ""
+            }
           >
             Alumno
           </Button>

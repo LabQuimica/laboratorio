@@ -61,14 +61,14 @@ export function UpdateVale() {
     <Sheet>
       <SheetTrigger asChild>
         <Button
-          variant={"destructive"}
+          variant={"default"}
           disabled={!hasChanges}
-          className="font-bold "
+          className="bg-black text-white dark:bg-white dark:text-black "
         >
           <IconFlask2Filled className="mr-2" />
           Actualizar Registros
           {hasChanges && (
-            <span className="ml-2 bg-white dark:bg-gray-800 text-destructive dark:text-white px-2 py-0.5 rounded-full text-xs ">
+            <span className="ml-2 bg-white dark:bg-gray-800 text-black  dark:text-white px-2 py-0.5 rounded-full text-xs ">
               {allChanges.length}
             </span>
           )}
@@ -95,7 +95,8 @@ export function UpdateVale() {
                     Tipo: {(change as any).tableType}
                   </span>
                   <Button
-                    variant="destructive"
+                    variant="default"
+                    className="bg-red-700 hover:bg-red-600"
                     size="icon"
                     onClick={() => {
                       if ("oldStatus" in change) {
@@ -151,13 +152,13 @@ export function UpdateVale() {
         </ScrollArea>
         <SheetFooter className="mt-4 flex flex-col gap-8">
           <Button
-            variant="destructive"
+            variant="default"
             onClick={() => {
               clearStatusChanges();
               clearCommentChanges();
             }}
             disabled={!hasChanges}
-            className="w-[90%] mx-auto font-bold"
+            className="w-[90%] mx-auto font-bold bg-red-700 hover:bg-red-600"
           >
             Limpiar
           </Button>

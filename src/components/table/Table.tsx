@@ -20,7 +20,7 @@ interface TableProps<TData> {
   isLoading: boolean;
   isError: boolean;
   orderBy: string;
-  reactQueryKEY: string;
+  reactQueryKEY: string[];
   FilterComponent: React.ComponentType<{
     onFilterChange: (filters: ColumnFiltersState) => void;
   }>;
@@ -35,11 +35,13 @@ export const Table = <TData,>({
   reactQueryKEY,
   FilterComponent,
 }: TableProps<TData>) => {
-  const [globalFilter, setGlobalFilter] = useState(""); // Estado para la búsqueda global
-  // const [rowSelection, setRowSelection] = useState({}); // Estado para la selección de filas
+  const [globalFilter, setGlobalFilter] = useState("");
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const initialColumnVisibility: VisibilityState = {};
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(initialColumnVisibility);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+    initialColumnVisibility
+  );
 
   const table = useReactTable({
     data,
@@ -131,4 +133,4 @@ export const Table = <TData,>({
       </div>
     </div>
   );
-};  
+};

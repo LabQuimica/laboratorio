@@ -19,7 +19,7 @@ export const ValesProfesorTable = ({
       isLoading={isLoading}
       isError={isError}
       orderBy="nombre_profesor"
-      reactQueryKEY="valesProfesor"
+      reactQueryKEY={["valesProfesor", "valeProfesorDetails"]}
       FilterComponent={FilterProfesorVale}
     />
   );
