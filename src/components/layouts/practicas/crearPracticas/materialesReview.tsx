@@ -22,8 +22,9 @@ const MaterialesReview = () => {
 
     const kits = useStoreItems(state => state.kits);
     const sensores = useStoreItems(state => state.sensores);
-    const liquidos = useStoreItems(state => state.liquidos);
-    const solidos = useStoreItems(state => state.solidos);
+    const reactivos = useStoreItems(state => state.reactivos);
+    const material = useStoreItems(state => state.materiales);
+    const equipos = useStoreItems(state => state.equipos);
     const removeMaterial = useStoreItems(state => state.removeMaterial);
     const error = useStoreItems(state => state.error);
     const updateMaterialQuantity = useStoreItems(state => state.updateMaterialQuantity);
@@ -114,8 +115,9 @@ const MaterialesReview = () => {
         const materiales = [
             ...kits.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
             ...sensores.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
-            ...liquidos.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
-            ...solidos.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
+            ...reactivos.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
+            ...material.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
+            ...equipos.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
         ];
 
         if (materiales.length === 0) {
@@ -152,8 +154,9 @@ const MaterialesReview = () => {
             });
             kits.forEach(item => removeMaterial('kits', item.id_item));
             sensores.forEach(item => removeMaterial('sensores', item.id_item));
-            liquidos.forEach(item => removeMaterial('liquidos', item.id_item));
-            solidos.forEach(item => removeMaterial('solidos', item.id_item));
+            reactivos.forEach(item => removeMaterial('liquidos', item.id_item));
+            material.forEach(item => removeMaterial('liquidos', item.id_item));
+            equipos.forEach(item => removeMaterial('solidos', item.id_item));
         } catch (error) {
             console.error(error);
             toast({
@@ -199,25 +202,25 @@ const MaterialesReview = () => {
                 <AccordionItem value="item-3">
                     <AccordionTrigger>
                     <div className='flex flex-row justify-between w-full pr-5'>
-                            <p className='text-lg'>Líquidos</p>
-                            <span className="ml-2 text-base text-gray-500">({liquidos.length})</span>
+                            <p className='text-lg'>Reactivos</p>
+                            <span className="ml-2 text-base text-gray-500">({reactivos.length})</span>
                         </div>
                     </AccordionTrigger>
                     <AccordionContent>
                         {/*Aqui van los líquidos agregados*/}
-                        {renderMateriales('liquidos', liquidos)}
+                        {renderMateriales('reactivos', reactivos)}
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
                     <AccordionTrigger>
                         <div className='flex flex-row justify-between w-full pr-5'>
-                            <p className='text-lg'>Sólidos</p>
-                            <span className="ml-2 text-base text-gray-500">({solidos.length})</span>
+                            <p className='text-lg'>Materiales</p>
+                            <span className="ml-2 text-base text-gray-500">({material.length})</span>
                         </div>
                     </AccordionTrigger>
                     <AccordionContent>
                         {/*Aqui van los sólidos agregados*/}
-                        {renderMateriales('solidos', solidos)}
+                        {renderMateriales('materiales', material)}
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>

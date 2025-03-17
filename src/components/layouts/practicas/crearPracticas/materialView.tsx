@@ -3,7 +3,7 @@ import { Material, Kit } from '@/types/MaterialesTypes';
 import KitComponent from './Kit';
 import MaterialComponent from './Items';
 interface TipoMaterialProps {
-    tipo: "kits" | "sensores" | "liquidos" | "solidos";
+    tipo: "kits" | "sensores" | "reactivos" | "materiales" | "equipos";
     data: Material[] | undefined;
 }
 

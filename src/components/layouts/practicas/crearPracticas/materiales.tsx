@@ -23,11 +23,11 @@ import { useMateriales } from "@/hooks/Items/useItems";
 import { Material } from "@/types/MaterialesTypes";
 import MaterialView from "./materialView";
 
-type TipoMaterial = "kits" | "sensores" | "liquidos" | "solidos";
+type TipoMaterial = "kits" | "sensores" | "reactivos" | "materiales" | "equipos";
 
 export default function Materiales(){
 
-    const tipos: TipoMaterial[] = ["kits", "sensores", "liquidos", "solidos"];
+    const tipos: TipoMaterial[] = ["kits", "sensores", "reactivos", "materiales", "equipos"];
     const [tipoActivo, setTipoActivo] = useState<TipoMaterial>("kits");
     const { data, isLoading, error } = useMateriales(tipoActivo);
 
@@ -39,7 +39,7 @@ export default function Materiales(){
                 className=""
             >
                 {/* Lista de pestañas */}
-                <TabsList className="grid w-full grid-cols-4">
+                <TabsList className="grid w-full grid-cols-5">
                 {tipos.map((tipo) => (
                     <TabsTrigger key={tipo} value={tipo}>
                     {tipo}

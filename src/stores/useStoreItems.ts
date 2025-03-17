@@ -1,11 +1,12 @@
 import { create } from 'zustand';
-import { Material, Kit, Sensor, Liquido, Solido } from '@/types/MaterialesTypes';
+import { Material, Kit, Sensor, Reactivo, Materiales, Equipos } from '@/types/MaterialesTypes';
 
 interface MaterialesState {
     kits: Kit[];
     sensores: Sensor[];
-    liquidos: Liquido[];
-    solidos: Solido[];
+    reactivos: Reactivo[];
+    materiales: Materiales[];
+    equipos: Equipos[];
     error: string | null;
     
     addMaterial: (tipo: string, material: Material) => void;
@@ -17,8 +18,9 @@ interface MaterialesState {
 export const useStoreItems = create<MaterialesState>((set) => ({
     kits: [],
     sensores: [],
-    liquidos: [],
-    solidos: [],
+    reactivos: [],
+    materiales: [],
+    equipos: [],
     error: null,
 
     setError: (error) => set({ error }),

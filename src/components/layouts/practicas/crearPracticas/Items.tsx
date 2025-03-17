@@ -7,7 +7,7 @@ import { Material } from '@/types/MaterialesTypes';
 
 interface MaterialComponentProps {
   data: Material[];
-  type: 'liquidos' | 'sensores' | 'solidos';
+  type: 'reactivos' | 'sensores' | 'materiales' | 'equipos';
 }
 
 const MaterialComponent: React.FC<MaterialComponentProps> = ({ data, type }) => {
@@ -16,10 +16,10 @@ const MaterialComponent: React.FC<MaterialComponentProps> = ({ data, type }) => 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {data.map((item) => (
-        <Card key={item.id_item} className="overflow-hidden">
+        <Card key={item.id_item} className="overflow-hidden flex flex-col">
           <CardHeader className="pb-2">
             <div className="flex justify-between items-start">
-              <CardTitle className="text-lg font-medium">{item.nombre}</CardTitle>
+              <CardTitle className="text-lg font-medium mr-2">{item.nombre}</CardTitle>
               <Badge variant={item.status === 1 ? "secondary" : "destructive"}>
                 {item.status === 1 ? "Disponible" : "Agotado"}
               </Badge>
@@ -48,21 +48,29 @@ const MaterialComponent: React.FC<MaterialComponentProps> = ({ data, type }) => 
                   <p className="mt-1 text-xs">{item.observacion}</p>
                 </div>
               )}
-              
-              <div className="text-xs text-right text-muted-foreground mt-4">
-                Actualizado: {new Date(item.fecha_modificacion).toLocaleDateString()}
-              </div>
-
-              <Button 
-                variant={'secondary'}
-                className="mt-2 w-full dark:text-black disabled:bg-bg-disable-light disabled:text-text-disable-light disabled:dark:bg-bg-disable-dark disabled:dark:text-text-disable-dark"
-                onClick={() => addMaterial(type, item)}
-                disabled={item.status === 0}
-              >
-                Agregar {type.charAt(0).toUpperCase() + type.slice(1)}
-              </Button>
             </div>
           </CardContent>
+
+          <div className="pb-3 px-4 mt-auto space-y-2">
+            <div className="text-xs text-right text-muted-foreground mt-4">
+              Actualizado: {new Date(item.fecha_modificacion).toLocaleDateString()}
+            </div>
+          
+            <Button 
+              variant={"secondary"}
+              className="w-full dark:text-black disabled:bg-bg-disable-light disabled:text-text-disable-light disabled:dark:bg-bg-disable-dark disabled:dark:text-text-disable-dark"
+              onClick={() => addMaterial(type, item)}
+              disabled={item.status === 0}
+            >
+              Agregar {(type === "sensores" || type === "materiales" 
+                ? type.slice(0, -2) 
+                : type.slice(0, -1)
+              ).charAt(0).toUpperCase() + (type === "sensores" || type === "materiales" 
+                ? type.slice(0, -2) 
+                : type.slice(0, -1)
+              ).slice(1)}
+            </Button>
+          </div>
         </Card>
       ))}
     </div>
