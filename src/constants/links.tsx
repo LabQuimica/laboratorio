@@ -6,6 +6,7 @@ import {
   IconChecklist,
   IconFileAnalytics,
   IconUsers,
+  IconBook,
 } from "@tabler/icons-react";
 
 export const links = [
@@ -24,6 +25,7 @@ export const links = [
     ),
   },
   {
+<<<<<<< HEAD
     label: "Vales",
     href: "/menu/vale",
     icon: (
@@ -32,9 +34,19 @@ export const links = [
   },
   {
     label: "Usuarios",
+=======
+    label: "Usuarios registrados",
+>>>>>>> origin/master
     href: "/menu/users",
     icon: (
       <IconUsers className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    ),
+  },
+  {
+    label: "Manuañes",
+    href: "/menu/manuales",
+    icon: (
+      <IconBook className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
 ];
