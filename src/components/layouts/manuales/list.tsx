@@ -4,8 +4,15 @@ import { fetchManualFile } from "../../../services/fetchManuales";
 import ManualFile from "./showFile";
 import { Manual } from "../../../types/archivoTypes";
 
-const ManualFileList = () => {
-  const { data: files, isLoading, isError } = useQuery<Manual[], Error>({
+interface ManualFileListProps {
+  isSelectionMode: boolean;
+  selectedFiles: string[];
+  setSelectedFiles: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+
+const ManualFileList = ({ isSelectionMode, selectedFiles, setSelectedFiles }: ManualFileListProps) => {
+  const { data: files, isLoading, isError, refetch } = useQuery<Manual[], Error>({
     queryKey: ["manualFiles"],
     queryFn: fetchManualFile,
   });
@@ -22,10 +29,24 @@ const ManualFileList = () => {
     return <p>No hay archivos disponibles.</p>;
   }
 
+  const toggleFileSelection = (fileId: string) => {
+    setSelectedFiles(prev => 
+      prev.includes(fileId)
+        ? prev.filter(id => id !== fileId)
+        : [...prev, fileId]
+    );
+  };
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {files.map((file) => (
-        <ManualFile key={file.id} file={file} />
+        <ManualFile 
+          key={file.id} 
+          file={file} 
+          isSelectionMode={isSelectionMode}
+          isSelected={selectedFiles.includes(file.id)}
+          onToggleSelection={() => toggleFileSelection(file.id)}
+        />
       ))}
     </div>
   );
