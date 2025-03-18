@@ -86,13 +86,13 @@ export default function ValeDetailsDisplay({
                 <span className="text-gray-500">Solicitada:</span>
                 {data.fecha_solicitadaVale}
               </p>
-              {/* <p>
-                <span className="text-gray-600">Asignada:</span>
-                {data.fecha_asignadaPA}
-              </p> */}
               <p>
-                <span className="text-gray-500">Entrega:</span>
-                {data.fecha_entregaPA}
+                <span className="text-gray-600">Inicio:</span>
+                {data.fecha_inicio}
+              </p>
+              <p>
+                <span className="text-gray-500">Fin:</span>
+                {data.fecha_fin}
               </p>
             </div>
           </div>

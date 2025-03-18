@@ -11,7 +11,7 @@ interface TableControlsProps {
   filteredRowCount: number;
   totalRowCount: number;
   filterComponent?: React.ReactNode;
-  reactQueryKEY: string;
+  reactQueryKEY: string[];
 }
 
 export const TableControls = ({
@@ -25,17 +25,19 @@ export const TableControls = ({
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  const handleInvalidate = async (reactQueryKEY: string) => {
+  const handleInvalidate = async (reactQueryKEYs: string[]) => {
     try {
-      // Invalida las queries asociadas a la clave
-      await queryClient.invalidateQueries({ queryKey: [reactQueryKEY] });
+      await queryClient.invalidateQueries({ queryKey: reactQueryKEYs });
 
-      // Espera a que las queries se revalide y verifique si hay errores
-      const query = queryClient
+      // Espera a que las queries se revaliden y verifica si hay errores
+      const queries = queryClient
         .getQueryCache()
-        .find({ queryKey: [reactQueryKEY] });
-      if (query && query.state.error) {
-        throw query.state.error; // Lanza el error si existe
+        .findAll({ queryKey: reactQueryKEYs });
+
+      for (const query of queries) {
+        if (query.state.error) {
+          throw query.state.error; // Lanza el error si existe
+        }
       }
 
       toast({

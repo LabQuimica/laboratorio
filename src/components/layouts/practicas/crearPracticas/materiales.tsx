@@ -1,32 +1,14 @@
-"use client"
+"use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { useMateriales } from "@/hooks/Items/useItems";
-import { Material } from "@/types/MaterialesTypes";
 import MaterialView from "./materialView";
 
 type TipoMaterial = "kits" | "sensores" | "reactivos" | "materiales" | "equipos";
 
-export default function Materiales(){
-
+export default function Materiales() {
     const tipos: TipoMaterial[] = ["kits", "sensores", "reactivos", "materiales", "equipos"];
     const [tipoActivo, setTipoActivo] = useState<TipoMaterial>("kits");
     const { data, isLoading, error } = useMateriales(tipoActivo);

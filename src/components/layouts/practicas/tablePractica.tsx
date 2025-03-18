@@ -30,7 +30,7 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
         isLoading={isLoading}
         isError={isError}
         orderBy="fecha_creacion"
-        reactQueryKEY="vales"
+        reactQueryKEY={["practicas"]}
         FilterComponent={EstadoValeFilter}
       />
     </div>
