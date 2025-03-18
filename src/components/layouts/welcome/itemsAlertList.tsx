@@ -3,7 +3,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import ItemCard from "./alertCard";
 import { fetchItemsAlert } from "../../../services/fetchItems";
-import { ItemAlert } from "../../../types/itemTypes"; 
+import { ItemAlert } from "../../../types/itemTypes";
 
 const ItemsAlertList: React.FC = () => {
   const {
@@ -11,8 +11,8 @@ const ItemsAlertList: React.FC = () => {
     isLoading,
     isError,
   } = useQuery<ItemAlert[], Error>({
-    queryKey: ["itemsAlert"], 
-    queryFn: fetchItemsAlert, 
+    queryKey: ["itemsAlert"],
+    queryFn: fetchItemsAlert,
   });
 
   if (isLoading) return <p>Cargando...</p>;
@@ -24,8 +24,8 @@ const ItemsAlertList: React.FC = () => {
         Alertas de material
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items?.map((item) => (
-          <ItemCard key={item.id_item} item={item} />
+        {items?.map((item, index) => (
+          <ItemCard key={item.id_item || `item-${index}`} item={item} />
         ))}
       </div>
     </div>
