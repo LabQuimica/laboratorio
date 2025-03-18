@@ -2,7 +2,7 @@
 
 const URL = process.env.NEXT_PUBLIC_API_URL;
 
-type TipoMaterial = "kits" | "sensores" | "liquidos" | "solidos";
+type TipoMaterial = "kits" | "sensores" | "reactivos" | "materiales" | "equipos";
 
 export const fetchMateriales = async (tipo: TipoMaterial) => {
     let endpoint: string;
@@ -14,11 +14,14 @@ export const fetchMateriales = async (tipo: TipoMaterial) => {
         case "sensores":
           endpoint = "/materiales/getSensores";
           break;
-        case "liquidos":
-          endpoint = "/materiales/getLiquidos";
+        case "reactivos":
+          endpoint = "/materiales/getReactivos";
           break;
-        case "solidos":
-          endpoint = "/materiales/getSolidos";
+        case "materiales":
+          endpoint = "/materiales/getMateriales";
+          break;
+        case "equipos":
+          endpoint = "/materiales/getEquipos";
           break;
         default:
           throw new Error("Tipo de material no válido");
