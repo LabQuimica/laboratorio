@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import { jwtDecode } from "jwt-decode";
 // import { User } from "@/types/user";
 
@@ -71,6 +72,8 @@
 //   return response.json();
 // }
 
+=======
+>>>>>>> 6425d9216ee23171113e4ab5de06ee00eeb56fae
 import { jwtDecode } from "jwt-decode";
 import { User } from "@/types/user";
 
