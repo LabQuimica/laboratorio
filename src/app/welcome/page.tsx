@@ -22,7 +22,7 @@ export default function WelcomePage() {
           cursor: 'pointer',
         }}
       >
-        Iniciar Sesión
+        Iniciar sesión
       </button>
     </div>
   );
