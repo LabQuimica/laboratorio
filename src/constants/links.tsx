@@ -17,13 +17,6 @@ export const links = [
     ),
   },
   {
-    label: "Vales",
-    href: "/menu/vale",
-    icon: (
-      <IconChecklist className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-    ),
-  },
-  {
     label: "Prácticas",
     href: "/menu/practica",
     icon: (
@@ -31,7 +24,14 @@ export const links = [
     ),
   },
   {
-    label: "Usuarios generales",
+    label: "Vales",
+    href: "/menu/vale",
+    icon: (
+      <IconChecklist className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    ),
+  },
+  {
+    label: "Usuarios",
     href: "/menu/users",
     icon: (
       <IconUsers className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
