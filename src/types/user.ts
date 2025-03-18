@@ -8,4 +8,5 @@ export interface User {
   date: string;
   rol: Rol;
   active: boolean;
+  codigo: string;
 }
