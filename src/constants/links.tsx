@@ -25,6 +25,13 @@ export const links = [
     ),
   },
   {
+    label: "Vales",
+    href: "/menu/vale",
+    icon: (
+      <IconChecklist className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    ),
+  },
+  {
     label: "Usuarios registrados",
     href: "/menu/users",
     icon: (
