@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAddUser } from "@/hooks/Users/useUserMutations";
 import { useForm } from "react-hook-form";
-import { toast } from "@/hooks/use-toast"; // Tu toast personalizado
+import { toast } from "@/hooks/use-toast";
 import * as XLSX from "xlsx";
 import { useUsers } from "@/hooks/Users/useUser";
 

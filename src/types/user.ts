@@ -10,3 +10,11 @@ export interface User {
   active: boolean;
   codigo: string;
 }
+
+export interface AddUserRequest {
+  name: string;
+  email: string;
+  password: string;
+  rol: Rol;
+  codigo: string;
+}
