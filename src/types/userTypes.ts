@@ -7,6 +7,7 @@ export interface User {
     date: string; 
     rol: "administrador" | "profesor" | "alumno";
     active: number;
+    codigo: string;
   }
 
 export type rolUser = "administrador" | "profesor" | "alumno";

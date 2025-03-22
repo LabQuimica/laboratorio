@@ -6,8 +6,9 @@ export interface LoginResponse {
     name: string;
     email: string;
     date: string;
-    rol: Rol; // Cambiado de string a Rol
+    rol: Rol;
     active: boolean;
+    codigo: string;
   };
 }
 

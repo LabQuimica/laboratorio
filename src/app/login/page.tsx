@@ -43,7 +43,7 @@ export default function LoginPage() {
             ¡BienvenidO de nuevo!
           </h1>
           <p className="font-semibold text-2xl text-center">
-            Estamos Felices Por Tenerte Aquí
+            Estamos felices por tenerte aquí
           </p>
         </div>
         <div className="flex pt-16 w-full justify-center align-middle items-center">

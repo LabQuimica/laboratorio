@@ -8,30 +8,6 @@ import formatDateCell from "@/components/table/FormatedDate";
 import PasswordCell from "@/components/layouts/users/showPassword";
 
 export const columns: ColumnDef<User>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() ||
-  //         (table.getIsSomePageRowsSelected() && "indeterminate")
-  //       }
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //       className=""
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //       className=" "
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     accessorKey: "id_user",
     header: ({ column }) => (
@@ -54,31 +30,30 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => <TruncatedCell text={row.getValue("email")} />,
   },
   {
-    accessorKey: "password",
-    header: "Contraseña",
-    size: 30,
-    cell: ({ row }) => <PasswordCell password={row.getValue("password")} />,
-  },
-  {
-    accessorKey: "date",
-    header: "Fecha",
-    cell: formatDateCell("date"),
-  },
-  {
     accessorKey: "rol",
     header: "Rol",
-    size: 30,
+    size: 50,
+    cell: ({ row }) => (
+      <p className="text-center"> {row.getValue("rol")} </p>
+    ),
   },
   {
     accessorKey: "active",
     header: "Estado",
     size: 10,
     cell: ({ row }) => {
-      const value = row.getValue("active"); 
+      const value = row.getValue("active");
       return <p className="text-center">{value === 1 ? "Activo" : "No activo"}</p>;
     },
   },
-  
+  {
+    accessorKey: "codigo",
+    header: "Código",
+    size: 30,
+    cell: ({ row }) => (
+      <p className="text-center"> {row.getValue("codigo")} </p>
+    ),
+  },
   {
     accessorKey: "actions",
     header: "Actions",
@@ -86,3 +61,4 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => <ActionUser row={row} />,
   },
 ];
+
