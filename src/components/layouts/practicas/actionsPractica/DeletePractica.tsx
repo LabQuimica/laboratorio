@@ -53,7 +53,7 @@ const DeletePractica = ({ open, onOpenChange, idPractica }: DeletePracticaProps)
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogCancel className='text-black dark:text-white'>Cancelar</AlertDialogCancel>
           <AlertDialogAction className="text-white" onClick={handleDeleteConfirm}>Eliminar</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

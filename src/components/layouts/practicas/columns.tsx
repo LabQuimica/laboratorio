@@ -8,10 +8,25 @@ import StatusPractica from "./StatusPractica";
 import PracticaActions from "./AccionesPractica";
 import { usePracticas } from "@/hooks/Practicas/usePractica";
 import { useState } from "react";
+import { HoverDetailsDocente } from "./HoverDetailsDocente";
+import GroupBadge from "./GroupBadge";
+import StatusPracticaAsignada from "./profesor/StatusPracticaAsignada";
 
-export const docentecolumns: ColumnDef<Practica>[] = [
+// Columnas para el administrador
+// Columnas de practicas Creadas
+export const creadascolumns: ColumnDef<Practica>[] = [
   {
     accessorKey: "id_practica",
+  },
+  {
+    accessorKey: "docente",
+    header: "Docente",
+    size: 8,
+    cell: ({ row }) => (
+      <div className="flex items-center justify-center">
+        <HoverDetailsDocente nombre={row.getValue("docente")}/>
+      </div>
+    )
   },
   {
     accessorKey: "nombre",
@@ -52,9 +67,7 @@ export const docentecolumns: ColumnDef<Practica>[] = [
     ),
   }
 ];
-
-
-
+// Columnas de practicas Asignadas
 export const asignadascolumns: ColumnDef<Practica>[] = [
     {
         accessorKey: "id_practica",
@@ -65,7 +78,7 @@ export const asignadascolumns: ColumnDef<Practica>[] = [
       size: 8,
       cell: ({ row }) => (
         <div className="flex items-center justify-center">
-          <NameBadge nombre={row.getValue("docente")} />
+          <HoverDetailsDocente nombre={row.getValue("docente")}/>
         </div>
       )
     },
@@ -76,6 +89,7 @@ export const asignadascolumns: ColumnDef<Practica>[] = [
     {
         accessorKey: "descripcion",
         header: "Descripcion",
+        size: 350,
         //cell: ({ row }) => <TruncatedCell text={row.getValue("descripcion")} />,
     },
     {
@@ -90,12 +104,23 @@ export const asignadascolumns: ColumnDef<Practica>[] = [
       )
     },
     {
+      accessorKey: "status",
+      header: "Estatus",
+      size: 200,
+      cell: ({ row }) => <StatusPracticaAsignada row={row}/>
+    },
+    {
       accessorKey: "grupo",
       header: "Grupo",
+      size: 60,
       cell: ({ row }) => (
-        <span className="text-sm">
-          {row.getValue("grupo")} - {row.original.semestre}
-        </span>
+        <div className="flex flex-row row-span-2 gap-6 w-full">
+          <GroupBadge grupo={row.getValue("grupo")} className="w-12 h-12" />
+          <div className="flex flex-col">
+            <p className="font-bold">{row.getValue("grupo")}</p>
+            <p className="font-thin text-sm">{row.original.semestre}</p>
+          </div>
+        </div>
       ),
     },
-  ];
+];

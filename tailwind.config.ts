@@ -51,7 +51,7 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			},
-  			'bg-active-light': '#F5F5F5',
+			'bg-active-light': '#F5F5F5',
   			'bg-active-dark': '#262626',
   			'bg-disable-light': '#ECEEF0',
   			'bg-disable-dark': '#0E0E0E',
@@ -65,6 +65,7 @@ export default {
 			'btn-less-light': '#2563EB',
 			'btn-less-dark': '#2563EB',
 			'btn-add': '#2563EB',
+			'btn-session-blue': '#3988FF',
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

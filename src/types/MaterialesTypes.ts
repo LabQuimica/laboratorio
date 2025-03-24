@@ -28,7 +28,7 @@ export interface Sensor extends Material {
 export interface Reactivo extends Material {
     tipo: "reactivos";
 }
-  
+
 
 export interface Materiales extends Material {
     tipo: "materiales";

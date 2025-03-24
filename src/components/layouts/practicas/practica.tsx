@@ -4,9 +4,14 @@ import { useState } from 'react';
 import Tabs from "@/components/tabs/Tabs";
 import AddPractica from "./AddPractica";
 import { IconRosetteDiscountCheckFilled, IconClockCheck, IconArchiveOff } from "@tabler/icons-react";
+import { DocentePracticasTable } from "./profesor/tableDocentePracticas";
+import { useContext } from "react";
+import { UserContext } from "@/context/UserContext";
+import { UpdatePracticaStatus } from "./UpdatePracticaStatus";
 
 const PracticasPage = () => {
   const [viewType, setViewType] = useState<'creadas' | 'asignadas' | 'archivadas'>('creadas');
+  const { user } = useContext(UserContext);
   
   const tabs = [
     {
@@ -34,8 +39,11 @@ const PracticasPage = () => {
         </div>
 
         {/* Boton para añadir práctica */}
-        <div className="right-0">
+        <div className="flex flex-row right-0 space-x-2">
             <AddPractica />
+            <div className="pr-4">
+              <UpdatePracticaStatus />
+            </div>
         </div>
       </div>
 
@@ -47,8 +55,16 @@ const PracticasPage = () => {
       />
 
       {/* Tabla de prácticas envueltas en un fondo con estas clases de tailwind */}
-      <div className={"bg-bg-active-light dark:bg-bg-active-dark rounded-b-xl rounded-r-xl mr-3 px-5"}>
-        <PracticasTable viewType={viewType} />
+      <div className={"bg-bg-active-light dark:bg-bg-active-dark rounded-b-xl rounded-r-xl mr-3 px-5"} key={user?.id_user}>
+        {user?.rol === "administrador" ? (
+          <PracticasTable viewType={viewType} />
+        ) : user?.rol === "profesor" ? (
+          <div>
+            <DocentePracticasTable viewType={viewType} id_docente={user?.id_user} />
+          </div>
+        ) : (
+          <p className="text-center p-4">No tienes permisos para ver esta sección.</p>
+        )}
       </div>
       
     </div>
