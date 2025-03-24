@@ -8,4 +8,13 @@ export interface User {
   date: string;
   rol: Rol;
   active: boolean;
+  codigo: string;
+}
+
+export interface AddUserRequest {
+  name: string;
+  email: string;
+  password: string;
+  rol: Rol;
+  codigo: string;
 }
