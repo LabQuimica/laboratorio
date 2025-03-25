@@ -98,7 +98,7 @@ const PracticaMaterialesList = ({
   };
 
   const handleQuantityChange = (index: number, materialId: number, value: number) => {
-    const maxQuantity = Number(allMaterials?.find(m => m.id_item === materialId)?.cantidad) || Infinity;
+    const maxQuantity = Number(allMaterials?.find(m => m.id_item === materialId)?.cantidad) || 0;
     let errorMessage = "";
 
     if (value < 1) {
@@ -140,9 +140,14 @@ const PracticaMaterialesList = ({
                       <Input value={material.nombre} disabled className="w-3/4 shadow-none"/>
                       <Input
                         type="number"
-                        value={material.cantidad}
-                        className="w-1/4 shadow-none outline-transparent"
-                        onChange={(e) => handleQuantityChange(index, material.id_item, Number(e.target.value))}
+                        placeholder={material.cantidad}
+                        className="w-1/4 shadow-none outline-transparent placeholder:text-white"
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value !== "") {
+                            handleQuantityChange(index, material.id_item, Number(value));
+                          }
+                        }}
                       />
 
                       <Button
