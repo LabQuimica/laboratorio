@@ -22,11 +22,8 @@ import statusStylesPractica from "./SatusStylesPractica";
 import { useUpdatePracticaStatus } from "@/hooks/Practicas/usePractica";
 
 export function UpdatePracticaStatus() {
-  const {
-    statusChanges,
-    clearStatusChanges,
-    removeStatusChangeById,
-  } = usePracticaStore();
+  const { statusChanges, clearStatusChanges, removeStatusChangeById } =
+    usePracticaStore();
 
   const { toast } = useToast();
   const updateMutation = useUpdatePracticaStatus();
@@ -39,8 +36,7 @@ export function UpdatePracticaStatus() {
       await updateMutation.mutateAsync({ statusChanges });
       toast({
         title: "Actualización exitosa",
-        description:
-          "Los estados de prácticas han sido actualizados.",
+        description: "Los estados de prácticas han sido actualizados.",
       });
       clearStatusChanges();
     } catch (error) {
@@ -76,7 +72,8 @@ export function UpdatePracticaStatus() {
           <SheetTitle>Cambios Pendientes de Práctica</SheetTitle>
           <SheetDescription>
             Revisa los cambios antes de confirmar la actualización. Esta acción
-            actualizará el estado y los comentarios de las prácticas seleccionadas.
+            actualizará el estado y los comentarios de las prácticas
+            seleccionadas.
           </SheetDescription>
         </SheetHeader>
         <ScrollArea className="h-[80%] mt-4 rounded-md border p-4">
@@ -87,10 +84,10 @@ export function UpdatePracticaStatus() {
                 className="mb-4 p-3 border rounded-lg "
               >
                 <div className="flex justify-between items-center content-center">
-                  <span className="text-sm">Vale ID: {change.id_practica}</span>
-                  <span className="text-sm text-gray-500">
-                    Tipo: {(change as any).tableType}
+                  <span className="text-sm">
+                    Práctica ID: {change.id_practica}
                   </span>
+                  <span className="text-sm text-gray-500"></span>
                   <Button
                     variant="default"
                     className="bg-red-700 hover:bg-red-600"

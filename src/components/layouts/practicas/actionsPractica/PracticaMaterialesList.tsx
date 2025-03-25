@@ -112,8 +112,6 @@ const PracticaMaterialesList = ({
         ...prevErrors,
         [materialId]: errorMessage,
       };
-      const hasAnyError = Object.values(newErrors).some(error => error !== "");
-      onErrorsChange(hasAnyError);
       return newErrors;
     });
 
@@ -121,6 +119,12 @@ const PracticaMaterialesList = ({
       onMaterialChange(index, "cantidad", value);
     }
   };
+
+  // Use useEffect to notify parent about errors after state updates
+  useEffect(() => {
+    const hasAnyError = Object.values(errors).some(error => error !== "");
+    onErrorsChange(hasAnyError);
+  }, [errors, onErrorsChange]);
 
   return (
     <>
