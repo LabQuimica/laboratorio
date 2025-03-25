@@ -96,7 +96,7 @@ export function UpdateVale() {
                   </span>
                   <Button
                     variant="default"
-                    className="bg-red-700 hover:bg-red-600"
+                    className="bg-destructive hover:bg-destructive/90"
                     size="icon"
                     onClick={() => {
                       if ("oldStatus" in change) {

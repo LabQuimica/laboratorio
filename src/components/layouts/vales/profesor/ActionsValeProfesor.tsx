@@ -12,7 +12,7 @@ import { useValeDetailsProfesor } from "@/hooks/Vales/useVales";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ValeDetailsProfesor from "./ValeDetailsProfesor";
-import Link from "next/link";
+import MenuPDFValeProfesor from "./PDF/MenuPDF";
 
 interface Props {
   id_practica_asignada: number;
@@ -55,12 +55,7 @@ export function ActionValeProfesor({ id_practica_asignada }: Props) {
             )}
           </div>
           <SheetFooter>
-            <Link
-              href={`/pdf/valeProfesor/${id_practica_asignada}`}
-              target="_blank"
-            >
-              <Button>Descargar</Button>
-            </Link>
+            <MenuPDFValeProfesor data={data} />
           </SheetFooter>
         </SheetContent>
       </Sheet>
