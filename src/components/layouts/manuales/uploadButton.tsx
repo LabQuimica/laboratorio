@@ -4,7 +4,11 @@ import { IconUpload } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { uploadFile } from "../../../services/fetchManuales";
 
-const UploadButton = () => {
+interface UploadButtonProps {
+  folderId?: string;
+}
+
+const UploadButton = ({ folderId }: UploadButtonProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadError, setUploadError] = useState("");
@@ -20,7 +24,13 @@ const UploadButton = () => {
     setUploadError("");
 
     try {
-      await uploadFile(file);
+      const formData = new FormData();
+      formData.append("files", file);
+      if (folderId) {
+        formData.append("folderId", folderId);
+      }
+
+      await uploadFile(formData);
       
       // barra de carga
       const simulateProgress = () => {

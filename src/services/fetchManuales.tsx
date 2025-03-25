@@ -1,36 +1,36 @@
-const URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = process.env.NEXT_PUBLIC_API_URL || 'localhost:1234';
 
 // obtener archivos
-export const fetchManualFile = async () => {
+export const fetchManualFile = async (folderId?: string) => {
   try {
-    const response = await fetch(`http://${URL}/manuales/drive-files`); 
+    const response = await fetch(`http://${URL}/manuales/drive-files${folderId ? `?folderId=${folderId}` : ''}`);
+    if (!response.ok) {
+      throw new Error('Error al obtener los archivos');
+    }
     const data = await response.json();
     return data || [];
   } catch (error) {
-    console.error("Error al obtener archivos desde el servidor:", error);
-    return [];
+    console.error('Error:', error);
+    throw error;
   }
 };
 
 // subir archivos
-export const uploadFile = async (file: File) => {
+export const uploadFile = async (formData: FormData) => {
   try {
-    const formData = new FormData();
-    formData.append("file", file);
-    
     const response = await fetch(`http://${URL}/manuales/upload-to-drive`, {
-      method: "POST",
-      body: formData,
+      method: 'POST',
+      body: formData
     });
     
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Error al subir el archivo");
+      throw new Error('Error al subir el archivo');
     }
-    
-    return await response.json();
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error("Error al subir archivo:", error);
+    console.error('Error:', error);
     throw error;
   }
 };
@@ -38,22 +38,22 @@ export const uploadFile = async (file: File) => {
 // eliminar archivos
 export const deleteFiles = async (fileIds: string[]) => {
   try {
-    const response = await fetch(`http://${URL}/manuales/delete-from-drive`, {
-      method: "POST",
+    const response = await fetch(`http://${URL}/manuales/delete-files`, {
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ fileIds }),
     });
-    
+
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Error al eliminar los archivos");
+      throw new Error('Error al eliminar los archivos');
     }
-    
-    return await response.json();
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error("Error al eliminar archivos:", error);
+    console.error('Error:', error);
     throw error;
   }
 };
