@@ -1,22 +1,34 @@
 import { useState, useEffect } from "react";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { usePracticaById } from "@/hooks/Practicas/usePractica";
 import { useUpdatePractica } from "@/hooks/Practicas/usePractica";
 import { useDeleteMaterialPractica } from "@/hooks/Practicas/usePractica";
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from "@/hooks/use-toast";
 import { Practica } from "@/types/PracticaTypes";
 import { Material } from "@/types/MaterialesTypes";
 import PracticaDetailsForm from "./PracticaDetailsForm";
 import PracticaMaterialesList from "./PracticaMaterialesList";
 
 interface EditPracticaProps {
-open: boolean;
-onOpenChange: (open: boolean) => void;
-idPractica: number;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  idPractica: number;
 }
 
-const EditPractica = ({ open, onOpenChange, idPractica }: EditPracticaProps) => {
+const EditPractica = ({
+  open,
+  onOpenChange,
+  idPractica,
+}: EditPracticaProps) => {
   const { data: practica, isLoading } = usePracticaById(idPractica);
   const updatePractica = useUpdatePractica();
   const deleteMaterialPractica = useDeleteMaterialPractica();
@@ -38,13 +50,12 @@ const EditPractica = ({ open, onOpenChange, idPractica }: EditPracticaProps) => 
 
   const [materialsToDelete, setMaterialsToDelete] = useState<number[]>([]);
 
-
   useEffect(() => {
     if (practica) {
       const initialData = {
         nombre: practica.nombre,
         descripcion: practica.descripcion,
-        materiales: practica.materiales || []
+        materiales: practica.materiales || [],
       };
       setFormData(initialData);
       setOriginalData(initialData);
@@ -62,13 +73,15 @@ const EditPractica = ({ open, onOpenChange, idPractica }: EditPracticaProps) => 
   };
 
   const handleAddMaterial = (material: Material) => {
-    const materialExists = formData.materiales?.some(mat => mat.id_item === material.id_item);
+    const materialExists = formData.materiales?.some(
+      (mat) => mat.id_item === material.id_item
+    );
 
     if (!materialExists) {
       const updatedMateriales = [...(formData.materiales || []), material];
       setFormData({
         ...formData,
-        materiales: updatedMateriales
+        materiales: updatedMateriales,
       });
       return true;
     } else {
@@ -78,20 +91,21 @@ const EditPractica = ({ open, onOpenChange, idPractica }: EditPracticaProps) => 
 
   const handleRemoveMaterial = (materialId: number) => {
     const existedInOriginal = originalData.materiales?.some(
-      material => material.id_item === materialId
+      (material) => material.id_item === materialId
     );
     if (existedInOriginal) {
-      setMaterialsToDelete(prev => [...prev, materialId]);
+      setMaterialsToDelete((prev) => [...prev, materialId]);
     }
 
-    setFormData(prevFormData => {
-      const updatedMateriales = prevFormData.materiales?.filter(
-        material => material.id_item !== materialId
-      ) || [];
-      
+    setFormData((prevFormData) => {
+      const updatedMateriales =
+        prevFormData.materiales?.filter(
+          (material) => material.id_item !== materialId
+        ) || [];
+
       return {
         ...prevFormData,
-        materiales: updatedMateriales
+        materiales: updatedMateriales,
       };
     });
 
@@ -102,7 +116,8 @@ const EditPractica = ({ open, onOpenChange, idPractica }: EditPracticaProps) => 
     if (hasErrors) {
       toast({
         title: "No se pueden guardar los cambios",
-        description: "Hay errores en los materiales. Por favor revise las cantidades.",
+        description:
+          "Hay errores en los materiales. Por favor revise las cantidades.",
         variant: "destructive",
       });
       return;
@@ -112,7 +127,7 @@ const EditPractica = ({ open, onOpenChange, idPractica }: EditPracticaProps) => 
       for (const materialId of materialsToDelete) {
         await deleteMaterialPractica.mutateAsync({
           practicaId: idPractica,
-          materialId: materialId
+          materialId: materialId,
         });
       }
 
@@ -142,7 +157,9 @@ const EditPractica = ({ open, onOpenChange, idPractica }: EditPracticaProps) => 
       <SheetContent className="w-[30rem] h-full overflow-y-scroll">
         <SheetHeader>
           <SheetTitle>Editar Práctica</SheetTitle>
-          <SheetDescription>Modifique los datos de la práctica</SheetDescription>
+          <SheetDescription>
+            Modifique los datos de la práctica
+          </SheetDescription>
         </SheetHeader>
 
         {isLoading ? (
@@ -150,15 +167,15 @@ const EditPractica = ({ open, onOpenChange, idPractica }: EditPracticaProps) => 
         ) : (
           <div className="grid gap-4 py-4">
             {/* Nombre y descripcion de practica */}
-            <PracticaDetailsForm 
+            <PracticaDetailsForm
               id_practica={idPractica}
               nombre={formData.nombre || ""}
               descripcion={formData.descripcion || ""}
               onChange={handleDetailsChange}
             />
-            
+
             {/* Materiales de practica */}
-            <PracticaMaterialesList 
+            <PracticaMaterialesList
               materiales={formData.materiales || []}
               practicaId={idPractica}
               onMaterialChange={handleMaterialChange}
@@ -171,14 +188,15 @@ const EditPractica = ({ open, onOpenChange, idPractica }: EditPracticaProps) => 
 
         <SheetFooter className="mt-4">
           <SheetClose asChild>
-            <Button 
-            variant="outline" 
-            onClick={() => {
-              if (originalData) {
-                setFormData(originalData);
-              }
-              onOpenChange(false);
-            }}>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                if (originalData) {
+                  setFormData(originalData);
+                }
+                onOpenChange(false);
+              }}
+            >
               Cancelar
             </Button>
           </SheetClose>
