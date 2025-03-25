@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 import { useValeDetailsProfesor } from "@/hooks/Vales/useVales";
 import { PDFViewer } from "@react-pdf/renderer";
-import PDFProfesor from "@/components/layouts/pdf/profesor/pdf";
+import PDFProfesor from "@/components/pdf/profesor/pdf";
 
 export default function ValePDFProfesor() {
   const params = useParams();

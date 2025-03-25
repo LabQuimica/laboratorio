@@ -13,6 +13,7 @@ import { useState } from "react";
 import ValeDetailsDisplay from "./ValeDetailsDisplay";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import MenuPDFValeAlumno from "./PDF/MenuPDF";
 
 interface Props {
   id_vale: number;
@@ -51,9 +52,7 @@ export function ActionValeAlumno({ id_vale }: Props) {
             )}
           </div>
           <SheetFooter>
-            <Link href={`/pdf/valeAlumno/${id_vale}`} target="_blank">
-              <Button>Descargar</Button>
-            </Link>
+            <MenuPDFValeAlumno data={data} />
           </SheetFooter>
         </SheetContent>
       </Sheet>
