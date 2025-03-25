@@ -23,7 +23,7 @@ const ManualFile = ({
 }: ManualFileProps) => {
   const [hover, setHover] = useState(false);
 
-  // Para los iconos de los archivos (solo dpf y carpetas)
+  // iconos de los archivos (solo dpf y carpetas)
   const FileIcon = () => {
     if (file.mimeType === "application/pdf") {
       return <IconFileTypePdf className="w-12 h-12 text-red-600" />;
@@ -39,6 +39,12 @@ const ManualFile = ({
       className="flex flex-col items-center gap-2 p-4 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-lg overflow-hidden border w-full"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={() => {
+        if (!isSelectionMode && file.mimeType === "application/vnd.google-apps.folder") {
+          window.open(`/menu/manuales/${file.id}`, '_blank');
+        }
+      }}
+      style={{ cursor: file.mimeType === "application/vnd.google-apps.folder" ? 'pointer' : 'default' }}
     >
       <div className="relative">
         <FileIcon />
