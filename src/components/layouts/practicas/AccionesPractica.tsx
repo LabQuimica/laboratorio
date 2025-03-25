@@ -8,6 +8,7 @@ import {
 import { IconEdit, IconTrash, IconHandFinger } from '@tabler/icons-react';
 import DeletePractica from "./actionsPractica/DeletePractica";
 import AsignarPractica from "./actionsPractica/AsignarPractica";
+import EditPractica from "./actionsPractica/EditarPractica";
 
 interface PracticaActionsProps {
   idPractica: number;
@@ -17,6 +18,7 @@ interface PracticaActionsProps {
 const PracticaActions = ({ idPractica, estaAsignada}: PracticaActionsProps) => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openAsignar, setOpenAsignar] = useState(false);
+  const [openModificar, setOpenModificar] = useState(false);
 
   return (
     <div className='flex justify-center w-full'>
@@ -26,8 +28,8 @@ const PracticaActions = ({ idPractica, estaAsignada}: PracticaActionsProps) => {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={() => console.log("Modificar práctica")}>
-            <IconEdit className="h-5 w-5 mr-2" /> Modificar
+          <DropdownMenuItem onSelect={() => setOpenModificar(true)}>
+            <IconEdit className="h-5 w-5 mr-2" /> Editar
           </DropdownMenuItem>
 
           {!estaAsignada && (
@@ -57,6 +59,13 @@ const PracticaActions = ({ idPractica, estaAsignada}: PracticaActionsProps) => {
           idPractica={idPractica} 
         />
       )}
+
+      {/* Modal para editar practica */}
+      <EditPractica 
+        open={openModificar} 
+        onOpenChange={setOpenModificar} 
+        idPractica={idPractica} 
+      />
     </div>
   );
 };

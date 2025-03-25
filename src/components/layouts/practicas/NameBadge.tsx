@@ -17,17 +17,17 @@ const getInitials = (name: string) => {
     .toUpperCase();
 };
 
-const NameBadge = ({ nombre }: { nombre: string }) => {
+const NameBadge = ({ nombre, className }: { nombre: string, className?: string }) => {
   const color = getColorFromName(nombre);
   const initials = getInitials(nombre);
 
   return (
     <div className="items-center justify-center align-middle text-center">
         <span
-        className="block px-1 py-4 h-12 w-12 items-center justify-center align-middle text-white text-sm font-bold rounded-3xl"
+        className={`flex px-1 py-4 ${className} items-center justify-center align-middle text-white text-sm font-bold rounded-full`}
         style={{ backgroundColor: color }}
         >
-        <p>{initials}</p>
+        <p className="self-center">{initials}</p>
         </span>
     </div>
   );

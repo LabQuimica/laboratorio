@@ -1,3 +1,14 @@
+import { Material } from "./MaterialesTypes";
+
+export type EstadoPractica = "pendiente" | "progreso" | "completada" | "cancelada" | "inhabilitada";
+
+export interface StatusChange {
+  id_practica: number;
+  oldStatus: EstadoPractica;
+  newStatus: EstadoPractica;
+}
+
+
 export interface Practica {
 	id: number;
 	docente: string;
@@ -9,4 +20,5 @@ export interface Practica {
 	grupo: string | null;
 	semestre: string | null;
 	status: string | null;
+	materiales?: Material[];
 }

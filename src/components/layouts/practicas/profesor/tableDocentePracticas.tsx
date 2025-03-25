@@ -1,20 +1,18 @@
 "use client";
-import { useEffect, useState } from "react";
-import { usePracticas } from "@/hooks/Practicas/usePractica";
-import { asignadascolumns, creadascolumns } from "./columns";
-import DocenteSelector from "./docenteSelector";
 import { Table } from "@/components/table/Table";
 import { Practica } from "@/types/PracticaTypes";
-import { EstadoValeFilter } from "../vales/alumno/FilterVale";
+import { useDocentePracticas } from "@/hooks/Practicas/profesor/useDocentePracticas";
+import { asignadascolumns, creadascolumns } from "./columns";
+import { EstadoValeFilter } from "../../vales/alumno/FilterVale";
+import { useEffect } from "react";
 
-interface PracticasTableProps {
+interface DocentePracticasTableProps {
   viewType: "creadas" | "asignadas" | "archivadas";
+  id_docente: number;
 }
 
-export const PracticasTable = ({ viewType }: PracticasTableProps) => {
-  const { data: practicasAdmin, isLoading, isError} = usePracticas(viewType);
-  //const { practicasData } = usePracticas();
-
+export const DocentePracticasTable = ({ viewType, id_docente }: DocentePracticasTableProps) => {
+  const { data: practicasDocente, isLoading, isError } = useDocentePracticas(viewType, id_docente);
   const columns = viewType === "creadas" ? creadascolumns : asignadascolumns;
 
   if (viewType === "archivadas") {
@@ -25,7 +23,7 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
     <div>
       {/* Tabla */}
       <Table<Practica>
-        data={practicasAdmin || []}
+        data={practicasDocente || []}
         columns={columns}
         isLoading={isLoading}
         isError={isError}
