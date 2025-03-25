@@ -70,16 +70,12 @@ const ItemsTable = ({ items }: { items: ValeAlumnoDetailsMateriale[] }) => {
                 <Text>{item.nombre_item}</Text>
               </View>
               <View style={[styles.cell, styles.lessMaxWidth]}>
-                <Text>
-                  {item.tipo_item === "solidos" || item.tipo_item === "liquidos"
-                    ? "reactivo"
-                    : item.tipo_item}
-                </Text>
+                <Text>{item.tipo_item}</Text>
               </View>
               <View style={[styles.cell]}>
                 <Text>
                   {item.tipo_item === "kits" || item.tipo_item === "sensores"
-                    ? ""
+                    ? "Sin caracteristicas"
                     : item.caracteristica}
                 </Text>
               </View>
