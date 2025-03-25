@@ -112,10 +112,11 @@ const PracticaMaterialesList = ({
         ...prevErrors,
         [materialId]: errorMessage,
       };
-      const hasAnyError = Object.values(newErrors).some(error => error !== "");
-      onErrorsChange(hasAnyError);
       return newErrors;
     });
+  
+    const hasAnyError = Object.values(errors).some(error => error !== "");
+    onErrorsChange(hasAnyError);
 
     if (!errorMessage) {
       onMaterialChange(index, "cantidad", value);
