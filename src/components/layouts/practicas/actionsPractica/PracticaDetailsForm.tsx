@@ -60,7 +60,7 @@ const PracticaDetailsForm = ({ id_practica, nombre, descripcion, onChange }: Pra
               name="descripcion"
               value={descripcion}
               onChange={handleChange}
-              className="col-span-3 shadow-none"
+              className="col-span-3 shadow-none h-28"
             />
           </div>
 
