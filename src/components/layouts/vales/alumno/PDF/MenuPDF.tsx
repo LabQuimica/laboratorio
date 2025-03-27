@@ -19,8 +19,6 @@ import { ValeAlumnoDetails } from "@/types/ValeTypes";
 import dynamic from "next/dynamic";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFAlumno from "@/components/pdf/alumno/pdf";
-import PDFProfesor from "@/components/pdf/profesor/pdf";
-import { url } from "inspector";
 
 const InterfacePDFValeAlumno = dynamic(() => import("./interfacePDF"), {
   ssr: false,
@@ -32,13 +30,6 @@ export default function MenuPDFValeAlumno({
   data?: ValeAlumnoDetails;
 }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
-
-  const handleDownload = () => {
-    if (downloadLinkRef.current) {
-      downloadLinkRef.current.click();
-    }
-  };
 
   return (
     <div>
@@ -76,37 +67,16 @@ export default function MenuPDFValeAlumno({
             </DialogContent>
           </Dialog>
 
-          <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault();
-              handleDownload();
-            }}
-            className="cursor-pointer"
-          >
-            Descargar PDF
-          </DropdownMenuItem>
-
-          <a
-            ref={downloadLinkRef}
-            href="#"
-            style={{ display: "none" }}
-            download={`vale_alumno_${data?.id_vale}.pdf`}
-          >
-            Descargar PDF
-          </a>
-
-          <PDFDownloadLink
-            document={<PDFAlumno data={data} />}
-            fileName={`vale_alumno_${data?.id_vale}.pdf`}
-          >
-            {({ url }) => {
-              if (url && downloadLinkRef.current) {
-                downloadLinkRef.current.href = url;
+          <DropdownMenuItem>
+            <PDFDownloadLink
+              document={<PDFAlumno data={data} />}
+              fileName={`vale_alumno_${data?.id_vale}_${data?.nombre_alumno}.pdf`}
+            >
+              {({ loading }) =>
+                loading ? "Generando PDF..." : "Descargar PDF"
               }
-
-              return null;
-            }}
-          </PDFDownloadLink>
+            </PDFDownloadLink>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

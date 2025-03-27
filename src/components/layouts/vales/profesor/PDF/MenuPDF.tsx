@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -30,13 +30,6 @@ export default function MenuPDFValeProfesor({
   data?: ValeProfesorDetails;
 }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
-
-  const handleDownload = () => {
-    if (downloadLinkRef.current) {
-      downloadLinkRef.current.click();
-    }
-  };
 
   return (
     <div>
@@ -52,6 +45,7 @@ export default function MenuPDFValeProfesor({
                   e.preventDefault();
                   setIsDialogOpen(true);
                 }}
+                className="cursor-pointer"
               >
                 Visualizar PDF
               </DropdownMenuItem>
@@ -73,36 +67,16 @@ export default function MenuPDFValeProfesor({
             </DialogContent>
           </Dialog>
 
-          <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault();
-              handleDownload();
-            }}
-          >
-            Descargar PDF
-          </DropdownMenuItem>
-
-          <a
-            ref={downloadLinkRef}
-            href="#"
-            style={{ display: "none" }}
-            download={`vale_profesor_${data?.id_practica_asignada}_${data?.nombre_usuario}.pdf`}
-          >
-            Descargar PDF
-          </a>
-
-          <PDFDownloadLink
-            document={<PDFProfesor data={data} />}
-            fileName={`vale_profesor_${data?.id_practica_asignada}_${data?.nombre_usuario}.pdf`}
-          >
-            {({ blob, url, loading, error }) => {
-              if (url && downloadLinkRef.current) {
-                downloadLinkRef.current.href = url;
+          <DropdownMenuItem>
+            <PDFDownloadLink
+              document={<PDFProfesor data={data} />}
+              fileName={`vale_profesor_${data?.id_practica_asignada}_${data?.nombre_usuario}.pdf`}
+            >
+              {({ loading }) =>
+                loading ? "Generando PDF..." : "Descargar PDF"
               }
-
-              return null;
-            }}
-          </PDFDownloadLink>
+            </PDFDownloadLink>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
