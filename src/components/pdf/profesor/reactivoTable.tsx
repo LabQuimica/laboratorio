@@ -47,7 +47,7 @@ const ReactivoTable = ({ items }: { items: ItemProfesor[] }) => {
           <Text>UBICACIÓN</Text>
         </View>
         <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-          <Text>CANTIDAD UTILIZADA (ml/gr)</Text>
+          <Text>CANTIDAD UTILIZADA (mL/g)</Text>
         </View>
       </View>
 
@@ -61,7 +61,7 @@ const ReactivoTable = ({ items }: { items: ItemProfesor[] }) => {
                 <Text>{item.ubicacion}</Text>
               </View>
               <View style={[styles.cell, styles.maxWidth]}>
-                <Text>{`${item.cantidad_total_necesaria} ml/gr`}</Text>
+                <Text>{`${item.cantidad_total_necesaria} mL/g`}</Text>
               </View>
             </View>
           ))
