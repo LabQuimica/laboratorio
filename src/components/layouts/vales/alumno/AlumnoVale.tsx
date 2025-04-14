@@ -6,7 +6,7 @@ import {
   IconSkull,
   IconCircleDashedX,
 } from "@tabler/icons-react";
-import { ValesAlumnoTable } from "./tableVale";
+import { ValesAlumnoTable } from "./TableVale";
 import { useState } from "react";
 import Tabs from "@/components/tabs/Tabs";
 import { EstadoVale } from "@/types/ValeTypes";
