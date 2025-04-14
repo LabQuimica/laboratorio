@@ -1,5 +1,6 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { pdf } from "@react-pdf/renderer";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -17,7 +18,6 @@ import {
 } from "@/components/ui/dialog";
 import { ValeAlumnoDetails } from "@/types/ValeTypes";
 import dynamic from "next/dynamic";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFAlumno from "@/components/pdf/alumno/pdf";
 
 const InterfacePDFValeAlumno = dynamic(() => import("./interfacePDF"), {
@@ -30,6 +30,31 @@ export default function MenuPDFValeAlumno({
   data?: ValeAlumnoDetails;
 }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleDownloadClick = async () => {
+    if (isGenerating || !data) return;
+    setIsGenerating(true);
+    try {
+      const blob = await pdf(<PDFAlumno data={data} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      const fileName = `vale_alumno_${data?.id_vale ?? "id"}_${
+        data?.nombre_alumno ?? "alumno"
+      }.pdf`;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error generating or downloading PDF:", error);
+      alert("Hubo un error al generar el PDF. Por favor, inténtalo de nuevo.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <div>
@@ -37,6 +62,7 @@ export default function MenuPDFValeAlumno({
         <DropdownMenuTrigger asChild>
           <Button variant="outline">Acciones</Button>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
@@ -67,15 +93,15 @@ export default function MenuPDFValeAlumno({
             </DialogContent>
           </Dialog>
 
-          <DropdownMenuItem>
-            <PDFDownloadLink
-              document={<PDFAlumno data={data} />}
-              fileName={`vale_alumno_${data?.id_vale}_${data?.nombre_alumno}.pdf`}
-            >
-              {({ loading }) =>
-                loading ? "Generando PDF..." : "Descargar PDF"
-              }
-            </PDFDownloadLink>
+          <DropdownMenuItem
+            onSelect={(e) => {
+              e.preventDefault();
+              handleDownloadClick();
+            }}
+            disabled={isGenerating}
+            className="cursor-pointer"
+          >
+            {isGenerating ? "Generando PDF..." : "Descargar PDF"}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
