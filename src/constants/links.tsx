@@ -1,8 +1,5 @@
 import {
-  IconArrowLeft,
   IconBrandTabler,
-  IconSettings,
-  IconUserBolt,
   IconChecklist,
   IconFileAnalytics,
   IconUsers,

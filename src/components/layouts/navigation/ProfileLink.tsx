@@ -8,7 +8,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import profile from "../../../../public/images/profile.jpeg";
 import { SidebarLink } from "@/components/ui/sidebar";
 import { ThemeMenu } from "./ui/ThemeMenu";
 import { UserMenu } from "./ui/UserMenu";
@@ -34,7 +33,7 @@ export const ProfileLink = ({
             href: "#",
             icon: (
               <Image
-                src={`avatars/${user?.img}`}
+                src={`/avatars/${user?.img}`}
                 className="h-7 w-7 flex-shrink-0 rounded-full"
                 width={50}
                 height={50}

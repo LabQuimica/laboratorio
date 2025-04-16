@@ -4,6 +4,7 @@ import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconMenu2, IconX } from "@tabler/icons-react";
+import { usePathname } from "next/navigation";
 
 interface Links {
   label: string;
@@ -92,7 +93,7 @@ export const DesktopSidebar = ({
     <>
       <motion.div
         className={cn(
-          "h-full px-4 py-4 hidden  md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 w-[200px] flex-shrink-0",
+          "h-full py-4 hidden  md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 w-[200px] flex-shrink-0",
           className
         )}
         animate={{
@@ -168,11 +169,15 @@ export const SidebarLink = ({
   props?: LinkProps;
 }) => {
   const { open, animate } = useSidebar();
+  const pathname = usePathname();
+  const isActive = pathname.startsWith(link.href);
+
   return (
     <Link
       href={link.href}
       className={cn(
-        "flex items-center justify-start gap-2  group/sidebar py-2",
+        "flex  px-4 items-center justify-start gap-2 group/sidebar py-2",
+        isActive && "bg-white dark:bg-neutral-700 rounded-md ",
         className
       )}
       {...props}
