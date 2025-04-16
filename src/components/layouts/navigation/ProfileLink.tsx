@@ -12,14 +12,17 @@ import profile from "../../../../public/images/profile.jpeg";
 import { SidebarLink } from "@/components/ui/sidebar";
 import { ThemeMenu } from "./ui/ThemeMenu";
 import { UserMenu } from "./ui/UserMenu";
+import { useContext } from "react";
+import { UserContext } from "@/context/UserContext";
 
 export const ProfileLink = ({
   setAnimate,
 }: {
   setAnimate: (value: boolean) => void;
 }) => {
+  const { user } = useContext(UserContext);
   const handleOpenChange = (open: boolean) => {
-    setAnimate(!open); // Desactivar animación cuando el menú está abierto
+    setAnimate(!open);
   };
 
   return (
@@ -27,11 +30,11 @@ export const ProfileLink = ({
       <DropdownMenuTrigger asChild>
         <SidebarLink
           link={{
-            label: "Manu Arora",
+            label: user?.name || "",
             href: "#",
             icon: (
               <Image
-                src={profile}
+                src={`avatars/${user?.img}`}
                 className="h-7 w-7 flex-shrink-0 rounded-full"
                 width={50}
                 height={50}
