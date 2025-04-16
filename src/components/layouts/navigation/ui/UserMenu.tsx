@@ -20,9 +20,8 @@ export const UserMenu = () => {
     localStorage.removeItem("user");
     setUser(null);
 
-    queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
-    queryClient.invalidateQueries({ queryKey: ["practicas"] });
-    
+    queryClient.removeQueries();
+
     router.push("/login");
   };
 
