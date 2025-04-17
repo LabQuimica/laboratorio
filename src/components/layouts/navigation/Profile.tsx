@@ -7,13 +7,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
 import { SidebarLink } from "@/components/ui/sidebar";
 import { ThemeMenu } from "./ui/ThemeMenu";
 import { UserMenu } from "./ui/UserMenu";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  getInitials,
+} from "@/components/ui/avatar";
 
 export const ProfileOptions = ({
   setAnimate,
@@ -35,6 +39,7 @@ export const ProfileOptions = ({
             icon: (
               <Avatar>
                 <AvatarImage src={`/avatars/${user?.img}`} />
+                <AvatarFallback>{getInitials(user?.name)}</AvatarFallback>
               </Avatar>
             ),
           }}
@@ -50,6 +55,7 @@ export const ProfileOptions = ({
           e.preventDefault();
         }}
       >
+        <DropdownMenuSeparator />
         <DropdownMenuLabel>Temas</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <ThemeMenu />
