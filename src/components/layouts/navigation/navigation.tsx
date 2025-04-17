@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Sidebar, SidebarBody } from "@/components/ui/sidebar";
 import { Logo } from "./Logo";
-import { ProfileLink } from "./ProfileLink";
+import { ProfileOptions } from "./Profile";
 import { SidebarLinks } from "./SidebarLinks";
 import { cn } from "@/lib/utils";
 
@@ -23,7 +23,7 @@ export default function Navigation({
             <Logo />
             <SidebarLinks />
           </div>
-          <ProfileLink setAnimate={setAnimate} />
+          <ProfileOptions setAnimate={setAnimate} />
         </SidebarBody>
       </Sidebar>
       <main className="flex-1 overflow-auto dark:bg-background">

@@ -15,7 +15,7 @@ import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export const ProfileLink = ({
+export const ProfileOptions = ({
   setAnimate,
 }: {
   setAnimate: (value: boolean) => void;
@@ -38,6 +38,7 @@ export const ProfileLink = ({
               </Avatar>
             ),
           }}
+          className="focus-visible:ring-0 focus-visible:ring-offset-0"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -45,6 +46,9 @@ export const ProfileLink = ({
         side="top"
         sideOffset={5}
         className="w-[12.5rem] bg-background"
+        onCloseAutoFocus={(e) => {
+          e.preventDefault();
+        }}
       >
         <DropdownMenuLabel>Temas</DropdownMenuLabel>
         <DropdownMenuSeparator />
