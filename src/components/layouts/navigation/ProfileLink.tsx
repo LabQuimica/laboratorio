@@ -13,6 +13,7 @@ import { ThemeMenu } from "./ui/ThemeMenu";
 import { UserMenu } from "./ui/UserMenu";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const ProfileLink = ({
   setAnimate,
@@ -32,13 +33,9 @@ export const ProfileLink = ({
             label: user?.name || "",
             href: "#",
             icon: (
-              <Image
-                src={`/avatars/${user?.img}`}
-                className="h-7 w-7 flex-shrink-0 rounded-full"
-                width={50}
-                height={50}
-                alt="Avatar"
-              />
+              <Avatar>
+                <AvatarImage src={`/avatars/${user?.img}`} />
+              </Avatar>
             ),
           }}
         />

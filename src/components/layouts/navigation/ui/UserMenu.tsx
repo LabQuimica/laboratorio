@@ -15,13 +15,10 @@ export const UserMenu = () => {
 
   const handleLogout = () => {
     setLoading(true);
-
     Cookies.remove("token");
     localStorage.removeItem("user");
     setUser(null);
-
     queryClient.removeQueries();
-
     router.push("/login");
   };
 
@@ -32,7 +29,7 @@ export const UserMenu = () => {
         Perfil
       </DropdownMenuItem>
       <DropdownMenuItem
-        className="cursor-pointer text-red-500"
+        className="cursor-pointer text-red-700 dark:text-red-500"
         onClick={handleLogout}
       >
         <IconLogout />

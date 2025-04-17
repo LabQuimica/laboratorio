@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 interface Links {
   label: string;
   href: string;
-  icon: React.JSX.Element | React.ReactNode;
+  icon: React.ReactElement<{ className?: string }>;
 }
 
 interface SidebarContextProps {
@@ -172,27 +172,67 @@ export const SidebarLink = ({
   const pathname = usePathname();
   const isActive = pathname.startsWith(link.href);
 
-  return (
-    <Link
-      href={link.href}
-      className={cn(
-        "flex  px-4 items-center justify-start gap-2 group/sidebar py-2",
-        isActive && "bg-white dark:bg-neutral-700 rounded-md ",
-        className
-      )}
-      {...props}
-    >
-      {link.icon}
+  const isImage =
+    React.isValidElement(link.icon) &&
+    (link.icon.type === "img" ||
+      (typeof link.icon.type === "function" &&
+        link.icon.type.name === "Image"));
 
+  const iconElement = React.isValidElement(link.icon)
+    ? React.cloneElement(link.icon, {
+        className: cn(
+          link.icon.props.className,
+          "text-neutral-700 dark:text-neutral-200 flex-shrink-0",
+          isActive && "text-white dark:text-black"
+        ),
+      })
+    : link.icon;
+
+  const content = (
+    <>
+      {iconElement}
       <motion.span
         animate={{
           display: animate ? (open ? "inline-block" : "none") : "inline-block",
           opacity: animate ? (open ? 1 : 0) : 1,
         }}
-        className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+        className={cn(
+          "text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0",
+          isActive && "text-white dark:text-black",
+          className
+        )}
       >
         {link.label}
       </motion.span>
+    </>
+  );
+
+  if (link.href === "#") {
+    return (
+      <button
+        className={cn(
+          "flex px-4 items-center justify-start gap-2 group/sidebar py-2 w-full",
+          isActive && "bg-neutral-300 dark:bg-neutral-700 rounded-md",
+          className
+        )}
+        {...props}
+      >
+        {content}
+      </button>
+    );
+  }
+
+  return (
+    <Link
+      href={link.href}
+      className={cn(
+        "flex px-4 items-center justify-start gap-2 group/sidebar py-2",
+        isActive && "bg-neutral-800 dark:bg-slate-50",
+        className
+      )}
+      {...props}
+    >
+      {content}
     </Link>
   );
 };
