@@ -145,7 +145,6 @@ export const UserMenu = () => {
                     Código:
                   </p>
                   <p>{user.codigo}</p>
-                  <p>{selectedAvatarPath}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">
