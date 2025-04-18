@@ -28,7 +28,6 @@ export const ProfileOptions = ({
   const handleOpenChange = (open: boolean) => {
     setAnimate(!open);
   };
-
   return (
     <DropdownMenu onOpenChange={handleOpenChange}>
       <DropdownMenuTrigger asChild>
