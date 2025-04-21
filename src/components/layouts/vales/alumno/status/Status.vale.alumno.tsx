@@ -12,18 +12,17 @@ interface Vale {
 
 interface StatusValeProps<TData> {
   row: Row<TData>;
-  tableType: "ValeAlumno" | "ValeProfesor";
 }
 
-function StatusValeAlumno<TData>({ row, tableType }: StatusValeProps<TData>) {
+function StatusValeAlumno<TData>({ row }: StatusValeProps<TData>) {
   const { user } = useContext(UserContext);
 
   if (user?.rol === "profesor") {
-    return <StatusAlumnoProfesor row={row} tableType={tableType} />;
+    return <StatusAlumnoProfesor row={row} />;
   }
 
   if (user?.rol === "administrador") {
-    return <StatusAlumnoAdministrador row={row} tableType={tableType} />;
+    return <StatusAlumnoAdministrador row={row} />;
   }
 
   return null;

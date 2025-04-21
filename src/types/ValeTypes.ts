@@ -16,15 +16,15 @@ export interface Vale {
 export interface StatusChange {
   id_vale: number;
   oldStatus: EstadoVale;
-  newStatus: EstadoVale; 
-  tableType: "ValeAlumno" | "ValeProfesor";
+  newStatus: EstadoVale;
+  nombre_alumno: string;
 }
 
 export interface CommentChange {
   id_vale: number; 
   oldObservation: string; 
   newObservation: string; 
-  tableType: "ValeAlumno" | "ValeProfesor";
+  nombre_alumno: string;
 }
 
 export interface ValeAlumnoDetails {
