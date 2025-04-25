@@ -25,7 +25,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Trash2 } from "lucide-react";
 import { useDeleteMaterialPractica } from "@/hooks/Practicas/usePractica";
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from "@/hooks/use-toast";
 
 interface PracticaMaterialesListProps {
   materiales: Material[];
@@ -36,30 +36,42 @@ interface PracticaMaterialesListProps {
   onErrorsChange: (hasErrors: boolean) => void;
 }
 
-const PracticaMaterialesList = ({ 
-  materiales, 
+const PracticaMaterialesList = ({
+  materiales,
   practicaId,
-  onMaterialChange, 
+  onMaterialChange,
   onAddMaterial,
   onRemoveMaterial,
-  onErrorsChange
+  onErrorsChange,
 }: PracticaMaterialesListProps) => {
-  const { data: allMaterials, isLoading: isMaterialsLoading, error: materialsError } = useAllMaterials();
+  const {
+    data: allMaterials,
+    isLoading: isMaterialsLoading,
+    error: materialsError,
+  } = useAllMaterials();
   const { toast } = useToast();
   const deleteMaterial = useDeleteMaterialPractica();
   const [searchTerm, setSearchTerm] = useState("");
   const [openCommand, setOpenCommand] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [materialToDelete, setMaterialToDelete] = useState<{ practicaId: number, materialId: number } | null>(null);
+  const [materialToDelete, setMaterialToDelete] = useState<{
+    practicaId: number;
+    materialId: number;
+  } | null>(null);
   const [errors, setErrors] = useState<{ [key: number]: string }>({});
-  
+
+  useEffect(() => {
+    const hasAnyError = Object.values(errors).some((error) => error !== "");
+    onErrorsChange(hasAnyError);
+  }, [errors, onErrorsChange]);
+
   const getFilteredMaterials = () => {
     if (!allMaterials) return [];
-    
-    const filtered = allMaterials.filter(material => 
+
+    const filtered = allMaterials.filter((material) =>
       material.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    
+
     // Para mostrar solo los primeros 5 elementos
     return filtered.slice(0, 5);
   };
@@ -97,8 +109,14 @@ const PracticaMaterialesList = ({
     }
   };
 
-  const handleQuantityChange = (index: number, materialId: number, value: number) => {
-    const maxQuantity = Number(allMaterials?.find(m => m.id_item === materialId)?.cantidad) || 0;
+  const handleQuantityChange = (
+    index: number,
+    materialId: number,
+    value: number
+  ) => {
+    const maxQuantity =
+      Number(allMaterials?.find((m) => m.id_item === materialId)?.cantidad) ||
+      0;
     let errorMessage = "";
 
     if (value < 1) {
@@ -106,7 +124,7 @@ const PracticaMaterialesList = ({
     } else if (value > maxQuantity) {
       errorMessage = `La máxima cantidad disponible es ${maxQuantity}`;
     }
-
+    
     setErrors(prevErrors => {
       const newErrors = {
         ...prevErrors,
@@ -125,107 +143,153 @@ const PracticaMaterialesList = ({
 
   return (
     <>
-    <ScrollArea>
-      <div className="space-y-4">
-        <Card className="dark:bg-neutral-900">
-          <CardHeader>
-            <CardTitle>Materiales</CardTitle>
-          </CardHeader>
+      <ScrollArea>
+        <div className="space-y-4">
+          <Card className="dark:bg-neutral-900">
+            <CardHeader>
+              <CardTitle>Materiales</CardTitle>
+            </CardHeader>
 
-          <CardContent>
-          {materiales.length > 0 ? (
-              <div className="space-y-2">
-                {materiales.map((material, index) => (
-                  <div key={index} className="flex flex-col space-y-2">
-                    <div className="flex space-x-2">
-                      <Input value={material.nombre} disabled className="w-3/4 shadow-none"/>
-                      <Input
-                        type="number"
-                        placeholder={material.cantidad}
-                        className="w-1/4 shadow-none outline-transparent placeholder:text-white"
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value !== "") {
-                            handleQuantityChange(index, material.id_item, Number(value));
+            <CardContent>
+              {materiales.length > 0 ? (
+                <div className="space-y-2">
+                  {materiales.map((material, index) => (
+                    <div key={index} className="flex flex-col space-y-2">
+                      <div className="flex space-x-2">
+                        <Input
+                          value={material.nombre}
+                          disabled
+                          className="w-3/4 shadow-none"
+                        />
+                        <Input
+                          type="number"
+                          placeholder={material.cantidad}
+                          className="w-1/4 shadow-none outline-transparent placeholder:text-white"
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (value !== "") {
+                              handleQuantityChange(
+                                index,
+                                material.id_item,
+                                Number(value)
+                              );
+                            }
+                          }}
+                        />
+
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="w-1/12"
+                          onClick={() =>
+                            openDeleteDialog(practicaId, material.id_item)
                           }
-                        }}
-                      />
-
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-1/12"
-                        onClick={() => openDeleteDialog(practicaId, material.id_item)}
-                        disabled={deleteMaterial.isPending}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                          disabled={deleteMaterial.isPending}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      {errors[material.id_item] && (
+                        <p className="text-red-500 text-sm">
+                          {errors[material.id_item]}
+                        </p>
+                      )}
                     </div>
-                    {errors[material.id_item] && (
-                      <p className="text-red-500 text-sm">{errors[material.id_item]}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
               ) : (
-                <p className="text-sm text-gray-500">No hay materiales agregados</p>
+                <p className="text-sm text-gray-500">
+                  No hay materiales agregados
+                </p>
               )}
 
-              <Button variant="outline" onClick={() => setOpenCommand(true)} className="w-1/2 mt-3">
+              <Button
+                variant="outline"
+                onClick={() => setOpenCommand(true)}
+                className="w-1/2 mt-3"
+              >
                 Agregar Material
               </Button>
 
               {openCommand && (
                 <div className="mt-2">
                   <Command className="rounded-lg border shadow-md w-full">
-                    <CommandInput 
-                      placeholder="Buscar material..." 
-                      value={searchTerm} 
+                    <CommandInput
+                      placeholder="Buscar material..."
+                      value={searchTerm}
                       onValueChange={handleSearchChange}
                     />
                     <CommandList>
                       <CommandEmpty>No se encontraron materiales</CommandEmpty>
                       {isMaterialsLoading ? (
-                        <p className="p-2 text-center">Cargando materiales...</p>
+                        <p className="p-2 text-center">
+                          Cargando materiales...
+                        </p>
                       ) : materialsError ? (
-                        <p className="p-2 text-center text-red-500">Error al cargar materiales</p>
+                        <p className="p-2 text-center text-red-500">
+                          Error al cargar materiales
+                        </p>
                       ) : (
                         getFilteredMaterials().map((material) => (
-                          <CommandItem key={material.id_item} onSelect={() => handleAddMaterial(material)}>
+                          <CommandItem
+                            key={material.id_item}
+                            onSelect={() => handleAddMaterial(material)}
+                          >
                             {material.nombre}
                           </CommandItem>
                         ))
                       )}
-                      {allMaterials && getFilteredMaterials().length < allMaterials.filter(m => 
-                        m.nombre.toLowerCase().includes(searchTerm.toLowerCase())).length && (
-                        <p className="text-xs text-gray-500 p-2 text-center">
-                          Mostrando 5 de {allMaterials.filter(m => 
-                            m.nombre.toLowerCase().includes(searchTerm.toLowerCase())).length} resultados
-                        </p>
-                      )}
+                      {allMaterials &&
+                        getFilteredMaterials().length <
+                          allMaterials.filter((m) =>
+                            m.nombre
+                              .toLowerCase()
+                              .includes(searchTerm.toLowerCase())
+                          ).length && (
+                          <p className="text-xs text-gray-500 p-2 text-center">
+                            Mostrando 5 de{" "}
+                            {
+                              allMaterials.filter((m) =>
+                                m.nombre
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase())
+                              ).length
+                            }{" "}
+                            resultados
+                          </p>
+                        )}
                     </CommandList>
                   </Command>
                 </div>
               )}
-          </CardContent>
-        </Card>
-      </div>
-    </ScrollArea>
+            </CardContent>
+          </Card>
+        </div>
+      </ScrollArea>
 
-    <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-    <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>¿Estás seguro de eliminar el material?</AlertDialogTitle>
-        <AlertDialogDescription>
-          Esta acción eliminará el material seleccionado de la práctica
-        </AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <AlertDialogCancel className="text-black dark:text-white">Cancelar</AlertDialogCancel>
-        <AlertDialogAction onClick={confirmDelete}>Eliminar</AlertDialogAction>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-    </AlertDialog>
+      <AlertDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              ¿Estás seguro de eliminar el material?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta acción eliminará el material seleccionado de la práctica
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="text-black dark:text-white">
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>
+              Eliminar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

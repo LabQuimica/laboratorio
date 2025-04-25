@@ -8,13 +8,13 @@ interface ManualFileListProps {
   isSelectionMode: boolean;
   selectedFiles: string[];
   setSelectedFiles: React.Dispatch<React.SetStateAction<string[]>>;
+  folderId?: string;
 }
 
-
-const ManualFileList = ({ isSelectionMode, selectedFiles, setSelectedFiles }: ManualFileListProps) => {
+const ManualFileList = ({ isSelectionMode, selectedFiles, setSelectedFiles, folderId }: ManualFileListProps) => {
   const { data: files, isLoading, isError, refetch } = useQuery<Manual[], Error>({
-    queryKey: ["manualFiles"],
-    queryFn: fetchManualFile,
+    queryKey: ["manualFiles", folderId],
+    queryFn: () => fetchManualFile(folderId),
   });
 
   if (isLoading) {

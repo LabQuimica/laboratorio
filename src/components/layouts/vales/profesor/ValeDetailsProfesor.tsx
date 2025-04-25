@@ -50,9 +50,9 @@ export default function PracticaAsignadaDetails({
   const getUnidad = (tipoItem: string) => {
     switch (tipoItem.toLowerCase()) {
       case "solidos":
-        return "gr";
+        return "g";
       case "liquidos":
-        return "ml";
+        return "mL";
       case "kits":
         return "und";
       default:
@@ -83,7 +83,7 @@ export default function PracticaAsignadaDetails({
               <p className="">{data.semestre_grupo}</p>
             </div>
             <div>
-              <h3 className=" text-sm text-gray-500">Asignación</h3>
+              <h3 className=" text-sm text-gray-500">No. de Vale</h3>
               <p className="">#{data.id_practica_asignada}</p>
             </div>
           </div>
@@ -146,6 +146,10 @@ export default function PracticaAsignadaDetails({
                       <p>
                         <span className="text-gray-600">Tipo:</span>{" "}
                         {item.tipo_item}
+                      </p>
+                      <p>
+                        <span className="text-gray-600">Característica:</span>{" "}
+                        {item.especial || "No tiene"}
                       </p>
                       <p>
                         <span className="text-gray-600">Disponible:</span>{" "}

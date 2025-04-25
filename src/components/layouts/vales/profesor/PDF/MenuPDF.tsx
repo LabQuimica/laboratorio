@@ -1,5 +1,6 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { pdf } from "@react-pdf/renderer";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -17,7 +18,6 @@ import {
 } from "@/components/ui/dialog";
 import { ValeProfesorDetails } from "@/types/ValeTypes";
 import dynamic from "next/dynamic";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFProfesor from "@/components/pdf/profesor/pdf";
 
 const InterfacePDFValeProfesor = dynamic(() => import("./interfacePDF"), {
@@ -30,11 +30,27 @@ export default function MenuPDFValeProfesor({
   data?: ValeProfesorDetails;
 }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleDownload = () => {
-    if (downloadLinkRef.current) {
-      downloadLinkRef.current.click();
+  const handleDownloadClick = async () => {
+    if (isGenerating || !data) return;
+    setIsGenerating(true);
+    try {
+      const blob = await pdf(<PDFProfesor data={data} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      const fileName = `vale_profesor_${data?.id_practica_asignada}_${data?.nombre_usuario}.pdf`;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error generating or downloading PDF:", error);
+      alert("Hubo un error al generar el PDF. Por favor, inténtalo de nuevo.");
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -52,6 +68,7 @@ export default function MenuPDFValeProfesor({
                   e.preventDefault();
                   setIsDialogOpen(true);
                 }}
+                className="cursor-pointer"
               >
                 Visualizar PDF
               </DropdownMenuItem>
@@ -76,33 +93,13 @@ export default function MenuPDFValeProfesor({
           <DropdownMenuItem
             onSelect={(e) => {
               e.preventDefault();
-              handleDownload();
+              handleDownloadClick();
             }}
+            disabled={isGenerating}
+            className="cursor-pointer"
           >
-            Descargar PDF
+            {isGenerating ? "Generando PDF..." : "Descargar PDF"}
           </DropdownMenuItem>
-
-          <a
-            ref={downloadLinkRef}
-            href="#"
-            style={{ display: "none" }}
-            download={`vale_profesor_${data?.id_practica_asignada}_${data?.nombre_usuario}.pdf`}
-          >
-            Descargar PDF
-          </a>
-
-          <PDFDownloadLink
-            document={<PDFProfesor data={data} />}
-            fileName={`vale_profesor_${data?.id_practica_asignada}_${data?.nombre_usuario}.pdf`}
-          >
-            {({ blob, url, loading, error }) => {
-              if (url && downloadLinkRef.current) {
-                downloadLinkRef.current.href = url;
-              }
-
-              return null;
-            }}
-          </PDFDownloadLink>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

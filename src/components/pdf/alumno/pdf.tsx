@@ -52,39 +52,37 @@ const PDFAlumno = ({ data }: MyDocumentProps) => {
           {/* Primera fila */}
           <View style={styles.row}>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-              <Text>Nombre del Alumno</Text>
+              <Text>Unidad de Aprendizaje</Text>
             </View>
             <View style={[styles.cell]}>
-              <Text>{data.nombre_alumno}</Text>
-              <Text>{data.email_alumno}</Text>
+              <Text>{data.practica.nombre_semestre}</Text>
             </View>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-              <Text>Nombre del Profesor</Text>
+              <Text>Carrera</Text>
             </View>
             <View style={[styles.cell, styles.cellText]}>
-              <Text>{data.practica.nombre_profesor}</Text>
+              <Text>Ingeniería Biotecnológica</Text>
             </View>
           </View>
 
           {/* Segunda fila */}
           <View style={styles.row}>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-              <Text>Nombre de la práctica</Text>
+              <Text>Nombre del docente</Text>
             </View>
             <View style={[styles.cell]}>
-              <Text>{data.practica.nombre_practica}</Text>
+              <Text>{data.practica.nombre_profesor}</Text>
             </View>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
               <Text>Grupo y Unidad</Text>
             </View>
             <View style={styles.cell}>
-              <Text>{data.practica.nombre_semestre}</Text>
               <Text>{`${data.practica.semestre}`}</Text>
             </View>
           </View>
 
           {/* Tercera fila */}
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
               <Text>Fecha y hora</Text>
             </View>
@@ -98,12 +96,16 @@ const PDFAlumno = ({ data }: MyDocumentProps) => {
             <View style={[styles.cell, styles.cellText]}>
               <Text>{getCurrentDateTime()}</Text>
             </View>
-          </View>
+          </View> */}
         </View>
         <View style={styles.container}>
           <ItemsTable items={data.practica.materiales} />
           <View style={styles.flex} />
-
+          <Text style={[styles.subtitle, styles.centerSubtitle]}>
+            Tlaxcala, Tlaxcala a {new Date().getDate()} de{" "}
+            {new Date().toLocaleString("es-ES", { month: "long" })} de{" "}
+            {new Date().getFullYear()}{" "}
+          </Text>
           <FirmasTable items={data.practica.nombre_profesor} />
           <FirmaAlumnoTable
             boleta={data.boleta}
