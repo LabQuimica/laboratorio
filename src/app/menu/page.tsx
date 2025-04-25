@@ -1,9 +1,7 @@
-
-import WelcomePage from "@/components/layouts/welcome/welcome";
+import { redirect } from "next/navigation";
 
 export function Welcome() {
-  return <WelcomePage />;
+  redirect("menu/dashboard");
 }
 
 export default Welcome;
-

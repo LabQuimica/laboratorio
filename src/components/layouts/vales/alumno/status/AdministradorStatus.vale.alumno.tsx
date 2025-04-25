@@ -18,20 +18,11 @@ const statusOptions: EstadoVale[] = [
   "incompleto",
 ];
 
-interface Vale {
-  id_vale: number;
-  estado_vale: EstadoVale;
-}
-
 interface StatusValeProps<TData> {
   row: Row<TData>;
-  tableType: "ValeAlumno" | "ValeProfesor";
 }
 
-function StatusAlumnoAdministrador<TData>({
-  row,
-  tableType,
-}: StatusValeProps<TData>) {
+function StatusAlumnoAdministrador<TData>({ row }: StatusValeProps<TData>) {
   const addChange = useStatusStore((state) => state.addStatusChange);
   const changes = useStatusStore((state) => state.statusChanges);
   const id_vale = Number(row.getValue("id_vale"));
@@ -45,7 +36,7 @@ function StatusAlumnoAdministrador<TData>({
       id_vale: id_vale,
       oldStatus: row.getValue("estado_vale"),
       newStatus,
-      tableType,
+      nombre_alumno: row.getValue("alumno"),
     });
   };
 

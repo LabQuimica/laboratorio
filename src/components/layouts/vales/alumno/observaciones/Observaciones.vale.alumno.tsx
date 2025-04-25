@@ -6,21 +6,17 @@ import ObservacionesValeAdministrador from "./AdministradorObservaciones.vale.al
 
 interface ProjectActionsProps<TData> {
   row: Row<TData>;
-  tableType: "ValeAlumno" | "ValeProfesor";
 }
 
-function ObservacionesVale<TData>({
-  row,
-  tableType,
-}: ProjectActionsProps<TData>) {
+function ObservacionesVale<TData>({ row }: ProjectActionsProps<TData>) {
   const { user } = useContext(UserContext);
 
   if (user?.rol === "profesor") {
-    return <ObservacionesValeProfesor tableType={tableType} row={row} />;
+    return <ObservacionesValeProfesor row={row} />;
   }
 
   if (user?.rol === "administrador") {
-    return <ObservacionesValeAdministrador row={row} tableType={tableType} />;
+    return <ObservacionesValeAdministrador row={row} />;
   }
 
   return null;

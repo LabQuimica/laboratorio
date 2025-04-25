@@ -8,7 +8,6 @@ import { Row } from "@tanstack/react-table";
 
 interface ProjectActionsProps<TData> {
   row: Row<TData>;
-  tableType: "ValeAlumno" | "ValeProfesor";
 }
 
 function ObservacionesValeProfesor<TData>({ row }: ProjectActionsProps<TData>) {

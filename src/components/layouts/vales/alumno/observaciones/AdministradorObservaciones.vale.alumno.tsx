@@ -22,12 +22,10 @@ import { CommentChange } from "@/types/ValeTypes";
 
 interface ProjectActionsProps<TData> {
   row: Row<TData>;
-  tableType: "ValeAlumno" | "ValeProfesor";
 }
 
 function ObservacionesValeAdministrador<TData>({
   row,
-  tableType,
 }: ProjectActionsProps<TData>) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const commentChanges = useStatusStore((state) => state.commentChanges);
@@ -53,7 +51,7 @@ function ObservacionesValeAdministrador<TData>({
       id_vale: idVale,
       oldObservation: originalComment,
       newObservation: finalComment,
-      tableType,
+      nombre_alumno: row.getValue("alumno"),
     };
     addCommentChange(change);
     setIsDialogOpen(false);

@@ -4,20 +4,11 @@ import { EstadoVale } from "@/types/ValeTypes";
 import { Row } from "@tanstack/react-table";
 import statusStyles from "../../statusStyles";
 
-interface Vale {
-  id_vale: number;
-  estado_vale: EstadoVale;
-}
-
 interface StatusValeProps<TData> {
   row: Row<TData>;
-  tableType: "ValeAlumno" | "ValeProfesor";
 }
 
-function StatusAlumnoProfesor<TData>({
-  row,
-  tableType,
-}: StatusValeProps<TData>) {
+function StatusAlumnoProfesor<TData>({ row }: StatusValeProps<TData>) {
   const currentStatus: EstadoVale = row.getValue("estado_vale");
 
   return (
