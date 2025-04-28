@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { AlertDialog } from '@radix-ui/react-alert-dialog';
 import { X } from 'lucide-react';
-
+import { useEffect } from "react";
 import { useStoreItems } from "@/stores/useStoreItems";
 import { usePracticaStore } from '@/stores/practicasStore';
 import { useCreatePractica } from '@/hooks/Practicas/usePractica';
@@ -47,7 +47,12 @@ const MaterialesReview = () => {
                 <ul className="space-y-2">
                 {materialesList.map((material) => (
                     <li key={material.id_item} className="flex justify-between items-center p-2">
-                    <span className='text-base'>{material.nombre}</span>
+                    <span className='text-base'>
+                        {tipo === 'materiales' && material.especial !== "N/A"
+                        ? `${material.nombre} ${material.especial}`
+                        : material.nombre
+                    }
+                    </span>
                     <div className="flex items-center">
                         <Button 
                             variant="default" 
@@ -59,11 +64,16 @@ const MaterialesReview = () => {
                             <span className='font-extrabold text-xl'>-</span>
                         </Button>
                         <input 
-                            type="number" 
-                            value={material.cantidadActual} 
-                            onChange={(e) => handleQuantityChange(tipo, material, e.target.value)}
-                            min="1"
-                            max={material.cantidad}
+                            type="number"
+                            min={1}
+                            value={material.cantidadActual ?? ''}
+                            onChange={
+                                (e) => {
+                                    const value = e.target.value;
+                                    // Permitir vacío temporalmente para que el usuario pueda escribir
+                                    handleQuantityChange(tipo, material, value);
+                                }
+                            }
                             className="mx-2 px-2 w-16 text-sm h-8 text-center align-middle justify-center items-center bg-transparent"
                         />
                         <Button 
@@ -154,26 +164,31 @@ const MaterialesReview = () => {
             });
             kits.forEach(item => removeMaterial('kits', item.id_item));
             sensores.forEach(item => removeMaterial('sensores', item.id_item));
-            reactivos.forEach(item => removeMaterial('liquidos', item.id_item));
-            material.forEach(item => removeMaterial('liquidos', item.id_item));
-            equipos.forEach(item => removeMaterial('solidos', item.id_item));
+            reactivos.forEach(item => removeMaterial('reactivos', item.id_item));
+            material.forEach(item => removeMaterial('materiales', item.id_item));
+            equipos.forEach(item => removeMaterial('equipos', item.id_item));
         } catch (error) {
             console.error(error);
             toast({
                 title: "Error",
-                description: "No se pudo crear la práctica.",
+                description: "No se pudo crear la práctica. Revisa las cantidades de los materiales.",
                 variant: "destructive",
             });
         }
     };
 
+    useEffect(() => {
+        if (error) {
+          toast({
+            title: "Error",
+            description: error,
+            variant: "destructive",
+          });
+        }
+      }, [error]);
+
     return (
         <div>
-            {error && (
-                <AlertDialog>
-                        {error}
-                </AlertDialog>
-            )}
             <Accordion type="multiple" className="w-full">
                 <AccordionItem value="item-1">
                     <AccordionTrigger>

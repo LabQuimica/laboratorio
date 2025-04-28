@@ -22,3 +22,10 @@ export interface Practica {
 	status: string | null;
 	materiales?: Material[];
 }
+
+export interface CreadorPractica {
+	name: string;
+	email: string;
+	rol: string;
+	img: string;
+}

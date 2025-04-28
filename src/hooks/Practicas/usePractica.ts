@@ -2,7 +2,7 @@
 import { Practica } from "@/types/PracticaTypes";
 import { Docente } from "@/types/DocenteTypes";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchPracticas, fetchPracticaById, fetchDocentes, createPractica, deletePractica, asignarPractica, updatePractica, deleteMaterialPractica, updateStatusPractica } from "@/services/Practicas/practicasService";
+import { fetchPracticas, fetchPracticaById, fetchDocentes, createPractica, deletePractica, asignarPractica, updatePractica, deleteMaterialPractica, updateStatusPractica, inhabilitarPracticaByGroup, inhabilitarPractica, inhabilitarPracticasGroup } from "@/services/Practicas/practicasService";
 import { StatusChange } from "@/types/PracticaTypes";
 
 export const usePracticas = (tipo: "creadas" | "asignadas" | "archivadas") => {
@@ -110,6 +110,39 @@ export const useUpdatePracticaStatus = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['practicas'] });
       queryClient.invalidateQueries({ queryKey: ['statusPracticas'] });
+    },
+  });
+};
+
+export const useInhabilitarPracticaByGroup = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ practicaId, groupId }: { practicaId: number; groupId: number }) => inhabilitarPracticaByGroup(practicaId, groupId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["practicas"] });
+    },
+  });
+};
+
+export const useInhabilitarPractica = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (practicaId: number) => inhabilitarPractica(practicaId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["practicas"] });
+    },
+  });
+};
+
+export const useInhabilitarPracticasGroup = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (groupId: number) => inhabilitarPracticasGroup(groupId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["practicas"] });
     },
   });
 };

@@ -9,6 +9,7 @@ import StatusPractica from "../StatusPractica";
 import PracticaActions from "../AccionesPractica";
 import GroupBadge from "../GroupBadge";
 import StatusPracticaAsignada from "./StatusPracticaAsignada";
+import { Avatar, AvatarFallback, getInitials } from "@/components/ui/avatar";
 
 // Columnas para el docente
 // Columnas de practicas Creadas
@@ -49,7 +50,7 @@ export const creadascolumns: ColumnDef<Practica>[] = [
       size: 20,
       cell: ({ row }) => (
         <div className="items-center justify-center w-full">
-          <PracticaActions idPractica={row.getValue("id_practica")} estaAsignada={row.getValue("esta_asignada")}/>
+          <PracticaActions idPractica={row.getValue("id_practica")} estaAsignada={row.getValue("esta_asignada")} viewType="creadas"/>
         </div>
       ),
     }
@@ -88,17 +89,75 @@ export const asignadascolumns: ColumnDef<Practica>[] = [
       cell: ({ row }) => <StatusPracticaAsignada row={row}/>
     },
     {
-      accessorKey: "grupo",
+      accessorFn: (row) => `${row.grupo} ${row.semestre}`,
+      id: "grupoCompleto",
       header: "Grupo",
       size: 60,
       cell: ({ row }) => (
         <div className="flex flex-row row-span-2 gap-6 w-full">
-          <GroupBadge grupo={row.getValue("grupo")} className="w-12 h-12" />
+          <Avatar className="h-12 w-12 cursor-default">
+            <AvatarFallback>{getInitials(row.original.grupo || "Sin grupo")}</AvatarFallback>
+          </Avatar>
           <div className="flex flex-col">
-            <p className="font-bold">{row.getValue("grupo")}</p>
+            <p className="font-bold">{row.original.grupo}</p>
             <p className="font-thin text-sm">{row.original.semestre}</p>
           </div>
         </div>
       ),
     },
+];
+
+//Columnas de practicas Archivadas
+export const archivadascolumns: ColumnDef<Practica>[] = [
+  {
+      accessorKey: "id_practica",
+  },
+  {
+    accessorFn: (row) => `${row.grupo} ${row.semestre}`,
+    id: "grupoCompleto",
+    header: "Grupo",
+    size: 60,
+    cell: ({ row }) => (
+      <div className="flex flex-row gap-6 w-full">
+        <Avatar className="h-12 w-12 cursor-default">
+          <AvatarFallback>{getInitials(row.original.grupo || "Sin grupo")}</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col">
+          <p className="font-bold">{row.original.grupo}</p>
+          <p className="font-thin text-sm">{row.original.semestre}</p>
+        </div>
+      </div>
+    ),
+  },
+  {
+      accessorKey: "nombre",
+      header: "Nombre",
+  },
+  {
+      accessorKey: "descripcion",
+      header: "Descripcion",
+      size: 350,
+      //cell: ({ row }) => <TruncatedCell text={row.getValue("descripcion")} />,
+  },
+  {
+    accessorKey: "fecha_creacion",
+    header: ({ column }) => (
+      <SortableHeader column={column} title="Fecha Creación" className="justify-center" />
+    ),
+    cell: ({ row }) => (
+      <div className="flex items-center justify-center">
+        {row.getValue("fecha_creacion")}
+      </div>
+    )
+  },
+  {
+    accessorKey: "acciones",
+    header: "Acciones",
+    size: 20,
+    cell: ({ row }) => (
+      <div className="items-center justify-center w-full">
+        <PracticaActions idPractica={row.getValue("id_practica")} estaAsignada={row.getValue("esta_asignada")} viewType="archivadas"/>
+      </div>
+    ),
+  }
 ];

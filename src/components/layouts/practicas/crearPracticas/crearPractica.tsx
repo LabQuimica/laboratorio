@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import Materiales from "./materiales";
 import MaterialesReview from "./materialesReview";
 import { usePracticaStore } from "@/stores/practicasStore";
@@ -59,13 +60,16 @@ export default function CrearPracticaPage() {
             </div>
 
             {/* Review */}
-            <div className="bg-bg-active-light dark:bg-primary w-1/4 mx-10 p-6 rounded-xl fixed right-0">
-                <p className="text-xl font-semibold">
-                    Materiales agregados
-                </p>
-                {/* Materiales agregados por secciones */}
-                <MaterialesReview/>
-            </div>
+            <ScrollArea className="bg-bg-active-light dark:bg-primary h-5/6 w-1/4 mx-10 p-6 rounded-xl !fixed right-0">
+                <div >
+                    <p className="text-xl font-semibold">
+                        Materiales agregados
+                    </p>
+                    {/* Materiales agregados por secciones */}
+                    <MaterialesReview/>
+                </div>
+            </ScrollArea>
+            
         </div>
       </div>
     );
