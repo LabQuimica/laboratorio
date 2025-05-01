@@ -7,6 +7,7 @@ import {
   IconFileAnalytics,
   IconUsers,
   IconBook,
+  IconPackage,
 } from "@tabler/icons-react";
 
 export const links = [
@@ -43,6 +44,13 @@ export const links = [
     href: "/menu/manuales",
     icon: (
       <IconBook className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    ),
+  },
+  {
+    label: "Materiales",
+    href: "/menu/materiales",
+    icon: (
+      <IconPackage className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
 ];
