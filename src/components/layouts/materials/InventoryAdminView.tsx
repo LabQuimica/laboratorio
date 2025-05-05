@@ -1,4 +1,3 @@
-// laboratorio/src/components/layouts/materials/InventoryAdminView.tsx
 "use client";
 
 import { useState } from "react";
@@ -33,30 +32,24 @@ export default function InventoryAdminView({ viewType }: Props) {
   ];
 
   return (
-    <div className="p-4">
-      {isLoading ? (
-        <p>Cargando…</p>
-      ) : isError ? (
-        <p className="text-red-500">Error al cargar materiales</p>
-      ) : (
-        <Table<Material>
-          data={data}
-          columns={columns}
-          isLoading={isLoading}
-          isError={isError}
-          orderBy="nombre"
-          reactQueryKEY={["materials", viewType]}
-          FilterComponent={() => null}
-        />
-      )}
+    <>
+      <Table<Material>
+        data={data}
+        columns={columns}
+        isLoading={isLoading}
+        isError={isError}
+        orderBy="nombre"
+        reactQueryKEY={["materials", viewType]}
+        FilterComponent={() => null}
+      />
 
       {editing && (
         <EditMaterialModal
           mat={editing}
-          open={Boolean(editing)}
+          open={true}
           onClose={() => setEditing(null)}
         />
       )}
-    </div>
+    </>
   );
 }

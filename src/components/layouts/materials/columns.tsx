@@ -1,28 +1,27 @@
 // laboratorio/src/components/layouts/materials/columns.tsx
 import { ColumnDef } from "@tanstack/react-table";
+import TruncatedCell from "@/components/table/TruncatedCell";
 import { Material } from "@/types/material";
 
 export const columns: ColumnDef<Material>[] = [
   {
     accessorKey: "nombre",
     header: "Nombre",
-    cell: ({ row }) => <span>{row.getValue("nombre")}</span>,
+    cell: ({ row }) => <TruncatedCell text={row.getValue("nombre")} />,
     size: 50,
   },
   {
     accessorKey: "ubicacion",
     header: "Ubicación",
-    cell: ({ row }) => <span>{row.getValue("ubicacion")}</span>,
+    cell: ({ row }) => <TruncatedCell text={row.getValue("ubicacion")} />,
     size: 50,
   },
   {
     accessorKey: "cantidad",
-    header: () => (
-      <div className="flex justify-center">Cantidad</div>
-    ),
+    header: () => <div className="text-center">Cantidad</div>,
     cell: ({ row }) => (
       <div className="text-center">
-        {row.getValue<number>("cantidad")}
+        <TruncatedCell text={row.getValue<number>("cantidad").toString()} />
       </div>
     ),
     size: 20,
@@ -30,13 +29,13 @@ export const columns: ColumnDef<Material>[] = [
   {
     accessorKey: "observacion",
     header: "Observación",
-    cell: ({ row }) => <span>{row.getValue("observacion")}</span>,
+    cell: ({ row }) => <TruncatedCell text={row.getValue("observacion")} />,
     size: 50,
   },
   {
     accessorKey: "especial",
     header: "Especial",
-    cell: ({ row }) => <span>{row.getValue("especial")}</span>,
+    cell: ({ row }) => <TruncatedCell text={row.getValue("especial")} />,
     size: 20,
   },
 ];

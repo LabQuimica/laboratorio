@@ -49,7 +49,7 @@ export default function UsersPage() {
       {/* Si aún no hay término de búsqueda, nada más */}
       {!q && (
         <p className="text-center text-gray-500">
-          Ingresa los datos del usuario a buscar...
+          Ingresa un término de búsqueda para ver resultados
         </p>
       )}
 

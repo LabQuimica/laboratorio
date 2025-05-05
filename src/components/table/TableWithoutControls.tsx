@@ -44,7 +44,7 @@ export function TableWithoutControls<TData>({
   return (
     <div className="py-3">
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <table className="w-full table-fixed">
           <thead>
             {table.getHeaderGroups().map((hg) => (
               <tr key={hg.id}>

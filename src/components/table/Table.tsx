@@ -86,7 +86,7 @@ export const Table = <TData,>({
 
       {/* Tabla */}
       <div className="">
-        <table className="w-full">
+        <table className="w-full table-fixed">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>

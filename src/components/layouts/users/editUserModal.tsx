@@ -1,27 +1,36 @@
+// src/components/layouts/users/EditUserModal.tsx
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { useUpdateUser } from "@/hooks/Users/useUserMutations";
 import { User } from "@/types/user";
 
-interface EditUserModalProps {
+interface Props {
   user: User;
   open: boolean;
   onClose: () => void;
 }
 
-type EditUserFormValues = {
-  name: string;
-  email: string;
-  codigo: string;
-  rol: "administrador" | "profesor" | "alumno";
-};
+type FormValues = Pick<User, "name" | "email" | "codigo" | "rol">;
 
-const EditUserModal: React.FC<EditUserModalProps> = ({ user, open, onClose }) => {
-  const { register, handleSubmit, reset } = useForm<EditUserFormValues>({
+export default function EditUserModal({ user, open, onClose }: Props) {
+  const { control, register, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       name: user.name,
       email: user.email,
@@ -29,16 +38,20 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, open, onClose }) =>
       rol: user.rol,
     },
   });
-  const { mutateAsync } = useUpdateUser();
+  const updateUser = useUpdateUser();
 
-  const onSubmit = async (data: EditUserFormValues) => {
+  const onSubmit = async (data: FormValues) => {
     try {
-      await mutateAsync({ id_user: user.id_user, ...data });
-      toast({ title: "Éxito", description: "Usuario modificado correctamente", open: true });
-      reset();
+      await updateUser.mutateAsync({ id_user: user.id_user, ...data });
+      toast({ title: "Éxito", description: "Usuario modificado", open: true });
       onClose();
-    } catch (error: any) {
-      toast({ title: "Error", description: error.message, open: true });
+    } catch (err: any) {
+      toast({
+        title: "Error",
+        description: err.message,
+        variant: "destructive",
+        open: true,
+      });
     }
   };
 
@@ -49,33 +62,36 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, open, onClose }) =>
           <DialogTitle>Modificar Usuario</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label className="block mb-1">Nombre:</label>
-            <input {...register("name", { required: true })} className="w-full p-2 border rounded" />
-          </div>
-          <div>
-            <label className="block mb-1">Correo:</label>
-            <input type="email" {...register("email", { required: true })} className="w-full p-2 border rounded" />
-          </div>
-          <div>
-            <label className="block mb-1">Código (Boleta):</label>
-            <input {...register("codigo", { required: true })} className="w-full p-2 border rounded" />
-          </div>
-          <div>
-            <label className="block mb-1">Rol:</label>
-            <select {...register("rol", { required: true })} className="w-full p-2 border rounded">
-              <option value="administrador">Administrador</option>
-              <option value="profesor">Profesor</option>
-              <option value="alumno">Alumno</option>
-            </select>
-          </div>
-          <Button type="submit" className="bg-blue-600 text-white hover:bg-blue-700">
-            Guardar Cambios
-          </Button>
+          <Input {...register("name", { required: true })} placeholder="Nombre" />
+          <Input
+            {...register("email", {
+              required: true,
+              pattern: /^\S+@\S+$/i,
+            })}
+            placeholder="Email"
+          />
+          <Input {...register("codigo", { required: true })} placeholder="Código" />
+
+          <Controller
+            name="rol"
+            control={control}
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="administrador">Administrador</SelectItem>
+                  <SelectItem value="profesor">Profesor</SelectItem>
+                  <SelectItem value="alumno">Alumno</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+
+          <Button type="submit">Guardar Cambios</Button>
         </form>
       </DialogContent>
     </Dialog>
   );
-};
-
-export default EditUserModal;
+}
