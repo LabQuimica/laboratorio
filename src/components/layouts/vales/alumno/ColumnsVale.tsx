@@ -38,12 +38,12 @@ export const columsAlumnoVale: ColumnDef<Vale>[] = [
     accessorKey: "estado_vale",
     header: "Estatus",
     size: 150,
-    cell: ({ row }) => <StatusValeAlumno row={row} tableType="ValeAlumno" />,
+    cell: ({ row }) => <StatusValeAlumno row={row} />,
   },
   {
     accessorKey: "observaciones_vale",
     header: "Observaciones",
-    cell: ({ row }) => <ObservacionesVale row={row} tableType="ValeAlumno" />,
+    cell: ({ row }) => <ObservacionesVale row={row} />,
   },
   {
     accessorKey: "fecha_solicitada",

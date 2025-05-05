@@ -14,6 +14,7 @@ export function getUserFromToken(token: string): User | null {
       rol: decoded.rol,
       active: true,
       codigo: decoded.codigo,
+      img: decoded.img,
     };
     return user;
   } catch (error) {
@@ -58,6 +59,18 @@ export async function updateUser(
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(errorData.error || "Error al actualizar usuario");
+  }
+  return response.json();
+}
+
+export async function updateUserAvatar(userId: number | undefined, avatar: string): Promise<{ img: string }> {
+  const response = await fetch(`http://${URL}/users/updateUserAvatar?id=${userId}&avatar=${avatar}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || "Error al actualizar el avatar");
   }
   return response.json();
 }

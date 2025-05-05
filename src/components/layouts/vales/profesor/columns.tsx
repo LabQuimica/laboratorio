@@ -64,12 +64,7 @@ export const columsProfesorVale: ColumnDef<ValeProfesor>[] = [
     ),
     size: 200,
   },
-  // {
-  //   accessorKey: "estado_vale",
-  //   header: "Estatus",
-  //   size: 150,
-  //   cell: ({ row }) => <StatusValeAlumno row={row} tableType="ValeAlumno" />,
-  // },
+
   {
     accessorKey: "actions",
     header: "Acciones",

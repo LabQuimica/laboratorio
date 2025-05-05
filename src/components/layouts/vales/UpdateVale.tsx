@@ -90,10 +90,11 @@ export function UpdateVale() {
                 className="mb-4 p-3 border rounded-lg "
               >
                 <div className="flex justify-between items-center content-center">
-                  <span className="text-sm">Vale ID: {change.id_vale}</span>
-                  <span className="text-sm text-gray-500">
-                    Tipo: {(change as any).tableType}
+                  <span className="text-sm">
+                    Vale de:
+                    <span className="font-bold"> {change.nombre_alumno} </span>
                   </span>
+
                   <Button
                     variant="default"
                     className="bg-destructive hover:bg-destructive/90"

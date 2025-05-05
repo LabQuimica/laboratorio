@@ -7,38 +7,42 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
-import profile from "/public/images/profile.jpeg";
 import { SidebarLink } from "@/components/ui/sidebar";
 import { ThemeMenu } from "./ui/ThemeMenu";
 import { UserMenu } from "./ui/UserMenu";
+import { useContext } from "react";
+import { UserContext } from "@/context/UserContext";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  getInitials,
+} from "@/components/ui/avatar";
 
-export const ProfileLink = ({
+export const ProfileOptions = ({
   setAnimate,
 }: {
   setAnimate: (value: boolean) => void;
 }) => {
+  const { user } = useContext(UserContext);
   const handleOpenChange = (open: boolean) => {
-    setAnimate(!open); // Desactivar animación cuando el menú está abierto
+    setAnimate(!open);
   };
-
   return (
     <DropdownMenu onOpenChange={handleOpenChange}>
       <DropdownMenuTrigger asChild>
         <SidebarLink
           link={{
-            label: "Manu Arora",
+            label: user?.name || "",
             href: "#",
             icon: (
-              <Image
-                src={profile}
-                className="h-7 w-7 flex-shrink-0 rounded-full"
-                width={50}
-                height={50}
-                alt="Avatar"
-              />
+              <Avatar>
+                <AvatarImage src={`/avatars/${user?.img}`} />
+                <AvatarFallback>{getInitials(user?.name)}</AvatarFallback>
+              </Avatar>
             ),
           }}
+          className="focus-visible:ring-0 focus-visible:ring-offset-0"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -46,7 +50,11 @@ export const ProfileLink = ({
         side="top"
         sideOffset={5}
         className="w-[12.5rem] bg-background"
+        onCloseAutoFocus={(e) => {
+          e.preventDefault();
+        }}
       >
+        <DropdownMenuSeparator />
         <DropdownMenuLabel>Temas</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <ThemeMenu />

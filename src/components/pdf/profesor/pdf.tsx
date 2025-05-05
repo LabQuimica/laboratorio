@@ -63,7 +63,7 @@ const PDFProfesor = ({ data }: MyDocumentProps) => {
               <Text>UA</Text>
             </View>
             <View style={[styles.cell, styles.cellText]}>
-              <Text>Lab de Bioingeniería</Text>
+              <Text>{`${data.nombre_grupo}`}</Text>
             </View>
           </View>
 
@@ -80,7 +80,6 @@ const PDFProfesor = ({ data }: MyDocumentProps) => {
             </View>
             <View style={styles.cell}>
               <Text>{`${data.semestre_grupo}`}</Text>
-              <Text>{`${data.nombre_grupo}`}</Text>
             </View>
           </View>
 

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { useValeDetails } from "@/hooks/Vales/useVales";
 import { useState } from "react";
-import ValeDetailsDisplay from "./ValeDetailsDisplay";
+import ValeDetailsDisplay from "./DetailsVale";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import MenuPDFValeAlumno from "./PDF/MenuPDF";
