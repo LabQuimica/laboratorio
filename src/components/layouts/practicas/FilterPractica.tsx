@@ -5,10 +5,11 @@ import { ColumnFiltersState } from "@tanstack/react-table";
 import { useState } from "react";
 
 interface PracticaAdminFilterProps {
+  viewType: "creadas" | "asignadas" | "archivadas";
   onFilterChange: (filters: ColumnFiltersState) => void;
 }
 
-export const PracticaAdminFilter = ({ onFilterChange }: PracticaAdminFilterProps) => {
+export const PracticaAdminFilter = ({ viewType, onFilterChange }: PracticaAdminFilterProps) => {
   const [filters, setFilters] = useState<ColumnFiltersState>([]);
 
   const { data: docentes} = useDocentes();
@@ -29,15 +30,17 @@ export const PracticaAdminFilter = ({ onFilterChange }: PracticaAdminFilterProps
         filters={filters}
         onFilterChange={handleFiltersChange}
       />
-      
-      <ComboboxFilter
-        label="Filtrar por Grupo"
-        placeholder="Buscar grupo..."
-        filterId="grupoCompleto"
-        items={grupos?.map((grupo) => `${grupo.nombre} ${grupo.semestre}`) || []}
-        filters={filters}
-        onFilterChange={handleFiltersChange}
-      />
+
+      {(viewType === "asignadas" || viewType === "archivadas") && (
+        <ComboboxFilter
+          label="Filtrar por Grupo"
+          placeholder="Buscar grupo..."
+          filterId="grupoCompleto"
+          items={grupos?.map((grupo) => `${grupo.nombre} ${grupo.semestre}`) || []}
+          filters={filters}
+          onFilterChange={handleFiltersChange}
+        />
+      )}
     </div>
   );
 };

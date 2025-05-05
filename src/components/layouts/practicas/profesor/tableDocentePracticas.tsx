@@ -32,7 +32,7 @@ export const DocentePracticasTable = ({ viewType, id_docente }: DocentePracticas
         isError={isError}
         orderBy="fecha_creacion"
         reactQueryKEY={["practicasDocente"]}
-        FilterComponent={PracticaProfFilter}
+        FilterComponent={(props) => <PracticaProfFilter {...props} viewType={viewType} />}
       />
     </div>
   );

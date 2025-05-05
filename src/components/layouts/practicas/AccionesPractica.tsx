@@ -79,7 +79,7 @@ const PracticaActions = ({ idPractica, estaAsignada, viewType}: PracticaActionsP
       )}
 
       {/* Modal para editar practica */}
-      {isCreadas && (
+      {isCreadas && openModificar && (
         <EditPractica 
           open={openModificar} 
           onOpenChange={setOpenModificar} 

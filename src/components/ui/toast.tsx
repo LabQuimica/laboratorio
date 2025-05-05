@@ -82,6 +82,14 @@ const ToastClose = React.forwardRef<
     )}
     toast-close=""
     {...props}
+    onClick={(e) => {
+      if (document.body.style.pointerEvents === "none") {
+        document.body.style.pointerEvents = "";
+        console.log("pointer-events limpiado desde ToastClose");
+      }
+
+      props?.onClick?.(e);
+    }}
   >
     <X className="h-4 w-4" />
   </ToastPrimitives.Close>

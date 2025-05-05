@@ -33,6 +33,7 @@ export const useCreatePractica = () => {
         mutationFn: createPractica,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
+          queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
         },
     });
 };
@@ -43,6 +44,7 @@ export const useDeletePractica = () => {
         mutationFn: ({ idPractica, profesorId }: { idPractica: number; profesorId?: number }) => deletePractica({ idPractica, profesorId }),
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
+          queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
         },
     });
 };
@@ -53,6 +55,7 @@ export const useAsignarPractica = () => {
         mutationFn: asignarPractica,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
+          queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
         },
     });
 };
@@ -65,6 +68,7 @@ export const useUpdatePractica = () => {
         updatePractica(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["practicas"] }); 
+            queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
         },
         onError: (error) => {
             console.error("Error al actualizar la práctica:", error);
@@ -78,6 +82,7 @@ export const useDeleteMaterialPractica = () => {
         mutationFn: ({ practicaId, materialId }: { practicaId: number; materialId: number }) => deleteMaterialPractica(practicaId, materialId),
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
+          queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
         },
     });
 };
@@ -110,6 +115,7 @@ export const useUpdatePracticaStatus = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['practicas'] });
       queryClient.invalidateQueries({ queryKey: ['statusPracticas'] });
+      queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
     },
   });
 };
@@ -121,6 +127,7 @@ export const useInhabilitarPracticaByGroup = () => {
     mutationFn: ({ practicaId, groupId }: { practicaId: number; groupId: number }) => inhabilitarPracticaByGroup(practicaId, groupId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["practicas"] });
+      queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
     },
   });
 };
@@ -132,6 +139,7 @@ export const useInhabilitarPractica = () => {
     mutationFn: (practicaId: number) => inhabilitarPractica(practicaId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["practicas"] });
+      queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
     },
   });
 };
@@ -143,6 +151,7 @@ export const useInhabilitarPracticasGroup = () => {
     mutationFn: (groupId: number) => inhabilitarPracticasGroup(groupId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["practicas"] });
+      queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
     },
   });
 };

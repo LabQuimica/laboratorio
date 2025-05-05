@@ -17,22 +17,23 @@ export const Logo = () => {
 
   const logoSrc =
     theme === "dark" || resolvedTheme === "dark"
-      ? "/assets/logo_dark.svg"
-      : "/assets/logo_light.svg";
+      ? "/assets/logo_dark_wt.svg"
+      : "/assets/logo_light_wt.svg";
 
   return (
-    <div className="flex items-center w-full align-middle justify-center">
+    <div className="flex items-center w-full align-middle pl-5">
       <Link
         href="/menu/dashboard"
-        className="flex font-normal space-x-2 items-center text-sm text-black py-1 relative z-20 self-center"
+        className="flex font-normal space-x-4 items-center text-sm text-black py-1 relative z-20 self-center"
       >
         <Image
           src={logoSrc}
           alt="logo"
-          className="w-auto h-auto"
-          width={100}
-          height={100}
+          className="w-10 h-10"
+          width={50}
+          height={50}
         />
+        <div className="text-2xl font-semibold text-black dark:text-white">QuimiLab</div>
       </Link>
     </div>
   );

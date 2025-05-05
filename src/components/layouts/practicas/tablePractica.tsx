@@ -13,6 +13,8 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
   const { data: practicasAdmin, isLoading, isError} = usePracticas(viewType);
   //const { practicasData } = usePracticas();
 
+  console.log("Practicas",practicasAdmin)
+
   let columns;
   if (viewType === "creadas") {
     columns = creadascolumns;
@@ -32,7 +34,7 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
         isError={isError}
         orderBy="fecha_creacion"
         reactQueryKEY={["practicas"]}
-        FilterComponent={PracticaAdminFilter}
+        FilterComponent={(props) => <PracticaAdminFilter {...props} viewType={viewType} />}
       />
     </div>
   );

@@ -63,19 +63,28 @@ const MaterialesReview = () => {
                         >
                             <span className='font-extrabold text-xl'>-</span>
                         </Button>
-                        <input 
-                            type="number"
-                            min={1}
-                            value={material.cantidadActual ?? ''}
-                            onChange={
-                                (e) => {
-                                    const value = e.target.value;
-                                    // Permitir vacío temporalmente para que el usuario pueda escribir
-                                    handleQuantityChange(tipo, material, value);
+                        <div className="flex items-center mx-2 px-2">
+                            <input 
+                                type="number"
+                                min={0.1}
+                                value={material.cantidadActual ?? ''}
+                                onChange={
+                                    (e) => {
+                                        const value = e.target.value;
+                                        // Permitir vacío temporalmente para que el usuario pueda escribir
+                                        handleQuantityChange(tipo, material, value);
+                                    }
                                 }
-                            }
-                            className="mx-2 px-2 w-16 text-sm h-8 text-center align-middle justify-center items-center bg-transparent"
-                        />
+                                className="w-16 text-sm h-8 text-center align-middle justify-center items-center bg-transparent"
+                            />
+                            {/* Unidad mg o ml */}
+                            {tipo === "reactivos" && (
+                            <span className="text-sm text-gray-500 ml-1">
+                                {material.tipo === "reactivos-sólidos" ? "mg" :
+                                material.tipo === "reactivos-líquidos" ? "ml" : ""}
+                            </span>
+                            )}
+                        </div>
                         <Button 
                             variant="ghost" 
                             size="sm"
@@ -138,13 +147,24 @@ const MaterialesReview = () => {
             });
             return;
         }
+
+        const materialesFiltrados = materiales.filter(m => Number(m.cantidad) > 0);
+
+        if (materialesFiltrados.length === 0) {
+            toast({
+                title: "Error",
+                description: "No se pueden crear prácticas sin materiales válidos (con cantidad menor a 0.1).",
+                variant: "destructive",
+            });
+            return;
+        }
     
         const newPractica = {
             nombre,
             descripcion,
             num_equipos: numEquipos,
             creadorId: user?.id_user,
-            materiales: materiales.map(material => ({
+            materiales: materialesFiltrados.map(material => ({
                 itemId: material.itemId,
                 cantidad: Number(material.cantidad) || 0,
             })),
