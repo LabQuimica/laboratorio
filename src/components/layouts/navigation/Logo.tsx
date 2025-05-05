@@ -21,19 +21,13 @@ export const Logo = () => {
       : "/assets/logo_light_wt.svg";
 
   return (
-    <div className="flex items-center w-full align-middle pl-5">
+    <div className="flex items-center w-full align-middle pl-3">
       <Link
         href="/menu/dashboard"
-        className="flex font-normal space-x-4 items-center text-sm text-black py-1 relative z-20 self-center"
+        className="flex space-x-5 items-center text-sm text-black py-1 relative z-20 self-center"
       >
-        <Image
-          src={logoSrc}
-          alt="logo"
-          className="w-10 h-10"
-          width={50}
-          height={50}
-        />
-        <div className="text-2xl font-semibold text-black dark:text-white">QuimiLab</div>
+        <Image src={logoSrc} alt="logo" width={30} height={30} />
+        <div className="text-xl  text-black dark:text-white">QuimiLab</div>
       </Link>
     </div>
   );
