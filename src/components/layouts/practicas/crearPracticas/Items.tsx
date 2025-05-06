@@ -19,7 +19,12 @@ const MaterialComponent: React.FC<MaterialComponentProps> = ({ data, type }) => 
         <Card key={item.id_item} className="overflow-hidden flex flex-col">
           <CardHeader className="pb-2">
             <div className="flex justify-between items-start">
-              <CardTitle className="text-lg font-medium mr-2">{item.nombre}</CardTitle>
+              <CardTitle className="text-lg font-medium mr-2">
+                {type === 'materiales' && item.especial && item.especial !== "N/A"
+                  ? `${item.nombre} ${item.especial}`
+                  : item.nombre
+                }
+              </CardTitle>
               <Badge variant={item.status === 1 ? "secondary" : "destructive"}>
                 {item.status === 1 ? "Disponible" : "Agotado"}
               </Badge>

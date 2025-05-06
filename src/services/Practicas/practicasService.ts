@@ -7,9 +7,17 @@ import { Practica } from "@/types/PracticaTypes";
 const URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchPracticas = async (tipo: "creadas" | "asignadas" | "archivadas") => {
-    const endpoint = tipo === "creadas"
-    ? `http://${URL}/practicas/getPracticasCreadas`
-    : `http://${URL}/practicas/getPracticasAsignadas`;
+    let endpoint;
+
+    if (tipo === "creadas"){
+      endpoint = `http://${URL}/practicas/getPracticasCreadas`;  
+    }
+    else if (tipo === "asignadas"){
+      endpoint = `http://${URL}/practicas/getPracticasAsignadas`;  
+    }
+    else {
+      endpoint = `http://${URL}/practicas/getPracticasInhabilitadas`;  
+    }
 
     const response = await fetch(endpoint);
     if (!response.ok) {
@@ -123,5 +131,51 @@ export const updateStatusPractica = async (changes: CombinedChange[]): Promise<v
   if (!response.ok) {
     throw new Error('Error actualizando los estados de practica');
   }
+  return response.json();
+};
+
+export const inhabilitarPracticaByGroup = async (practicaId: number, groupId: number ) => {
+  const response = await fetch(`http://${URL}/practicas/inhabilitarPracticaByGroup`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({practicaId, groupId}),
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al inhabilitar practica');
+  }
+  return response.json();
+};
+
+export const inhabilitarPractica = async (practicaId: number) => {
+  const response = await fetch(`http://${URL}/practicas/inhabilitarPractica`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ practicaId }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al inhabilitar práctica');
+  }
+  return response.json();
+};
+
+export const inhabilitarPracticasGroup = async (groupId: number) => {
+  const response = await fetch(`http://${URL}/practicas/inhabilitarPracticasGrupo`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ groupId }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al inhabilitar prácticas del grupo');
+  }
+
   return response.json();
 };

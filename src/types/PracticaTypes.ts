@@ -6,6 +6,8 @@ export interface StatusChange {
   id_practica: number;
   oldStatus: EstadoPractica;
   newStatus: EstadoPractica;
+  nombre: string;
+  grupo: string;
 }
 
 
@@ -21,4 +23,12 @@ export interface Practica {
 	semestre: string | null;
 	status: string | null;
 	materiales?: Material[];
+	id_unique_practica: number | null;
+}
+
+export interface CreadorPractica {
+	name: string;
+	email: string;
+	rol: string;
+	img: string;
 }

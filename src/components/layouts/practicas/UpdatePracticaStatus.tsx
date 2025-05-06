@@ -31,6 +31,8 @@ export function UpdatePracticaStatus() {
   const allChanges = [...statusChanges];
   const hasChanges = allChanges.length > 0;
 
+  console.log("Changes", allChanges);
+
   const handleUpdate = async () => {
     try {
       await updateMutation.mutateAsync({ statusChanges });
@@ -85,7 +87,7 @@ export function UpdatePracticaStatus() {
               >
                 <div className="flex justify-between items-center content-center">
                   <span className="text-sm">
-                    Práctica ID: {change.id_practica}
+                    Práctica: {change.nombre} <br/> Grupo: {change.grupo}
                   </span>
                   <span className="text-sm text-gray-500"></span>
                   <Button

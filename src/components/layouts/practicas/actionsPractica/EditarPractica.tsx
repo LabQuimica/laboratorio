@@ -142,6 +142,12 @@ const EditPractica = ({
         description: "Los cambios se guardaron correctamente",
         variant: "default",
       });
+
+      setTimeout(() => {
+        if (document.body.style.pointerEvents === "none") {
+          document.body.style.pointerEvents = "";
+        }
+      }, 300);
     } catch (error) {
       console.error("Error al guardar los cambios:", error);
       toast({
@@ -154,7 +160,7 @@ const EditPractica = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[30rem] h-full overflow-y-scroll">
+      <SheetContent className="w-[30rem] flex flex-col [&_button.absolute.top-4.right-4]:hidden">
         <SheetHeader>
           <SheetTitle>Editar Práctica</SheetTitle>
           <SheetDescription>
@@ -195,6 +201,12 @@ const EditPractica = ({
                   setFormData(originalData);
                 }
                 onOpenChange(false);
+
+                setTimeout(() => {
+                  if (document.body.style.pointerEvents === "none") {
+                    document.body.style.pointerEvents = "";
+                  }
+                }, 300);
               }}
             >
               Cancelar

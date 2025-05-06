@@ -8,11 +8,12 @@ import { DocentePracticasTable } from "./profesor/tableDocentePracticas";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 import { UpdatePracticaStatus } from "./UpdatePracticaStatus";
+import InhabilitarTodoGrupo from "./actionsPractica/InhabilitarTodo";
 
 const PracticasPage = () => {
   const [viewType, setViewType] = useState<'creadas' | 'asignadas' | 'archivadas'>('creadas');
   const { user } = useContext(UserContext);
-  
+
   const tabs = [
     {
       id: 'creadas',
@@ -40,7 +41,13 @@ const PracticasPage = () => {
 
         {/* Boton para añadir práctica */}
         <div className="flex flex-row right-0 space-x-2">
+            {/* Boton para agregar practica */}
             <AddPractica />
+            {/* Boton para archivar todas las practicas de un grupo solo visible para el admin */}
+            {user?.rol === "administrador" && (
+              <InhabilitarTodoGrupo />
+            )}
+            {/* Boton para actualizar registros de practicas */}
             <div className="pr-4">
               <UpdatePracticaStatus />
             </div>
@@ -51,7 +58,7 @@ const PracticasPage = () => {
       <Tabs 
         tabs={tabs}
         activeTab={viewType}
-        onTabChange={(tabId) => setViewType(tabId as 'creadas' | 'asignadas')}
+        onTabChange={(tabId) => setViewType(tabId as 'creadas' | 'asignadas' | 'archivadas')}
       />
 
       {/* Tabla de prácticas envueltas en un fondo con estas clases de tailwind */}

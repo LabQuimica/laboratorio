@@ -5,7 +5,11 @@ import { styles } from "./styles";
 
 const ReactivoTable = ({ items }: { items: ItemProfesor[] }) => {
   // Filtrar los elementos por tipo: 'liquidos' o 'solidos'
-  const filteredItems = items.filter((item) => item.tipo_item === "reactivos");
+  const filteredItems = items.filter(
+    (item) =>
+      item.tipo_item === "reactivos-líquidos" ||
+      item.tipo_item === "reactivos-sólidos"
+  );
 
   const renderEmptyRows = () => {
     return (
@@ -61,7 +65,9 @@ const ReactivoTable = ({ items }: { items: ItemProfesor[] }) => {
                 <Text>{item.ubicacion}</Text>
               </View>
               <View style={[styles.cell, styles.maxWidth]}>
-                <Text>{`${item.cantidad_total_necesaria} mL/g`}</Text>
+                <Text>{`${item.cantidad_total_necesaria} ${
+                  item.tipo_item === "reactivos-líquidos" ? "mL" : "g"
+                }`}</Text>
               </View>
             </View>
           ))

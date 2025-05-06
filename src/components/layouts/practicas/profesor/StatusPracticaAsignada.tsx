@@ -26,14 +26,15 @@ interface Practica {
 
 interface StatusPracticaProps<TData> {
   row: Row<TData>;
+  id_practica: number;
 }
 
 function StatusPracticaAsignada<TData>({
   row,
+  id_practica
 }: StatusPracticaProps<TData>) {
   const addChange = usePracticaStore((state) => state.addStatusChange);
   const changes = usePracticaStore((state) => state.statusChanges);
-  const id_practica = Number(row.getValue("id_practica"));
   const storedChange = changes.find((c) => c.id_practica === id_practica);
   const currentStatus: EstadoPractica = storedChange
     ? storedChange.newStatus
@@ -43,6 +44,8 @@ function StatusPracticaAsignada<TData>({
       id_practica: id_practica,
       oldStatus: row.getValue("status"),
       newStatus,
+      nombre: row.getValue("nombre"),
+      grupo: row.getValue("grupoCompleto")
     });
   };
 
