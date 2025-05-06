@@ -15,7 +15,7 @@ const PDFProfesor = ({ data }: MyDocumentProps) => {
   const getCurrentDateTime = (): string => {
     return new Date().toLocaleString();
   };
-
+  console.log(data);
   if (!data) {
     return (
       <Document>

@@ -49,17 +49,19 @@ export default function PracticaAsignadaDetails({
 
   const getUnidad = (tipoItem: string) => {
     switch (tipoItem.toLowerCase()) {
-      case "solidos":
+      case "reactivos-sólidos":
         return "g";
-      case "liquidos":
+      case "reactivos-líquidos":
         return "mL";
       case "kits":
+        return "und";
+      case "sensores":
         return "und";
       default:
         return "";
     }
   };
-
+  console.log(data);
   return (
     <div className="space-y-6 pt-2">
       <Card className="dark:bg-neutral-900">
