@@ -51,7 +51,18 @@ export default function CrearPracticaPage() {
                                 <Label htmlFor="equipos" className="text-right text-lg">
                                     Número de equipos
                                 </Label>
-                                <Input id="equipos" value={numEquipos} onChange={(e) => setNumEquipos(Number(e.target.value))} className="rounded-lg mt-3 h-10 w-20 text-center shadow-none" placeholder="1"/>
+                                <Input 
+                                    id="equipos"
+                                    type="number"
+                                    min="1"
+                                    value={numEquipos} 
+                                    onChange={(e) => {
+                                        const value = Number(e.target.value);
+                                        if (value >= 1) setNumEquipos(value);
+                                        else setNumEquipos(1);
+                                      }}
+                                    className="rounded-lg mt-3 h-10 w-20 text-center shadow-none" placeholder="1"
+                                />
                             </div>
 
                             {/* File upleader */}

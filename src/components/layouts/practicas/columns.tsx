@@ -68,6 +68,9 @@ export const asignadascolumns: ColumnDef<Practica>[] = [
         accessorKey: "id_practica",
     },
     {
+      accessorKey: "id_unique_practica",
+    },
+    {
       accessorKey: "docente",
       header: "Docente",
       size: 8,
@@ -102,7 +105,7 @@ export const asignadascolumns: ColumnDef<Practica>[] = [
       accessorKey: "status",
       header: "Estatus",
       size: 200,
-      cell: ({ row }) => <StatusPracticaAsignada row={row}/>
+      cell: ({ row }) => <StatusPracticaAsignada row={row} id_practica={row.getValue("id_unique_practica")}/>
     },
     {
       accessorFn: (row) => `${row.grupo} ${row.semestre}`,

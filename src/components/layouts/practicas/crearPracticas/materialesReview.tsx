@@ -71,7 +71,6 @@ const MaterialesReview = () => {
                                 onChange={
                                     (e) => {
                                         const value = e.target.value;
-                                        // Permitir vacío temporalmente para que el usuario pueda escribir
                                         handleQuantityChange(tipo, material, value);
                                     }
                                 }
@@ -187,6 +186,8 @@ const MaterialesReview = () => {
             reactivos.forEach(item => removeMaterial('reactivos', item.id_item));
             material.forEach(item => removeMaterial('materiales', item.id_item));
             equipos.forEach(item => removeMaterial('equipos', item.id_item));
+
+            window.location.href = '/menu/practica';
         } catch (error) {
             console.error(error);
             toast({
@@ -242,7 +243,7 @@ const MaterialesReview = () => {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                        {/*Aqui van los líquidos agregados*/}
+                        {/*Aqui van los reactivos agregados*/}
                         {renderMateriales('reactivos', reactivos)}
                     </AccordionContent>
                 </AccordionItem>
@@ -254,8 +255,20 @@ const MaterialesReview = () => {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                        {/*Aqui van los sólidos agregados*/}
+                        {/*Aqui van los materiales agregados*/}
                         {renderMateriales('materiales', material)}
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>
+                        <div className='flex flex-row justify-between w-full pr-5'>
+                            <p className='text-lg'>Equipos</p>
+                            <span className="ml-2 text-base text-gray-500">({equipos.length})</span>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        {/*Aqui van los equipos agregados*/}
+                        {renderMateriales('equipos', equipos)}
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>

@@ -33,9 +33,6 @@ export const links = [
     href: "/menu/manuales",
     icon: <IconBook className="h-5 w-5 " />,
   },
-];
-
-export const profesorLinks = [
   {
     label: "Grupos",
     href: "/menu/grupos",

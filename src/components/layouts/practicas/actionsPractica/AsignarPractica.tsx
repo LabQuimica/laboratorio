@@ -24,6 +24,7 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface AsignarPracticaProps {
   open: boolean;
@@ -100,7 +101,7 @@ const AsignarPractica = ({ open, onOpenChange, idPractica }: AsignarPracticaProp
         <DialogHeader>
           <DialogTitle>Asignar Práctica</DialogTitle>
           <DialogDescription>
-            Selecciona las fechas de inicio y fin, y un grupo
+            Selecciona el grupo, y las fechas de inicio y fin
           </DialogDescription>
         </DialogHeader>
         
@@ -114,22 +115,26 @@ const AsignarPractica = ({ open, onOpenChange, idPractica }: AsignarPracticaProp
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="w-full justify-start">
-                    {gruposSeleccionados.length > 0
-                      ? `Grupos: ${gruposSeleccionados
-                          .map(id => grupos.find(g => g.id_grupo === id)?.nombre || id)
-                          .join(', ')}`
-                      : "Seleccionar grupos"}
+                  {gruposSeleccionados.length > 0
+                    ? `Grupo: ${
+                        grupos.find(
+                          g => g.id_grupo === gruposSeleccionados[gruposSeleccionados.length - 1]
+                        )?.nombre || gruposSeleccionados[gruposSeleccionados.length - 1]
+                      }`
+                    : "Seleccionar grupos"}
                   </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                  {grupos.map((grupo) => (
-                    <DropdownMenuItem
-                      key={grupo.id_grupo}
-                      onSelect={() => agregarGrupo(grupo.id_grupo)}
-                    >
-                      {grupo.nombre}
-                    </DropdownMenuItem>
-                  ))}
+                    <ScrollArea className="h-[200px]">
+                    {grupos.map((grupo) => (
+                      <DropdownMenuItem
+                        key={grupo.id_grupo}
+                        onSelect={() => agregarGrupo(grupo.id_grupo)}
+                      >
+                        {grupo.nombre}
+                      </DropdownMenuItem>
+                    ))}
+                    </ScrollArea>
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}

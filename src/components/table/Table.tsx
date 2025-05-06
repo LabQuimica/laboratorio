@@ -52,6 +52,7 @@ export const Table = <TData,>({
         id_vale: false,
         id_pa: false,
         id_practica: false,
+        id_unique_practica: false,
       },
       // rowSelection,
       columnFilters,
