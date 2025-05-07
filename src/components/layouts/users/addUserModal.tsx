@@ -3,27 +3,32 @@
 
 import { useState } from "react";
 import {
-  Dialog, DialogTrigger, DialogContent,
-  DialogHeader, DialogTitle,
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Select, SelectTrigger, SelectValue,
-  SelectContent, SelectItem,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
 } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useForm, Controller } from "react-hook-form";
+import ExcelJS from "exceljs";
 import { useAddUser } from "@/hooks/Users/useUserMutations";
 import { useUsers } from "@/hooks/Users/useUser";
 import { toast } from "@/hooks/use-toast";
-import * as XLSX from "xlsx";
 import type { AddUserRequest } from "@/types/user";
 
 type FormValues = AddUserRequest;
 
 export default function AddUserModal() {
-  /* ------------------ estado / react‑hook‑form ------------------ */
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"manual" | "excel">("manual");
   const [excelData, setExcelData] = useState<FormValues[]>([]);
@@ -35,14 +40,13 @@ export default function AddUserModal() {
     formState: { errors },
   } = useForm<FormValues>({ defaultValues: { rol: "alumno" } });
 
-  /* ------------------ queries / mutations ------------------ */
   const addUser = useAddUser();
   const { data: users } = useUsers();
 
   const isDup = (u: FormValues) =>
-    users?.some(x => x.email === u.email || x.codigo === u.codigo);
+    users?.some((x) => x.email === u.email || x.codigo === u.codigo);
 
-  /* ------------------ alta manual ------------------ */
+  /* ------------------ Alta manual ------------------ */
   const onManual = async (data: FormValues) => {
     if (isDup(data)) {
       toast({ title: "Error", description: "Usuario duplicado", open: true });
@@ -52,11 +56,11 @@ export default function AddUserModal() {
       await addUser.mutateAsync(data);
       toast({ title: "Éxito", description: "Usuario agregado", open: true });
       reset({
-        name:     "",
-        email:    "",
+        name: "",
+        email: "",
         password: "",
-        codigo:   "",
-        rol:      "alumno",
+        codigo: "",
+        rol: "alumno",
       });
       setOpen(false);
     } catch (e: any) {
@@ -64,26 +68,42 @@ export default function AddUserModal() {
     }
   };
 
-  /* ------------------ lectura de Excel ------------------ */
+  /* ------------------ Lectura con exceljs ------------------ */
   const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const wb = XLSX.read(await file.arrayBuffer());
-    const raw: any[] = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
+    const buffer = await file.arrayBuffer();
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.load(buffer);
+    const sheet = workbook.worksheets[0];
 
-    // Normalizamos nombre de columnas  y rellenamos rol vacío → alumno
-    const parsed: FormValues[] = raw.map(r => ({
-      name:     r.name     || r.Nombre        || "",
-      email:    r.email    || r.Correo        || "",
-      password: r.password || r.Contraseña    || "",
-      codigo:   r.codigo   || r["N.Boleta"]   || "",
-      rol: (r.rol || "").toLowerCase() as any || "alumno",
-    }));
+    // Leer cabecera
+    const header: string[] = [];
+    sheet.getRow(1).eachCell((cell, colNumber) => {
+      header[colNumber] = String(cell.value ?? "").trim().toLowerCase();
+    });
 
-    // validamos que TODOS los campos obligatorios existan
+    // Parsear filas
+    const parsed: FormValues[] = [];
+    sheet.eachRow((row, rowNumber) => {
+      if (rowNumber === 1) return; // saltar encabezados
+      const rowData: Record<string, string> = {};
+      row.eachCell((cell, colNumber) => {
+        rowData[header[colNumber]] = String(cell.value ?? "").trim();
+      });
+      parsed.push({
+        name: rowData["name"] || rowData["nombre"] || "",
+        email: rowData["email"] || rowData["correo"] || "",
+        password: rowData["password"] || rowData["contraseña"] || "",
+        codigo: rowData["codigo"] || rowData["n.boleta"] || "",
+        rol: (rowData["rol"] || "alumno").toLowerCase() as any,
+      });
+    });
+
+    // Validar
     const invalid = parsed.filter(
-      u => !u.name || !u.email || !u.password || !u.codigo
+      (u) => !u.name || !u.email || !u.password || !u.codigo
     );
     if (invalid.length) {
       toast({
@@ -99,15 +119,15 @@ export default function AddUserModal() {
     toast({ title: "Archivo", description: "Datos listos para registrar", open: true });
   };
 
-  /* ------------------ alta masiva ------------------ */
+  /* ------------------ Alta masiva ------------------ */
   const onConfirm = async () => {
-    const nuevos = excelData.filter(u => !isDup(u));
+    const nuevos = excelData.filter((u) => !isDup(u));
     if (!nuevos.length) {
       toast({ title: "Error", description: "Todos los registros son duplicados", open: true });
       return;
     }
     try {
-      await Promise.all(nuevos.map(u => addUser.mutateAsync(u)));
+      await Promise.all(nuevos.map((u) => addUser.mutateAsync(u)));
       toast({ title: "Éxito", description: "Usuarios agregados", open: true });
       setExcelData([]);
       setOpen(false);
@@ -116,44 +136,78 @@ export default function AddUserModal() {
     }
   };
 
-  /* ------------------ UI ------------------ */
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild><Button>Agregar usuario</Button></DialogTrigger>
+      <DialogTrigger asChild>
+        <Button>Agregar usuario</Button>
+      </DialogTrigger>
 
       <DialogContent className="sm:max-w-lg">
-        <DialogHeader><DialogTitle>Agregar usuario</DialogTitle></DialogHeader>
+        <DialogHeader>
+          <DialogTitle>Agregar usuario</DialogTitle>
+        </DialogHeader>
 
-        <Tabs value={mode} onValueChange={v => setMode(v as any)}>
-          <TabsList>
-            <TabsTrigger value="manual">Manual</TabsTrigger>
-            <TabsTrigger value="excel">Excel</TabsTrigger>
+        <Tabs value={mode} onValueChange={(v) => setMode(v as any)}>
+          <TabsList className="flex w-full">
+            <TabsTrigger value="manual" className="flex-1 text-center">
+              Manual
+            </TabsTrigger>
+            <TabsTrigger value="excel" className="flex-1 text-center">
+              Excel
+            </TabsTrigger>
           </TabsList>
         </Tabs>
 
         {mode === "manual" ? (
-          <form onSubmit={handleSubmit(onManual)} className="space-y-4 mt-4" noValidate>
-            <Input {...register("name",     { required: "El nombre es obligatorio" })} placeholder="Nombre" />
-            {errors.name && <p className="text-red-600 text-sm">{errors.name.message}</p>}
+          <form
+            onSubmit={handleSubmit(onManual)}
+            className="space-y-4 mt-4"
+            noValidate
+          >
+            <Input
+              {...register("name", { required: "El nombre es obligatorio" })}
+              placeholder="Nombre"
+            />
+            {errors.name && (
+              <p className="text-red-600 text-sm">{errors.name.message}</p>
+            )}
 
-            <Input {...register("email", {
+            <Input
+              {...register("email", {
                 required: "El correo es obligatorio",
-                pattern: { value: /^\S+@\S+$/i, message: "Formato de correo inválido" }
-              })} placeholder="Email" />
-            {errors.email && <p className="text-red-600 text-sm">{errors.email.message}</p>}
+                pattern: { value: /^\S+@\S+$/i, message: "Formato de correo inválido" },
+              })}
+              placeholder="Email"
+            />
+            {errors.email && (
+              <p className="text-red-600 text-sm">{errors.email.message}</p>
+            )}
 
-            <Input {...register("password", { required: "La contraseña es obligatoria" })} type="password" placeholder="Contraseña" />
-            {errors.password && <p className="text-red-600 text-sm">{errors.password.message}</p>}
+            <Input
+              {...register("password", { required: "La contraseña es obligatoria" })}
+              type="password"
+              placeholder="Contraseña"
+            />
+            {errors.password && (
+              <p className="text-red-600 text-sm">{errors.password.message}</p>
+            )}
 
-            <Input {...register("codigo",   { required: "La boleta es obligatoria" })} placeholder="Código (Boleta)" />
-            {errors.codigo && <p className="text-red-600 text-sm">{errors.codigo.message}</p>}
+            <Input
+              {...register("codigo", { required: "La boleta es obligatoria" })}
+              placeholder="Código (Boleta)"
+            />
+            {errors.codigo && (
+              <p className="text-red-600 text-sm">{errors.codigo.message}</p>
+            )}
 
             <Controller
               name="rol"
               control={control}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger><SelectValue placeholder="Rol" /></SelectTrigger>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Rol" />
+                  </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="administrador">Administrador</SelectItem>
                     <SelectItem value="profesor">Profesor</SelectItem>
@@ -163,14 +217,17 @@ export default function AddUserModal() {
               )}
             />
 
-            <Button type="submit">Agregar</Button>
+            <Button type="submit" className="w-full">
+              Agregar
+            </Button>
           </form>
         ) : (
           <div className="space-y-4 mt-4">
             <input type="file" accept=".xlsx" onChange={onFile} />
             {excelData.length > 0 && (
-              <Button onClick={onConfirm}>
-                Registrar {excelData.length} usuario{excelData.length > 1 && "s"}
+              <Button onClick={onConfirm} className="w-full">
+                Registrar {excelData.length} usuario
+                {excelData.length > 1 && "s"}
               </Button>
             )}
           </div>

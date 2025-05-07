@@ -12,11 +12,12 @@ import {
   IconBox,
   IconDeviceDesktop,
   IconPuzzle,
+  IconDeviceLaptop,
 } from "@tabler/icons-react";
 
 export default function MaterialsPage() {
   const [viewType, setViewType] = useState<
-    "reactivos" | "materiales" | "sensores" | "kits"
+    "reactivos" | "materiales" | "sensores" | "kits" | "equipos"
   >("reactivos");
   const { user } = useContext(UserContext);
 
@@ -25,6 +26,7 @@ export default function MaterialsPage() {
     { id: "materiales",  label: "Materiales",  icon: <IconBox />            },
     { id: "sensores",    label: "Sensores",    icon: <IconDeviceDesktop /> },
     { id: "kits",        label: "Kits",        icon: <IconPuzzle />         },
+    { id: "equipos",     label: "Equipos",     icon: <IconDeviceLaptop />   },
   ];
 
   return (
@@ -39,9 +41,7 @@ export default function MaterialsPage() {
       <Tabs
         tabs={tabs}
         activeTab={viewType}
-        onTabChange={(id) =>
-          setViewType(id as "reactivos" | "materiales" | "sensores" | "kits")
-        }
+        onTabChange={(id) => setViewType(id as any)}
       />
 
       {/* Contenido según rol */}

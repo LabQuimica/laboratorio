@@ -60,26 +60,26 @@ export function ActionUserMenu<TData>({ row }: Props<TData>) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="icon" variant="ghost">
-            <IconEdit />
+          <Button>
+            Selecciona
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={onToggle}>
             {userData.active ? (
               <>
-                <IconToggleLeftFilled className="mr-2 h-4 w-4" />
+                <IconToggleRightFilled className="mr-2 h-4 w-4 text-green-500" />
                 Desactivar
               </>
             ) : (
               <>
-                <IconToggleRightFilled className="mr-2 h-4 w-4" />
+                <IconToggleLeftFilled className="mr-2 h-4 w-4 text-red-500" />
                 Activar
               </>
             )}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setEditOpen(true)}>
-            <IconEdit className="mr-2 h-4 w-4" /> Modificar
+            <IconEdit className="mr-2 h-4 w-4 text-blue-500" /> Modificar
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

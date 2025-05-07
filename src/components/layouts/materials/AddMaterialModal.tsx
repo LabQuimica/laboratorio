@@ -1,4 +1,4 @@
-// laboratorio/src/components/layouts/materials/AddMaterialModal.tsx
+// src/components/layouts/materials/AddMaterialModal.tsx
 "use client";
 
 import { useState } from "react";
@@ -21,45 +21,17 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { useCreateMaterial } from "@/hooks/Materials/useMaterialMutations";
 import { toast } from "@/hooks/use-toast";
+import { LOCATIONS } from "@/constants/locations";
+import { MATERIAL_TYPES } from "@/constants/materialTypes";
+import { BRANDS } from "@/constants/brands";
 import type { Material } from "@/types/material";
 
 type FormValues = Omit<
   Material,
-  "id_item" | "fecha_modificacion" | "marca" | "contenido_kit"
+  "id_item" | "fecha_modificacion" | "contenido_kit" | "marca"
 >;
 
-// Lista de ubicaciones únicas (puedes poblarla dinámicamente si lo prefieres)
-const LOCATIONS = [
-  "Estante abierto 1, Nivel 1",
-  "Estante abierto 1, Nivel 2",
-  "Estante abierto 1, Nivel 3",
-  "Estante abierto 2, Nivel 1",
-  "Estante abierto 2, Nivel 2",
-  "Estante abierto 2, Nivel 3",
-  "Estante abierto 2, Nivel 4",
-  "Estante abierto 2, Nivel 5",
-  "Estante abierto 2, Nivel 6",
-  "Estante cerrado 1, Nivel 1",
-  "Estante cerrado 1, Nivel 2",
-  "Estante cerrado 1, Nivel 3",
-  "Estante cerrado 1, Nivel 4",
-  "Estante cerrado 1, Nivel 5",
-  "Estante cerrado 1, Nivel 6",
-  "Estante cerrado 2, Nivel 1",
-  "Estante cerrado 2, Nivel 2",
-  "Estante cerrado 2, Nivel 3",
-  "Estante cerrado 2, Nivel 4",
-  "Estante cerrado 2, Nivel 5",
-  "Estante cerrado 2, Nivel 6",
-  "Estante cerrado 3, Nivel 1",
-  "Estante cerrado 3, Nivel 2",
-  "Estante cerrado 3, Nivel 3",
-  "Estante cerrado 3, Nivel 4",
-  "G10",
-  "Mesa",
-  "Mesa Movible",
-];
-
+// Ponemos defaults en useForm
 export default function AddMaterialModal() {
   const [open, setOpen] = useState(false);
   const {
@@ -68,14 +40,28 @@ export default function AddMaterialModal() {
     control,
     reset,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({
+    defaultValues: {
+      num_serie: "SN",
+      nombre: "",
+      tipo: "" as any,
+      ubicacion: "" as any,
+      cantidad: 0,
+      observacion: null,
+      especial: null,
+      fk_marca_item: 1,
+      status: true,
+    },
+  });
   const createMat = useCreateMaterial();
 
   const onSubmit = async (data: FormValues) => {
+    // Garantizar num_serie no vacío
+    if (!data.num_serie?.trim()) data.num_serie = "SN";
     try {
       await createMat.mutateAsync(data);
       toast({ title: "Agregado", description: "Material agregado con éxito", open: true });
-      reset();
+      reset(); // limpia el form
       setOpen(false);
     } catch (e: any) {
       toast({ title: "Error", description: e.message, variant: "destructive", open: true });
@@ -93,11 +79,11 @@ export default function AddMaterialModal() {
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Número de serie */}
+          {/* N. Serie */}
           <div>
-            <label className="block mb-1">Número de serie</label>
+            <label className="block mb-1">N. Serie</label>
             <Input
-              {...register("num_serie", { required: "Este campo es obligatorio" })}
+              {...register("num_serie", { required: "El número de serie es obligatorio" })}
             />
             {errors.num_serie && (
               <p className="text-red-600 text-sm">{errors.num_serie.message}</p>
@@ -108,7 +94,7 @@ export default function AddMaterialModal() {
           <div>
             <label className="block mb-1">Nombre</label>
             <Input
-              {...register("nombre", { required: "Este campo es obligatorio" })}
+              {...register("nombre", { required: "El nombre es obligatorio" })}
             />
             {errors.nombre && (
               <p className="text-red-600 text-sm">{errors.nombre.message}</p>
@@ -123,15 +109,19 @@ export default function AddMaterialModal() {
               control={control}
               rules={{ required: "Selecciona un tipo" }}
               render={({ field }) => (
-                <Select {...field}>
+                <Select
+                  value={field.value ?? undefined}
+                  onValueChange={(v) => field.onChange(v)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecciona tipo" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="reactivos">Reactivos</SelectItem>
-                    <SelectItem value="sensores">Sensores</SelectItem>
-                    <SelectItem value="materiales">Materiales</SelectItem>
-                    <SelectItem value="kits">Kits</SelectItem>
+                    {MATERIAL_TYPES.map((t) => (
+                      <SelectItem key={t} value={t}>
+                        {t[0].toUpperCase() + t.slice(1)}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               )}
@@ -166,9 +156,8 @@ export default function AddMaterialModal() {
               rules={{ required: "Selecciona una ubicación" }}
               render={({ field }) => (
                 <Select
-                  {...field}
-                  value={field.value ?? ""}
-                  onValueChange={field.onChange}
+                  value={field.value ?? undefined}
+                  onValueChange={(v) => field.onChange(v)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecciona ubicación" />
@@ -188,16 +177,54 @@ export default function AddMaterialModal() {
             )}
           </div>
 
+          {/* Marca */}
+          <div>
+            <label className="block mb-1">Marca</label>
+            <Controller
+              name="fk_marca_item"
+              control={control}
+              rules={{ required: "Selecciona una marca" }}
+              render={({ field }) => (
+                <Select
+                  value={String(field.value)}
+                  onValueChange={(v) => field.onChange(Number(v))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona marca" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {BRANDS.map((b) => (
+                      <SelectItem key={b.value} value={String(b.value)}>
+                        {b.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            {errors.fk_marca_item && (
+              <p className="text-red-600 text-sm">{errors.fk_marca_item.message}</p>
+            )}
+          </div>
+
           {/* Observación */}
           <div>
             <label className="block mb-1">Observación</label>
-            <Input {...register("observacion")} />
+            <Controller
+              name="observacion"
+              control={control}
+              render={({ field }) => <Input {...field} value={field.value ?? ""} />}
+            />
           </div>
 
           {/* Especial */}
           <div>
             <label className="block mb-1">Especial</label>
-            <Input {...register("especial")} />
+            <Controller
+              name="especial"
+              control={control}
+              render={({ field }) => <Input {...field} value={field.value ?? ""} />}
+            />
           </div>
 
           <Button type="submit">Guardar</Button>

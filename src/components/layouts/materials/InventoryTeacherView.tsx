@@ -6,7 +6,7 @@ import { useMaterials } from "@/hooks/Materials/useMaterials";
 import type { Material } from "@/types/material";
 
 interface Props {
-  viewType: "reactivos" | "materiales" | "sensores" | "kits";
+  viewType: "reactivos" | "materiales" | "sensores" | "kits" | "equipos";
 }
 
 export default function InventoryTeacherView({ viewType }: Props) {

@@ -8,9 +8,10 @@ import {
   fetchSensores,
   fetchMateriales,
   fetchKits,
+  fetchEquipos,
 } from "@/services/Materials/materialsService";
 
-type ViewType = "reactivos" | "materiales" | "sensores" | "kits";
+type ViewType = "reactivos" | "materiales" | "sensores" | "kits" | "equipos";
 
 export function useMaterials(viewType: ViewType) {
   // definimos la key como tupla literal para que TS la conozca
@@ -27,6 +28,8 @@ export function useMaterials(viewType: ViewType) {
         return fetchMateriales();
       case "kits":
         return fetchKits();
+      case "equipos":
+        return fetchEquipos();
     }
   };
 

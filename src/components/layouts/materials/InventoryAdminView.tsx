@@ -9,7 +9,7 @@ import MaterialActions from "./MaterialActions";
 import type { Material } from "@/types/material";
 
 interface Props {
-  viewType: "reactivos" | "materiales" | "sensores" | "kits";
+  viewType: "reactivos" | "materiales" | "sensores" | "kits" | "equipos";
 }
 
 export default function InventoryAdminView({ viewType }: Props) {

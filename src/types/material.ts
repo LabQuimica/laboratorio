@@ -11,5 +11,6 @@ export interface Material {
   especial: string | null;
   fecha_modificacion: string;
   marca: string | null;
+  fk_marca_item: number;
   contenido_kit?: string; // sólo para kits
 }

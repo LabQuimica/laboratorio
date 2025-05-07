@@ -23,6 +23,11 @@ export async function fetchKits(): Promise<Material[]> {
   if (!res.ok) throw new Error("Error al cargar kits");
   return res.json() as Promise<Material[]>;
 }
+export async function fetchEquipos(): Promise<Material[]> {
+  const res = await fetch(`http://${URL}/materiales/getEquipos`);
+  if (!res.ok) throw new Error("Error al cargar equipos");
+  return res.json() as Promise<Material[]>;
+}
 
 const BASE = `http://${URL}/materiales`;
 
