@@ -42,24 +42,24 @@ const ItemCard: React.FC<{ item: ItemProps }> = ({ item }) => {
   const progressWidth = `${Math.min(porcentaje, 100)}%`;
   
   return (
-    <div className={`rounded-lg overflow-hidden border ${statusInfo.borderColor} shadow-sm hover:shadow-md transition-shadow duration-200 w-full dark:shadow-neutral-900`}>
-      <div className={`p-4 ${statusInfo.bgColor}`}>
+    <div className={`rounded-lg overflow-hidden border ${statusInfo.borderColor} shadow-sm hover:shadow-md transition-shadow duration-200 w-full h-full flex flex-col dark:shadow-neutral-900`}>
+      <div className={`p-4 ${statusInfo.bgColor} flex-1 flex flex-col`}>
         <div className="flex justify-between items-start mb-2">
           <div className="flex items-center">
             <IconFlask className={statusInfo.textColor} size={22} />
-            <h3 className={`ml-2 text-lg font-bold ${statusInfo.textColor}`}>
+            <h3 className={`ml-2 text-lg font-bold ${statusInfo.textColor} line-clamp-2`}>
               {item.nombre}
             </h3>
           </div>
         </div>
         
-        <div className="flex justify-between items-center text-sm text-neutral-600 dark:text-neutral-400 mb-2">
+        <div className="flex justify-between items-center text-sm text-neutral-600 dark:text-neutral-400 mb-2 mt-auto">
           <span className="flex items-center">
-            <IconSpeakerphone size={18} className="mr-1" />
-            Disponible: {item.cantidad} / {item.cantidad_maxima}
+            <IconSpeakerphone size={18} className="mr-1 flex-shrink-0" />
+            <span className="truncate">Disponible: {item.cantidad} / {item.cantidad_maxima}</span>
           </span>
           
-          <span className="flex items-center font-medium">
+          <span className="flex items-center font-medium flex-shrink-0 ml-2">
             <IconPercentage size={16} className="mr-0.5" />
             {porcentaje.toFixed(1)}%
           </span>
@@ -105,7 +105,9 @@ const AlertaInventario: React.FC<{ items: ItemProps[] }> = ({ items }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
             {itemsOrdenados.map((item) => (
-              <ItemCard key={item.id_item || `item-${item.nombre}`} item={item} />
+              <div key={item.id_item || `item-${item.nombre}`} className="h-32">
+                <ItemCard item={item} />
+              </div>
             ))}
           </div>
         </>

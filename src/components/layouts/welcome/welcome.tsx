@@ -39,7 +39,6 @@ const ProfesorDashboard = ({ user }: { user: any }) => {
 const AdminDashboard = ({ user }: { user: any }) => {
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold">Panel de Administración</h2>
       <ItemsAlertList />
     </div>
   );
