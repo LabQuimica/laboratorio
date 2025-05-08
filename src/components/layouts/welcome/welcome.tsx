@@ -2,11 +2,48 @@
 
 import { Shortcuts } from "./shortcuts";
 import ItemsAlertList from "./itemsAlertList";
-
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "@/context/UserContext";
+import { Button } from "@/components/ui/button";
 
+// para profesores
+const ProfesorDashboard = ({ user }: { user: any }) => {
+  return (
+    <div className="space-y-6">
+      <h2 className="text-xl font-bold">Información para Profesores</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white dark:bg-zinc-800 rounded-lg p-6 shadow-md">
+          <h3 className="text-lg font-semibold mb-4">Prácticas asignadas</h3>
+          <p className="text-gray-600 dark:text-gray-300">
+            Puedes ver tus prácticas asignadas en la sección de Prácticas.
+          </p>
+          <Button className="mt-4" variant="outline" onClick={() => window.location.href = "/menu/practica"}>
+            Ver mis prácticas
+          </Button>
+        </div>
+        <div className="bg-white dark:bg-zinc-800 rounded-lg p-6 shadow-md">
+          <h3 className="text-lg font-semibold mb-4">Vales pendientes</h3>
+          <p className="text-gray-600 dark:text-gray-300">
+            Revisa los vales pendientes y en progreso en la sección de Vales.
+          </p>
+          <Button className="mt-4" variant="outline" onClick={() => window.location.href = "/menu/vale"}>
+            Gestionar vales
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
+// para administradores
+const AdminDashboard = ({ user }: { user: any }) => {
+  return (
+    <div className="space-y-6">
+      <h2 className="text-xl font-bold">Panel de Administración</h2>
+      <ItemsAlertList />
+    </div>
+  );
+};
 
 const WelcomePage = () => {
   const { user } = useContext(UserContext);
@@ -17,17 +54,15 @@ const WelcomePage = () => {
         QuimiLab - Hola {user?.name}
       </h1>
 
-
-      {/* Contenedor principal con Shortcuts a la izquierda y Cards a la derecha */}
       <div className="pt-6 flex flex-col md:flex-row gap-6">
-        {/* Shortcuts - Menú lateral */}
-        {/* <div className="w-full md:max-w-sm">
-          <Shortcuts />
-        </div> */}
-
-        {/* Cards de alerta */}
         <div className="flex-1">
-          <ItemsAlertList />
+          {user?.rol === "administrador" ? (
+            <AdminDashboard user={user} />
+          ) : user?.rol === "profesor" ? (
+            <ProfesorDashboard user={user} />
+          ) : (
+            <div>No tienes acceso a esta página.</div>
+          )}
         </div>
       </div>
     </div>
