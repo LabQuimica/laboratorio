@@ -25,6 +25,11 @@ export interface Sensor extends Material {
     tipo: "sensores";
 }
   
+
+export interface Reactivo extends Material {
+    tipo: "reactivos-liquidos" | "reactivos-solidos";
+}
+
 export interface ReactivoLiquido extends Material {
     tipo: "reactivos-liquidos";
 }
