@@ -4,7 +4,7 @@ import { Material } from "@/types/MaterialesTypes";
 
 const URL = process.env.NEXT_PUBLIC_API_URL;
 
-type TipoMaterial = "kits" | "sensores" | "reactivos" | "materiales" | "equipos";
+type TipoMaterial = "kits" | "sensores" | "reactivos-liquidos" | "reactivos-solidos" | "materiales" | "equipos";
 
 export const fetchMateriales = async (tipo: TipoMaterial) => {
     let endpoint: string;
@@ -16,8 +16,11 @@ export const fetchMateriales = async (tipo: TipoMaterial) => {
         case "sensores":
           endpoint = "/materiales/getSensores";
           break;
-        case "reactivos":
-            endpoint = "/materiales/getReactivos";
+        case "reactivos-liquidos":
+            endpoint = "/materiales/getReactivosLiquidos";
+            break;
+        case "reactivos-solidos":
+            endpoint = "/materiales/getReactivosSolidos";
             break;
         case "materiales":
           endpoint = "/materiales/getMateriales";
