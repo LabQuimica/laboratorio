@@ -24,10 +24,12 @@ export default function InventoryAdminView({ viewType }: Props) {
         <div className="text-center w-full">Acciones</div>
       ),
       cell: ({ row }: { row: any }) => (
-        <MaterialActions
-          material={row.original}
-          onEdit={(m) => setEditing(m)}
-        />
+        <div className="flex justify-center">
+          <MaterialActions
+            material={row.original}
+            onEdit={(m) => setEditing(m)}
+          />
+        </div>
       ),
       size: 10,
     },
