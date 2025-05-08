@@ -9,6 +9,7 @@ export const columns: ColumnDef<Material>[] = [
     header: "Nombre",
     cell: ({ row }) => <TruncatedCell text={row.getValue("nombre")} />,
     size: 50,
+    enableResizing: false,
   },
   {
     accessorKey: "ubicacion",
@@ -19,6 +20,7 @@ export const columns: ColumnDef<Material>[] = [
       </div>
     ),
     size: 50,
+    enableResizing: false,
   },
   {
     accessorKey: "cantidad",
@@ -29,17 +31,20 @@ export const columns: ColumnDef<Material>[] = [
       </div>
     ),
     size: 20,
+    enableResizing: false,
   },
   {
     accessorKey: "observacion",
     header: "Observación",
     cell: ({ row }) => <TruncatedCell text={row.getValue("observacion")} />,
     size: 50,
+    enableResizing: false,
   },
   {
     accessorKey: "especial",
     header: "Especial",
     cell: ({ row }) => <TruncatedCell text={row.getValue("especial")} />,
     size: 20,
+    enableResizing: false,
   },
 ];

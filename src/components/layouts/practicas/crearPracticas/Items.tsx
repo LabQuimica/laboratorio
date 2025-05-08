@@ -7,7 +7,7 @@ import { Material } from '@/types/MaterialesTypes';
 
 interface MaterialComponentProps {
   data: Material[];
-  type: 'reactivos' | 'sensores' | 'materiales' | 'equipos';
+  type: 'reactivos-liquidos' | 'reactivos-solidos' | 'sensores' | 'materiales' | 'equipos';
 }
 
 const MaterialComponent: React.FC<MaterialComponentProps> = ({ data, type }) => {
@@ -67,7 +67,7 @@ const MaterialComponent: React.FC<MaterialComponentProps> = ({ data, type }) => 
               onClick={() => addMaterial(type, item)}
               disabled={item.status === 0}
             >
-              Agregar {(type === "sensores" || type === "materiales" 
+              Agregar {(type === "sensores" || type === "materiales"
                 ? type.slice(0, -2) 
                 : type.slice(0, -1)
               ).charAt(0).toUpperCase() + (type === "sensores" || type === "materiales" 
