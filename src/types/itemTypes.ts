@@ -4,7 +4,7 @@ export interface Item {
     fk_marca_item: number;
     num_serie: string;
     nombre: string;
-    tipo: "kits" | "sensores" | "materiales" | "liquidos" | "solidos"; 
+    tipo: "kits" | "sensores" | "materiales" | "reactivos-liquidos" | "reactivos-solidos"; 
     ubicacion: string;
     cantidad: number;
     observacion: string;
@@ -20,4 +20,4 @@ export interface ItemAlert {
     marca: string;
   }
 
-export type tipoItem = "kits" | "sensores" | "materiales" | "liquidos" | "solidos";
+export type tipoItem = "kits" | "sensores" | "materiales" | "reactivos-liquidos" | "reactivos-solidos";

@@ -62,16 +62,7 @@ const ManualFile = ({
     </div>
   );
 
-  if (isSelectionMode) {  // para elegir los que se van a eliminar
-    return (
-      <div 
-        className="cursor-pointer" 
-        onClick={onToggleSelection}
-      >
-        <FileContent />
-      </div>
-    );
-  }
+
 
   return (  // para mostrar el archivo en el lector de pdf de drive
     <a
