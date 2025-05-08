@@ -8,10 +8,10 @@ import { Material } from '@/types/MaterialesTypes';
 import { Input } from "@/components/ui/input";
 import { IconSearch } from '@tabler/icons-react';
 
-type TipoMaterial = "kits" | "sensores" | "reactivos" | "materiales" | "equipos";
+type TipoMaterial = "kits" | "sensores" | "reactivos-liquidos" | "reactivos-solidos" | "materiales" | "equipos";
 
 export default function Materiales() {
-    const tipos: TipoMaterial[] = ["kits", "sensores", "reactivos", "materiales", "equipos"];
+    const tipos: TipoMaterial[] = ["kits", "sensores", "reactivos-liquidos", "reactivos-solidos", "materiales", "equipos"];
     const [tipoActivo, setTipoActivo] = useState<TipoMaterial>("kits");
     const { data, isLoading, error } = useMateriales(tipoActivo);
     const [searchQuery, setSearchQuery] = useState("");
