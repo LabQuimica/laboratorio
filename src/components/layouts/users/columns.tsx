@@ -1,64 +1,51 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import { ActionUser } from "@/components/layouts/users/ActionsUsers";
-import { SortableHeader } from "@/components/table/SortableHeader";
-import TruncatedCell from "@/components/table/TruncatedCell";
-import { User } from "@/types/userTypes";
 import { ColumnDef } from "@tanstack/react-table";
-import formatDateCell from "@/components/table/FormatedDate";
-import PasswordCell from "@/components/layouts/users/showPassword";
+import TruncatedCell from "@/components/table/TruncatedCell";
+import { ActionUserMenu } from "./ActionUserMenu";
+import type { User } from "@/types/user";
 
 export const columns: ColumnDef<User>[] = [
   {
-    accessorKey: "id_user",
-    header: ({ column }) => (
-      <SortableHeader column={column} title="Id" className="justify-center" />
-    ),
-    size: 10,
-    cell: ({ row }) => (
-      <p className="text-center"> {row.getValue("id_user")} </p>
-    ),
-  },
-  {
     accessorKey: "name",
-    header: ({ column }) => <SortableHeader column={column} title="Nombre" />,
-    size: 50,
+    header: "Nombre",
+    size: 30,
+    cell: ({ row }) => <TruncatedCell text={row.getValue("name")} />,
   },
   {
     accessorKey: "email",
-    header: "Correo electrónico",
-    size: 50,
+    header: "Correo",
+    size: 40,
     cell: ({ row }) => <TruncatedCell text={row.getValue("email")} />,
+  },
+  {
+    accessorKey: "codigo",
+    header: "Boleta",
+    size: 20,
+    cell: ({ row }) => <TruncatedCell text={row.getValue("codigo")} />,
   },
   {
     accessorKey: "rol",
     header: "Rol",
-    size: 50,
-    cell: ({ row }) => (
-      <p className="text-center"> {row.getValue("rol")} </p>
-    ),
+    size: 20,
+    cell: ({ row }) => <TruncatedCell text={row.getValue("rol")} />,
   },
   {
     accessorKey: "active",
     header: "Estado",
-    size: 10,
-    cell: ({ row }) => {
-      const value = row.getValue("active");
-      return <p className="text-center">{value === 1 ? "Activo" : "No activo"}</p>;
-    },
-  },
-  {
-    accessorKey: "codigo",
-    header: "Código",
-    size: 30,
+    size: 15,
     cell: ({ row }) => (
-      <p className="text-center"> {row.getValue("codigo")} </p>
+      <p className="text-center">
+        {row.getValue("active") ? "Activo" : "Inactivo"}
+      </p>
     ),
   },
   {
-    accessorKey: "actions",
-    header: "Actions",
-    size: 10,
-    cell: ({ row }) => <ActionUser row={row} />,
+    id: "actions",
+    header: "Acciones",
+    size: 15,
+    cell: ({ row }) => (
+      <div className="flex justify-center">
+        <ActionUserMenu row={row} />
+      </div>
+    ),
   },
 ];
-

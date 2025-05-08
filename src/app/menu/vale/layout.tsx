@@ -1,4 +1,4 @@
-import ValeNavigation from "@/components/layouts/vales/naviation";
+import ValeNavigation from "@/components/layouts/vales/navigation";
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (

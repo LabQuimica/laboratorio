@@ -8,6 +8,7 @@ export interface User {
     rol: "administrador" | "profesor" | "alumno";
     active: number;
     codigo: string;
+    img: string;
   }
 
 export type rolUser = "administrador" | "profesor" | "alumno";
