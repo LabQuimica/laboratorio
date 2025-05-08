@@ -17,8 +17,7 @@ import { toast } from "@/hooks/use-toast";
 import { LOCATIONS } from "@/constants/locations";
 import { MATERIAL_TYPES } from "@/constants/materialTypes";
 import { BRANDS } from "@/constants/brands";
-import type { Material } from "@/types/material";
-import { IconEdit } from "@tabler/icons-react";
+import type { Material } from "@/types/MaterialesTypes";
 
 interface Props {
   mat: Material;
@@ -103,14 +102,14 @@ export default function EditMaterialModal({ mat, open, onClose }: Props) {
             <Controller
               name="tipo"
               control={control}
-              rules={{ required: "Selecciona un tipo" }}
+              rules={{ required: "Selecciona un tipo de material" }}
               render={({ field }) => (
                 <Select
-                  value={field.value ?? undefined}
-                  onValueChange={(v) => field.onChange(v)}
+                  value={field.value}
+                  onValueChange={field.onChange}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecciona tipo" />
+                    <SelectValue placeholder="Selecciona tipo de material" />
                   </SelectTrigger>
                   <SelectContent>
                     {MATERIAL_TYPES.map((t) => (

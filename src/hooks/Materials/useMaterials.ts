@@ -2,16 +2,23 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { Material } from "@/types/material";
+import type { Material } from "@/types/MaterialesTypes";
 import {
-  fetchReactivos,
   fetchSensores,
   fetchMateriales,
   fetchKits,
   fetchEquipos,
+  fetchReactivosLiquidos,
+  fetchReactivosSolidos,
 } from "@/services/Materials/materialsService";
 
-type ViewType = "reactivos" | "materiales" | "sensores" | "kits" | "equipos";
+type ViewType =
+  | "reactivos-liquidos"
+  | "reactivos-solidos"
+  | "sensores"
+  | "materiales"
+  | "kits"
+  | "equipos";
 
 export function useMaterials(viewType: ViewType) {
   // definimos la key como tupla literal para que TS la conozca
@@ -20,8 +27,10 @@ export function useMaterials(viewType: ViewType) {
   // queryFn que maneja cada caso
   const queryFn = async (): Promise<Material[]> => {
     switch (viewType) {
-      case "reactivos":
-        return fetchReactivos();
+      case "reactivos-liquidos":
+        return fetchReactivosLiquidos();
+      case "reactivos-solidos":
+        return fetchReactivosSolidos();
       case "sensores":
         return fetchSensores();
       case "materiales":

@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import TruncatedCell from "@/components/table/TruncatedCell";
 import { ActionUserMenu } from "./ActionUserMenu";
-import type { User } from "@/types/user";
+import type { User } from "@/types/userTypes";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -20,13 +20,21 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "codigo",
     header: "Boleta",
     size: 20,
-    cell: ({ row }) => <TruncatedCell text={row.getValue("codigo")} />,
+    cell: ({ row }) => (
+      <p className="text-center">
+        {row.getValue("codigo")}
+      </p>
+    ),
   },
   {
     accessorKey: "rol",
     header: "Rol",
     size: 20,
-    cell: ({ row }) => <TruncatedCell text={row.getValue("rol")} />,
+    cell: ({ row }) => (
+      <p className="text-center">
+        {row.getValue("rol")}
+      </p>
+    ),
   },
   {
     accessorKey: "active",

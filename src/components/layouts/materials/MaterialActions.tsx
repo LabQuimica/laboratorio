@@ -1,6 +1,6 @@
 "use client";
 
-import { Material } from "@/types/material";
+import { Material } from "@/types/MaterialesTypes";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

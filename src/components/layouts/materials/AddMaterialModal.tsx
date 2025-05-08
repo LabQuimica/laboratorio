@@ -24,7 +24,7 @@ import { toast } from "@/hooks/use-toast";
 import { LOCATIONS } from "@/constants/locations";
 import { MATERIAL_TYPES } from "@/constants/materialTypes";
 import { BRANDS } from "@/constants/brands";
-import type { Material } from "@/types/material";
+import type { Material } from "@/types/MaterialesTypes";
 
 type FormValues = Omit<
   Material,

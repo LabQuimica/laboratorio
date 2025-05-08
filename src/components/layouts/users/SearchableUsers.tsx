@@ -8,7 +8,7 @@ import { useUsers } from "@/hooks/Users/useUser";
 import { UserContext } from "@/context/UserContext";
 import { columns } from "./columns";
 import AddUserModal from "./addUserModal";
-import type { User } from "@/types/user";
+import type { User } from "@/types/userTypes";
 
 export default function UsersPage() {
   const { data: users = [] } = useUsers();

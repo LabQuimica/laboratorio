@@ -18,7 +18,7 @@ import { useUpdateUser } from "@/hooks/Users/useUserMutations";
 import { toast } from "@/hooks/use-toast";
 import { UserContext } from "@/context/UserContext";
 import EditUserModal from "./editUserModal";
-import type { User } from "@/types/user";
+import type { User } from "@/types/userTypes";
 
 interface Props<TData> {
   row: Row<TData>;

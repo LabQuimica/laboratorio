@@ -3,15 +3,16 @@ export interface Material {
     id_item: number;
     num_serie: string;
     nombre: string;
-    tipo: "kits" | "sensores" | "reactivos-líquidos" | "reactivos-sólidos" | "materiales" | "equipos";
+    tipo: "kits" | "sensores" | "reactivos-liquidos" | "reactivos-solidos" | "materiales" | "equipos";
     ubicacion: string;
-    cantidad: string;
-    observacion: string;
-    status: number;
-    especial: string;
+    cantidad: number;
+    observacion: string | null;
+    status: boolean;
+    especial: string | null;
     fecha_modificacion: string;
     marca: string;
     cantidadActual?: string;
+    fk_marca_item: number;
 }
 
 export interface Kit extends Material {
@@ -24,8 +25,12 @@ export interface Sensor extends Material {
     tipo: "sensores";
 }
   
-export interface Reactivo extends Material {
-    tipo: "reactivos-líquidos" | "reactivos-sólidos";
+export interface ReactivoLiquido extends Material {
+    tipo: "reactivos-liquidos";
+}
+
+export interface ReactivoSolido extends Material { 
+    tipo: "reactivos-solidos";
 }
 
 export interface Materiales extends Material {

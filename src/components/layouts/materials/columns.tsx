@@ -1,7 +1,7 @@
 // laboratorio/src/components/layouts/materials/columns.tsx
 import { ColumnDef } from "@tanstack/react-table";
 import TruncatedCell from "@/components/table/TruncatedCell";
-import { Material } from "@/types/material";
+import { Material } from "@/types/MaterialesTypes";
 
 export const columns: ColumnDef<Material>[] = [
   {
@@ -13,7 +13,11 @@ export const columns: ColumnDef<Material>[] = [
   {
     accessorKey: "ubicacion",
     header: "Ubicación",
-    cell: ({ row }) => <TruncatedCell text={row.getValue("ubicacion")} />,
+    cell: ({ row }) => (
+      <div className="text-center">
+        <TruncatedCell text={row.getValue("ubicacion")} />
+      </div>
+    ),
     size: 50,
   },
   {

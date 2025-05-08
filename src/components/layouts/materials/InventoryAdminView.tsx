@@ -6,10 +6,10 @@ import { columns as baseColumns } from "./columns";
 import { useMaterials } from "@/hooks/Materials/useMaterials";
 import EditMaterialModal from "./EditMaterialModal";
 import MaterialActions from "./MaterialActions";
-import type { Material } from "@/types/material";
+import type { Material } from "@/types/MaterialesTypes";
 
 interface Props {
-  viewType: "reactivos" | "materiales" | "sensores" | "kits" | "equipos";
+  viewType: "reactivos-solidos" | "reactivos-liquidos" | "materiales" | "sensores" | "kits" | "equipos";
 }
 
 export default function InventoryAdminView({ viewType }: Props) {
@@ -20,7 +20,9 @@ export default function InventoryAdminView({ viewType }: Props) {
     ...baseColumns,
     {
       id: "actions",
-      header: () => <div className="text-center">Acciones</div>,
+      header: () => (
+        <div className="text-center w-full">Acciones</div>
+      ),
       cell: ({ row }: { row: any }) => (
         <MaterialActions
           material={row.original}

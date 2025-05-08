@@ -13,16 +13,18 @@ import {
   IconDeviceDesktop,
   IconPuzzle,
   IconDeviceLaptop,
+  IconBrandAirtable,
 } from "@tabler/icons-react";
 
 export default function MaterialsPage() {
   const [viewType, setViewType] = useState<
-    "reactivos" | "materiales" | "sensores" | "kits" | "equipos"
-  >("reactivos");
+    "reactivos-solidos" | "reactivos-liquidos" | "materiales" | "sensores" | "kits" | "equipos"
+  >("reactivos-solidos");
   const { user } = useContext(UserContext);
 
   const tabs = [
-    { id: "reactivos",   label: "Reactivos",   icon: <IconFlask2Filled />   },
+    { id: "reactivos-solidos", label: "Reactivos Sólidos", icon: <IconBrandAirtable /> },
+    { id: "reactivos-liquidos", label: "Reactivos Líquidos", icon: <IconFlask2Filled /> },
     { id: "materiales",  label: "Materiales",  icon: <IconBox />            },
     { id: "sensores",    label: "Sensores",    icon: <IconDeviceDesktop /> },
     { id: "kits",        label: "Kits",        icon: <IconPuzzle />         },

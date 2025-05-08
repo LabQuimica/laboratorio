@@ -24,7 +24,7 @@ import ExcelJS from "exceljs";
 import { useAddUser } from "@/hooks/Users/useUserMutations";
 import { useUsers } from "@/hooks/Users/useUser";
 import { toast } from "@/hooks/use-toast";
-import type { AddUserRequest } from "@/types/user";
+import type { AddUserRequest } from "@/types/userTypes";
 
 type FormValues = AddUserRequest;
 
@@ -206,7 +206,7 @@ export default function AddUserModal() {
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Rol" />
+                    <SelectValue/>
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="administrador">Administrador</SelectItem>

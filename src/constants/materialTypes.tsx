@@ -1,5 +1,6 @@
 export const MATERIAL_TYPES = [
-  "reactivos",
+  "reactivos-solidos",
+  "reactivos-liquidos",
   "sensores",
   "materiales",
   "kits",

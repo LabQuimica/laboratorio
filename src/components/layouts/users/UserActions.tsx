@@ -1,7 +1,7 @@
 // laboratorio/src/components/layouts/users/UserActions.tsx
 "use client";
 
-import { User } from "@/types/user";
+import { User } from "@/types/userTypes";
 import { useDeleteUser, useUpdateUser } from "@/hooks/Users/useUserMutations";
 import { toast } from "@/hooks/use-toast";
 import {

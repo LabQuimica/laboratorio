@@ -2,7 +2,7 @@
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import Cookies from "js-cookie";
-import { User } from "@/types/user";
+import { User } from "@/types/userTypes";
 import { getUserFromToken } from "@/services/userService";
 
 interface UserContextType {

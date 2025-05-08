@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import { User, AddUserRequest} from "@/types/user";
+import { User, AddUserRequest} from "@/types/userTypes";
 
 const URL = process.env.NEXT_PUBLIC_API_URL; 
 
@@ -10,6 +10,7 @@ export function getUserFromToken(token: string): User | null {
       id_user: decoded.id,
       name: decoded.name,
       email: decoded.email,
+      password: "", // Password not available in token, set as empty string
       date: decoded.date || new Date().toISOString(),
       rol: decoded.rol,
       active: true,

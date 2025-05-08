@@ -3,10 +3,10 @@
 import { TableWithoutControls } from "@/components/table/TableWithoutControls";
 import { columns } from "./columns";
 import { useMaterials } from "@/hooks/Materials/useMaterials";
-import type { Material } from "@/types/material";
+import type { Material } from "@/types/MaterialesTypes";
 
 interface Props {
-  viewType: "reactivos" | "materiales" | "sensores" | "kits" | "equipos";
+  viewType: "reactivos-solidos" | "reactivos-liquidos" | "materiales" | "sensores" | "kits" | "equipos";
 }
 
 export default function InventoryTeacherView({ viewType }: Props) {

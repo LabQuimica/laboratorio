@@ -1,10 +1,16 @@
 // laboratorio/src/services/materialsService.ts
-import type { Material } from "@/types/material";
+import type { Material } from "@/types/MaterialesTypes";
 const URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function fetchReactivos(): Promise<Material[]> {
-  const res = await fetch(`http://${URL}/materiales/getReactivos`);
-  if (!res.ok) throw new Error("Error al cargar reactivos");
+export async function fetchReactivosLiquidos(): Promise<Material[]> {
+  const res = await fetch(`http://${URL}/materiales/getReactivosLiquidos`);
+  if (!res.ok) throw new Error("Error al cargar reactivos líquidos");
+  return res.json() as Promise<Material[]>;
+}
+
+export async function fetchReactivosSolidos(): Promise<Material[]> {
+  const res = await fetch(`http://${URL}/materiales/getReactivosSolidos`);
+  if (!res.ok) throw new Error("Error al cargar reactivos sólidos");
   return res.json() as Promise<Material[]>;
 }
 

@@ -2,6 +2,7 @@
 "use client";
 
 import { useForm, Controller } from "react-hook-form";
+import { useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -19,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { useUpdateUser } from "@/hooks/Users/useUserMutations";
-import { User } from "@/types/user";
+import { User } from "@/types/userTypes";
 
 interface Props {
   user: User;
@@ -30,7 +31,7 @@ interface Props {
 type FormValues = Pick<User, "name" | "email" | "codigo" | "rol">;
 
 export default function EditUserModal({ user, open, onClose }: Props) {
-  const { control, register, handleSubmit } = useForm<FormValues>({
+  const { control, register, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
       name: user.name,
       email: user.email,
@@ -39,6 +40,18 @@ export default function EditUserModal({ user, open, onClose }: Props) {
     },
   });
   const updateUser = useUpdateUser();
+
+  // Reset form values when the modal is closed
+  useEffect(() => {
+    if (!open) {
+      reset({
+        name: user.name,
+        email: user.email,
+        codigo: user.codigo,
+        rol: user.rol,
+      });
+    }
+  }, [open, reset, user]);
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -56,7 +69,7 @@ export default function EditUserModal({ user, open, onClose }: Props) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
+    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>Modificar Usuario</DialogTitle>
@@ -76,7 +89,10 @@ export default function EditUserModal({ user, open, onClose }: Props) {
             name="rol"
             control={control}
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
+              <Select
+                value={field.value} 
+                onValueChange={field.onChange}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>

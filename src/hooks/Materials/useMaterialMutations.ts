@@ -2,7 +2,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { Material } from "@/types/material";
+import type { Material } from "@/types/MaterialesTypes";
 import {
   createMaterial,
   updateMaterial,
@@ -32,4 +32,3 @@ export function useDeleteMaterial() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["materials"] }),
   });
 }
-
