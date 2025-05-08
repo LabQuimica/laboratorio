@@ -22,7 +22,8 @@ const MaterialesReview = () => {
 
     const kits = useStoreItems(state => state.kits);
     const sensores = useStoreItems(state => state.sensores);
-    const reactivos = useStoreItems(state => state.reactivos);
+    const reactivos_solidos = useStoreItems(state => state.reactivos_solidos);
+    const reactivos_liquidos = useStoreItems(state => state.reactivos_liquidos);
     const material = useStoreItems(state => state.materiales);
     const equipos = useStoreItems(state => state.equipos);
     const removeMaterial = useStoreItems(state => state.removeMaterial);
@@ -77,7 +78,7 @@ const MaterialesReview = () => {
                                 className="w-16 text-sm h-8 text-center align-middle justify-center items-center bg-transparent"
                             />
                             {/* Unidad mg o ml */}
-                            {tipo === "reactivos" && (
+                            {(tipo === "reactivos-liquidos" || tipo === "reactivos-solidos") && (
                             <span className="text-sm text-gray-500 ml-1">
                                 {material.tipo === "reactivos-solidos" ? "mg" :
                                 material.tipo === "reactivos-liquidos" ? "ml" : ""}
@@ -133,7 +134,8 @@ const MaterialesReview = () => {
         const materiales = [
             ...kits.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
             ...sensores.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
-            ...reactivos.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
+            ...reactivos_solidos.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
+            ...reactivos_liquidos.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
             ...material.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
             ...equipos.map(item => ({ itemId: item.id_item, cantidad: item.cantidadActual })),
         ];
@@ -183,7 +185,8 @@ const MaterialesReview = () => {
             });
             kits.forEach(item => removeMaterial('kits', item.id_item));
             sensores.forEach(item => removeMaterial('sensores', item.id_item));
-            reactivos.forEach(item => removeMaterial('reactivos', item.id_item));
+            reactivos_solidos.forEach(item => removeMaterial('reactivos-solidos', item.id_item));
+            reactivos_liquidos.forEach(item => removeMaterial('reactivos-liquidos', item.id_item));
             material.forEach(item => removeMaterial('materiales', item.id_item));
             equipos.forEach(item => removeMaterial('equipos', item.id_item));
 
@@ -238,16 +241,28 @@ const MaterialesReview = () => {
                 <AccordionItem value="item-3">
                     <AccordionTrigger>
                     <div className='flex flex-row justify-between w-full pr-5'>
-                            <p className='text-lg'>Reactivos</p>
-                            <span className="ml-2 text-base text-gray-500">({reactivos.length})</span>
+                            <p className='text-lg'>Reactivos Solidos</p>
+                            <span className="ml-2 text-base text-gray-500">({reactivos_solidos.length})</span>
                         </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                        {/*Aqui van los reactivos agregados*/}
-                        {renderMateriales('reactivos', reactivos)}
+                        {/*Aqui van los reactivos solidos agregados*/}
+                        {renderMateriales('reactivos-solidos', reactivos_solidos)}
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
+                    <AccordionTrigger>
+                    <div className='flex flex-row justify-between w-full pr-5'>
+                            <p className='text-lg'>Reactivos Liquidos</p>
+                            <span className="ml-2 text-base text-gray-500">({reactivos_liquidos.length})</span>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        {/*Aqui van los reactivos liquidos agregados*/}
+                        {renderMateriales('reactivos-liquidos', reactivos_liquidos)}
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
                     <AccordionTrigger>
                         <div className='flex flex-row justify-between w-full pr-5'>
                             <p className='text-lg'>Materiales</p>
@@ -259,7 +274,7 @@ const MaterialesReview = () => {
                         {renderMateriales('materiales', material)}
                     </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="item-5">
+                <AccordionItem value="item-6">
                     <AccordionTrigger>
                         <div className='flex flex-row justify-between w-full pr-5'>
                             <p className='text-lg'>Equipos</p>
