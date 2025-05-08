@@ -4,7 +4,8 @@ import {
   IconFileAnalytics,
   IconUsers,
   IconBook,
-  IconChalkboard,
+  IconPackage,
+IconChalkboard,
 } from "@tabler/icons-react";
 
 export const links = [
@@ -34,7 +35,14 @@ export const links = [
     icon: <IconBook className="h-5 w-5 " />,
   },
   {
-    label: "Grupos",
+        label: "Materiales",
+    href: "/menu/materiales",
+    icon: (
+      <IconPackage className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    ),
+  },
+  {
+        label: "Grupos",
     href: "/menu/grupos",
     icon: <IconChalkboard className="h-5 w-5" />,
   },

@@ -4,6 +4,38 @@ import { cn } from "@/lib/utils";
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   ({ className, type, ...props }, ref) => {
+
+
+
+
+
+
+    
+    React.useEffect(() => {
+      const restorePointerEvents = () => {
+        if (document.body.style.pointerEvents === "none") {
+          document.body.style.pointerEvents = "auto";
+        }
+      };
+      restorePointerEvents();
+      const observer = new MutationObserver(() => restorePointerEvents());
+      observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ["style"],
+      });
+  
+      return () => {
+        observer.disconnect();
+        restorePointerEvents();
+      };
+    }, []);
+
+
+
+
+
+
+
     return (
       <input
         type={type}

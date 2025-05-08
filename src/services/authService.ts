@@ -1,4 +1,4 @@
-import { Rol } from "@/types/user";
+import { rolUser } from "@/types/userTypes";
 export interface LoginResponse {
   token: string;
   user: {
@@ -6,7 +6,7 @@ export interface LoginResponse {
     name: string;
     email: string;
     date: string;
-    rol: Rol;
+    rol: rolUser;
     active: boolean;
     codigo: string;
   };
