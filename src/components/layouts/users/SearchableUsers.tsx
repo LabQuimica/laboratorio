@@ -7,7 +7,7 @@ import { TableWithoutControls } from "@/components/table/TableWithoutControls";
 import { useUsers } from "@/hooks/Users/useUser";
 import { UserContext } from "@/context/UserContext";
 import { columns } from "./columns";
-import AddUserModal from "./AddUserModal";
+import AddUserModal from "./addUserModal";
 import type { User } from "@/types/user";
 
 export default function UsersPage() {
@@ -25,8 +25,11 @@ export default function UsersPage() {
     const term = q.trim().toLowerCase();
     if (!term) return [];
     return normalized.filter((u) =>
-      [u.name, u.email, u.codigo, u.rol]
-        .some((f) => String(f ?? "").toLowerCase().includes(term))
+      [u.name, u.email, u.codigo, u.rol].some((f) =>
+        String(f ?? "")
+          .toLowerCase()
+          .includes(term)
+      )
     );
   }, [normalized, q]);
 
@@ -55,9 +58,7 @@ export default function UsersPage() {
 
       {/* Si hay búsqueda pero no hay resultados */}
       {q && filtered.length === 0 && (
-        <p className="text-center text-red-500">
-          No se encontraron usuarios.
-        </p>
+        <p className="text-center text-red-500">No se encontraron usuarios.</p>
       )}
 
       {/* Tabla sólo si hay resultados */}

@@ -17,7 +17,7 @@ import {
 import { useUpdateUser } from "@/hooks/Users/useUserMutations";
 import { toast } from "@/hooks/use-toast";
 import { UserContext } from "@/context/UserContext";
-import EditUserModal from "./EditUserModal";
+import EditUserModal from "./editUserModal";
 import type { User } from "@/types/user";
 
 interface Props<TData> {
@@ -60,9 +60,7 @@ export function ActionUserMenu<TData>({ row }: Props<TData>) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button>
-            Selecciona
-          </Button>
+          <Button>Selecciona</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={onToggle}>
