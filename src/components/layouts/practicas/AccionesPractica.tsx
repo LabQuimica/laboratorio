@@ -5,20 +5,26 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { IconEdit, IconTrash, IconHandFinger } from '@tabler/icons-react';
+import { IconEdit, IconTrash, IconHandFinger, IconArchiveOff } from '@tabler/icons-react';
 import DeletePractica from "./actionsPractica/DeletePractica";
 import AsignarPractica from "./actionsPractica/AsignarPractica";
 import EditPractica from "./actionsPractica/EditarPractica";
+import InhabilitarPractica from "./actionsPractica/InhabilitarPractica";
 
 interface PracticaActionsProps {
   idPractica: number;
   estaAsignada: number;
+  viewType: "creadas" | "archivadas";
 }
 
-const PracticaActions = ({ idPractica, estaAsignada}: PracticaActionsProps) => {
+const PracticaActions = ({ idPractica, estaAsignada, viewType}: PracticaActionsProps) => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openAsignar, setOpenAsignar] = useState(false);
   const [openModificar, setOpenModificar] = useState(false);
+  const [openInhabilitar, setOpenInhabilitar] = useState(false);
+
+  const isCreadas = viewType === "creadas";
+  const isArchivadas = viewType === "archivadas";
 
   return (
     <div className='flex justify-center w-full'>
@@ -28,19 +34,31 @@ const PracticaActions = ({ idPractica, estaAsignada}: PracticaActionsProps) => {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={() => setOpenModificar(true)}>
-            <IconEdit className="h-5 w-5 mr-2" /> Editar
-          </DropdownMenuItem>
+          {isCreadas && (
+            <>
+              <DropdownMenuItem onSelect={() => setOpenModificar(true)} className="cursor-pointer">
+                <IconEdit className="h-5 w-5 mr-2" /> Editar
+              </DropdownMenuItem>
 
-          {!estaAsignada && (
-          <DropdownMenuItem onSelect={() => setOpenAsignar(true)}>
-            <IconHandFinger className="h-5 w-5 mr-2" /> Asignar
-          </DropdownMenuItem>
+              {!estaAsignada && (
+                <DropdownMenuItem onSelect={() => setOpenAsignar(true)} className="cursor-pointer">
+                  <IconHandFinger className="h-5 w-5 mr-2" /> Asignar
+                </DropdownMenuItem>
+              )}
+
+              {estaAsignada === 1 && (
+                <DropdownMenuItem onSelect={() => setOpenInhabilitar(true)} className="text-red-600 cursor-pointer">
+                  <IconArchiveOff className="h-5 w-5 mr-2" /> Inhabilitar
+                </DropdownMenuItem>
+              )}
+            </>
           )}
 
-          <DropdownMenuItem onSelect={() => setOpenDelete(true)} className="text-red-600">
-            <IconTrash className="h-5 w-5 mr-2" /> Eliminar
-          </DropdownMenuItem>
+          {isArchivadas && (
+            <DropdownMenuItem onSelect={() => setOpenDelete(true)} className="text-red-600 cursor-pointer">
+              <IconTrash className="h-5 w-5 mr-2" /> Eliminar
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -52,7 +70,7 @@ const PracticaActions = ({ idPractica, estaAsignada}: PracticaActionsProps) => {
       />
 
       {/* Modal para asignar practica */}
-      {!estaAsignada && (
+      {isCreadas && !estaAsignada && (
         <AsignarPractica 
           open={openAsignar} 
           onOpenChange={setOpenAsignar} 
@@ -61,11 +79,22 @@ const PracticaActions = ({ idPractica, estaAsignada}: PracticaActionsProps) => {
       )}
 
       {/* Modal para editar practica */}
-      <EditPractica 
-        open={openModificar} 
-        onOpenChange={setOpenModificar} 
-        idPractica={idPractica} 
-      />
+      {isCreadas && openModificar && (
+        <EditPractica 
+          open={openModificar} 
+          onOpenChange={setOpenModificar} 
+          idPractica={idPractica} 
+        />
+      )}
+
+      {/* Modal para inhabilitar practica*/}
+      {isCreadas && estaAsignada === 1 && (
+        <InhabilitarPractica
+          open={openInhabilitar} 
+          onOpenChange={setOpenInhabilitar} 
+          idPractica={idPractica} 
+        />
+      )}
     </div>
   );
 };

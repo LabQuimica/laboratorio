@@ -1,11 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
 import { usePracticas } from "@/hooks/Practicas/usePractica";
-import { asignadascolumns, creadascolumns } from "./columns";
-import DocenteSelector from "./docenteSelector";
+import { archivadascolumns, asignadascolumns, creadascolumns } from "./columns";
 import { Table } from "@/components/table/Table";
 import { Practica } from "@/types/PracticaTypes";
-import { EstadoValeFilter } from "../vales/alumno/FilterVale";
+import { PracticaAdminFilter } from "./FilterPractica";
 
 interface PracticasTableProps {
   viewType: "creadas" | "asignadas" | "archivadas";
@@ -15,12 +13,17 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
   const { data: practicasAdmin, isLoading, isError} = usePracticas(viewType);
   //const { practicasData } = usePracticas();
 
-  const columns = viewType === "creadas" ? creadascolumns : asignadascolumns;
+  console.log("Practicas",practicasAdmin)
 
-  if (viewType === "archivadas") {
-    return <div className="h-40">En proceso</div>;
+  let columns;
+  if (viewType === "creadas") {
+    columns = creadascolumns;
+  } else if (viewType === "asignadas") {
+    columns = asignadascolumns;
+  } else {
+    columns = archivadascolumns;
   }
-
+  
   return (
     <div>
       {/* Tabla */}
@@ -31,7 +34,7 @@ export const PracticasTable = ({ viewType }: PracticasTableProps) => {
         isError={isError}
         orderBy="fecha_creacion"
         reactQueryKEY={["practicas"]}
-        FilterComponent={EstadoValeFilter}
+        FilterComponent={(props) => <PracticaAdminFilter {...props} viewType={viewType} />}
       />
     </div>
   );

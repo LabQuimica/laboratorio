@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { AlertDialog } from '@radix-ui/react-alert-dialog';
 import { X } from 'lucide-react';
-
+import { useEffect } from "react";
 import { useStoreItems } from "@/stores/useStoreItems";
 import { usePracticaStore } from '@/stores/practicasStore';
 import { useCreatePractica } from '@/hooks/Practicas/usePractica';
@@ -47,7 +47,12 @@ const MaterialesReview = () => {
                 <ul className="space-y-2">
                 {materialesList.map((material) => (
                     <li key={material.id_item} className="flex justify-between items-center p-2">
-                    <span className='text-base'>{material.nombre}</span>
+                    <span className='text-base'>
+                        {tipo === 'materiales' && material.especial !== "N/A"
+                        ? `${material.nombre} ${material.especial}`
+                        : material.nombre
+                    }
+                    </span>
                     <div className="flex items-center">
                         <Button 
                             variant="default" 
@@ -58,14 +63,27 @@ const MaterialesReview = () => {
                         >
                             <span className='font-extrabold text-xl'>-</span>
                         </Button>
-                        <input 
-                            type="number" 
-                            value={material.cantidadActual} 
-                            onChange={(e) => handleQuantityChange(tipo, material, e.target.value)}
-                            min="1"
-                            max={material.cantidad}
-                            className="mx-2 px-2 w-16 text-sm h-8 text-center align-middle justify-center items-center bg-transparent"
-                        />
+                        <div className="flex items-center mx-2 px-2">
+                            <input 
+                                type="number"
+                                min={0.1}
+                                value={material.cantidadActual ?? ''}
+                                onChange={
+                                    (e) => {
+                                        const value = e.target.value;
+                                        handleQuantityChange(tipo, material, value);
+                                    }
+                                }
+                                className="w-16 text-sm h-8 text-center align-middle justify-center items-center bg-transparent"
+                            />
+                            {/* Unidad mg o ml */}
+                            {tipo === "reactivos" && (
+                            <span className="text-sm text-gray-500 ml-1">
+                                {material.tipo === "reactivos-sólidos" ? "mg" :
+                                material.tipo === "reactivos-líquidos" ? "ml" : ""}
+                            </span>
+                            )}
+                        </div>
                         <Button 
                             variant="ghost" 
                             size="sm"
@@ -128,13 +146,24 @@ const MaterialesReview = () => {
             });
             return;
         }
+
+        const materialesFiltrados = materiales.filter(m => Number(m.cantidad) > 0);
+
+        if (materialesFiltrados.length === 0) {
+            toast({
+                title: "Error",
+                description: "No se pueden crear prácticas sin materiales válidos (con cantidad menor a 0.1).",
+                variant: "destructive",
+            });
+            return;
+        }
     
         const newPractica = {
             nombre,
             descripcion,
             num_equipos: numEquipos,
             creadorId: user?.id_user,
-            materiales: materiales.map(material => ({
+            materiales: materialesFiltrados.map(material => ({
                 itemId: material.itemId,
                 cantidad: Number(material.cantidad) || 0,
             })),
@@ -154,26 +183,33 @@ const MaterialesReview = () => {
             });
             kits.forEach(item => removeMaterial('kits', item.id_item));
             sensores.forEach(item => removeMaterial('sensores', item.id_item));
-            reactivos.forEach(item => removeMaterial('liquidos', item.id_item));
-            material.forEach(item => removeMaterial('liquidos', item.id_item));
-            equipos.forEach(item => removeMaterial('solidos', item.id_item));
+            reactivos.forEach(item => removeMaterial('reactivos', item.id_item));
+            material.forEach(item => removeMaterial('materiales', item.id_item));
+            equipos.forEach(item => removeMaterial('equipos', item.id_item));
+
+            window.location.href = '/menu/practica';
         } catch (error) {
             console.error(error);
             toast({
                 title: "Error",
-                description: "No se pudo crear la práctica.",
+                description: "No se pudo crear la práctica. Revisa las cantidades de los materiales.",
                 variant: "destructive",
             });
         }
     };
 
+    useEffect(() => {
+        if (error) {
+          toast({
+            title: "Error",
+            description: error,
+            variant: "destructive",
+          });
+        }
+      }, [error]);
+
     return (
         <div>
-            {error && (
-                <AlertDialog>
-                        {error}
-                </AlertDialog>
-            )}
             <Accordion type="multiple" className="w-full">
                 <AccordionItem value="item-1">
                     <AccordionTrigger>
@@ -207,7 +243,7 @@ const MaterialesReview = () => {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                        {/*Aqui van los líquidos agregados*/}
+                        {/*Aqui van los reactivos agregados*/}
                         {renderMateriales('reactivos', reactivos)}
                     </AccordionContent>
                 </AccordionItem>
@@ -219,8 +255,20 @@ const MaterialesReview = () => {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                        {/*Aqui van los sólidos agregados*/}
+                        {/*Aqui van los materiales agregados*/}
                         {renderMateriales('materiales', material)}
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>
+                        <div className='flex flex-row justify-between w-full pr-5'>
+                            <p className='text-lg'>Equipos</p>
+                            <span className="ml-2 text-base text-gray-500">({equipos.length})</span>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        {/*Aqui van los equipos agregados*/}
+                        {renderMateriales('equipos', equipos)}
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>

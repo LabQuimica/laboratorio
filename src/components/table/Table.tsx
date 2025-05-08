@@ -21,7 +21,7 @@ interface TableProps<TData> {
   isError: boolean;
   orderBy: string;
   reactQueryKEY: string[];
-  FilterComponent: React.ComponentType<{
+  FilterComponent?: React.ComponentType<{
     onFilterChange: (filters: ColumnFiltersState) => void;
   }>;
 }
@@ -52,6 +52,7 @@ export const Table = <TData,>({
         id_vale: false,
         id_pa: false,
         id_practica: false,
+        id_unique_practica: false,
       },
       // rowSelection,
       columnFilters,
@@ -80,7 +81,9 @@ export const Table = <TData,>({
         setGlobalFilter={setGlobalFilter}
         filteredRowCount={table.getRowModel().rows.length}
         totalRowCount={table.getFilteredRowModel().rows.length}
-        filterComponent={<FilterComponent onFilterChange={setColumnFilters} />}
+        filterComponent={FilterComponent && (
+          <FilterComponent onFilterChange={setColumnFilters} />
+        )}
         reactQueryKEY={reactQueryKEY}
       />
 

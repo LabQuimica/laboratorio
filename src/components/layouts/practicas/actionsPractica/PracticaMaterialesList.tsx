@@ -119,16 +119,22 @@ const PracticaMaterialesList = ({
       0;
     let errorMessage = "";
 
-    if (value < 1) {
-      errorMessage = "La cantidad mínima debe ser 1";
+    if (value < 0.1) {
+      errorMessage = "La cantidad mínima debe ser 0.1";
     } else if (value > maxQuantity) {
       errorMessage = `La máxima cantidad disponible es ${maxQuantity}`;
     }
-
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [materialId]: errorMessage,
-    }));
+    
+    setErrors(prevErrors => {
+      const newErrors = {
+        ...prevErrors,
+        [materialId]: errorMessage,
+      };
+      return newErrors;
+    });
+  
+    const hasAnyError = Object.values(errors).some(error => error !== "");
+    onErrorsChange(hasAnyError);
 
     if (!errorMessage) {
       onMaterialChange(index, "cantidad", value);
@@ -157,6 +163,7 @@ const PracticaMaterialesList = ({
                         />
                         <Input
                           type="number"
+                          min={0.1}
                           placeholder={material.cantidad}
                           className="w-1/4 shadow-none outline-transparent placeholder:text-white"
                           onChange={(e) => {

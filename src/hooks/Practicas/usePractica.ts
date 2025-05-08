@@ -2,7 +2,7 @@
 import { Practica } from "@/types/PracticaTypes";
 import { Docente } from "@/types/DocenteTypes";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchPracticas, fetchPracticaById, fetchDocentes, createPractica, deletePractica, asignarPractica, updatePractica, deleteMaterialPractica, updateStatusPractica } from "@/services/Practicas/practicasService";
+import { fetchPracticas, fetchPracticaById, fetchDocentes, createPractica, deletePractica, asignarPractica, updatePractica, deleteMaterialPractica, updateStatusPractica, inhabilitarPracticaByGroup, inhabilitarPractica, inhabilitarPracticasGroup } from "@/services/Practicas/practicasService";
 import { StatusChange } from "@/types/PracticaTypes";
 
 export const usePracticas = (tipo: "creadas" | "asignadas" | "archivadas") => {
@@ -33,6 +33,7 @@ export const useCreatePractica = () => {
         mutationFn: createPractica,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
+          queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
         },
     });
 };
@@ -43,6 +44,9 @@ export const useDeletePractica = () => {
         mutationFn: ({ idPractica, profesorId }: { idPractica: number; profesorId?: number }) => deletePractica({ idPractica, profesorId }),
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
+          queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
+          queryClient.invalidateQueries({ queryKey: ["valesProfesor"] });
+          queryClient.invalidateQueries({ queryKey: ["valeProfesorDetails"] });
         },
     });
 };
@@ -53,6 +57,9 @@ export const useAsignarPractica = () => {
         mutationFn: asignarPractica,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
+          queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
+          queryClient.invalidateQueries({ queryKey: ["valesProfesor"] });
+          queryClient.invalidateQueries({ queryKey: ["valeProfesorDetails"] }); 
         },
     });
 };
@@ -65,6 +72,9 @@ export const useUpdatePractica = () => {
         updatePractica(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["practicas"] }); 
+            queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
+            queryClient.invalidateQueries({ queryKey: ["valesProfesor"] });
+            queryClient.invalidateQueries({ queryKey: ["valeProfesorDetails"] });
         },
         onError: (error) => {
             console.error("Error al actualizar la práctica:", error);
@@ -78,6 +88,9 @@ export const useDeleteMaterialPractica = () => {
         mutationFn: ({ practicaId, materialId }: { practicaId: number; materialId: number }) => deleteMaterialPractica(practicaId, materialId),
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["practicas"] });
+          queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
+          queryClient.invalidateQueries({ queryKey: ["valesProfesor"] });
+          queryClient.invalidateQueries({ queryKey: ["valeProfesorDetails"] });
         },
     });
 };
@@ -110,6 +123,47 @@ export const useUpdatePracticaStatus = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['practicas'] });
       queryClient.invalidateQueries({ queryKey: ['statusPracticas'] });
+      queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
+      queryClient.invalidateQueries({ queryKey: ["valesProfesor"] });
+    },
+  });
+};
+
+export const useInhabilitarPracticaByGroup = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ practicaId, groupId }: { practicaId: number; groupId: number }) => inhabilitarPracticaByGroup(practicaId, groupId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["practicas"] });
+      queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
+      queryClient.invalidateQueries({ queryKey: ["valesProfesor"] });
+    },
+  });
+};
+
+export const useInhabilitarPractica = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (practicaId: number) => inhabilitarPractica(practicaId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["practicas"] });
+      queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
+      queryClient.invalidateQueries({ queryKey: ["valesProfesor"] });
+    },
+  });
+};
+
+export const useInhabilitarPracticasGroup = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (groupId: number) => inhabilitarPracticasGroup(groupId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["practicas"] });
+      queryClient.invalidateQueries({ queryKey: ["practicasDocente"] });
+      queryClient.invalidateQueries({ queryKey: ["valesProfesor"] });
     },
   });
 };
