@@ -79,8 +79,8 @@ const MaterialesReview = () => {
                             {/* Unidad mg o ml */}
                             {tipo === "reactivos" && (
                             <span className="text-sm text-gray-500 ml-1">
-                                {material.tipo === "reactivos-sólidos" ? "mg" :
-                                material.tipo === "reactivos-líquidos" ? "ml" : ""}
+                                {material.tipo === "reactivos-solidos" ? "mg" :
+                                material.tipo === "reactivos-liquidos" ? "ml" : ""}
                             </span>
                             )}
                         </div>

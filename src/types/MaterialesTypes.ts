@@ -3,7 +3,7 @@ export interface Material {
     id_item: number;
     num_serie: string;
     nombre: string;
-    tipo: "kits" | "sensores" | "reactivos-líquidos" | "reactivos-sólidos" | "materiales" | "equipos";
+    tipo: "kits" | "sensores" | "reactivos-liquidos" | "reactivos-solidos" | "materiales" | "equipos";
     ubicacion: string;
     cantidad: string;
     observacion: string;
@@ -25,7 +25,7 @@ export interface Sensor extends Material {
 }
   
 export interface Reactivo extends Material {
-    tipo: "reactivos-líquidos" | "reactivos-sólidos";
+    tipo: "reactivos-liquidos" | "reactivos-solidos";
 }
 
 export interface Materiales extends Material {
