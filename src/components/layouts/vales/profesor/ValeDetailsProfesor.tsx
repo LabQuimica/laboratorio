@@ -49,9 +49,9 @@ export default function PracticaAsignadaDetails({
 
   const getUnidad = (tipoItem: string) => {
     switch (tipoItem.toLowerCase()) {
-      case "reactivos-solidos":
+      case "reactivos-sólidos":
         return "g";
-      case "reactivos-liquidos":
+      case "reactivos-líquidos":
         return "mL";
       case "kits":
         return "und";
