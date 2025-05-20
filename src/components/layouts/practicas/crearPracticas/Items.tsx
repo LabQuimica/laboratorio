@@ -7,7 +7,7 @@ import { Material } from '@/types/MaterialesTypes';
 
 interface MaterialComponentProps {
   data: Material[];
-  type: 'reactivos-liquidos' | 'reactivos-solidos' | 'sensores' | 'materiales' | 'equipos';
+  type: 'reactivos' | 'sensores' | 'materiales' | 'equipos';
 }
 
 const MaterialComponent: React.FC<MaterialComponentProps> = ({ data, type }) => {
