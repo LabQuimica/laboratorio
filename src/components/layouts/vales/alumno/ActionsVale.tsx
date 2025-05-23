@@ -13,7 +13,7 @@ import { useState } from "react";
 import ValeDetailsDisplay from "./DetailsVale";
 import { Button } from "@/components/ui/button";
 import MenuPDFValeAlumno from "./PDF/MenuPDF";
-import DownloadButton from "@/app/downloadVale/page";
+import DownloadButton from "@/app/downloadVale/alumno/page";
 
 interface Props {
   id_vale: number;

@@ -137,7 +137,7 @@ export default function PracticaAsignadaDetails({
                   <AccordionTrigger className="py-2">
                     <div className="flex items-center justify-between w-full pr-4">
                       <span>{item.nombre_item}</span>
-                      <Badge className="ml-2">
+                      <Badge className=" text-xs w-24 text-center items-center justify-center">
                         {item.cantidad_total_necesaria}{" "}
                         {getUnidad(item.tipo_item)}
                       </Badge>
