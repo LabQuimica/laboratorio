@@ -9,7 +9,7 @@ import {
   fetchKits,
   fetchEquipos,
   fetchReactivosLiquidos,
-  fetchReactivosSolidos,
+  fetchReactivosSolidos
 } from "@/services/Materials/materialsService";
 
 type ViewType =
