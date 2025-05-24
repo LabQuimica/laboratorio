@@ -137,9 +137,14 @@ export default function AddMaterialModal() {
             <Input
               type="number"
               step="1"
+              min={0}
               {...register("cantidad", {
                 valueAsNumber: true,
                 required: "La cantidad es obligatoria",
+                min: {
+                  value: 0,
+                  message: "La cantidad no puede ser negativa",
+                },
               })}
             />
             {errors.cantidad && (

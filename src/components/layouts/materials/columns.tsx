@@ -47,4 +47,11 @@ export const columns: ColumnDef<Material>[] = [
     size: 20,
     enableResizing: false,
   },
+  {
+    id: "actions",
+    header: () => <div className="text-center w-full">Acciones</div>,
+    cell: () => <div className="flex justify-center">{/* Sin acciones por defecto */}</div>,
+    size: 10,
+    enableResizing: false,
+  },
 ];

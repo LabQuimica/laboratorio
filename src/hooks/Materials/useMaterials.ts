@@ -9,10 +9,11 @@ import {
   fetchKits,
   fetchEquipos,
   fetchReactivosLiquidos,
-  fetchReactivosSolidos,
+  fetchReactivosSolidos
 } from "@/services/Materials/materialsService";
 
 type ViewType =
+  | "reactivos"
   | "reactivos-liquidos"
   | "reactivos-solidos"
   | "sensores"
@@ -27,6 +28,13 @@ export function useMaterials(viewType: ViewType) {
   // queryFn que maneja cada caso
   const queryFn = async (): Promise<Material[]> => {
     switch (viewType) {
+      case "reactivos":
+        // Mezcla ambos tipos de reactivos
+        const [solidos, liquidos] = await Promise.all([
+          fetchReactivosSolidos(),
+          fetchReactivosLiquidos(),
+        ]);
+        return [...solidos, ...liquidos];
       case "reactivos-liquidos":
         return fetchReactivosLiquidos();
       case "reactivos-solidos":
@@ -39,6 +47,8 @@ export function useMaterials(viewType: ViewType) {
         return fetchKits();
       case "equipos":
         return fetchEquipos();
+      default:
+        return [];
     }
   };
 

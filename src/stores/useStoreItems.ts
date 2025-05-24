@@ -1,11 +1,10 @@
 import { create } from 'zustand';
-import { Material, Kit, Sensor, ReactivoSolido, ReactivoLiquido, Materiales, Equipos } from '@/types/MaterialesTypes';
+import { Material, Kit, Sensor, Reactivo, Materiales, Equipos } from '@/types/MaterialesTypes';
 
 interface MaterialesState {
     kits: Kit[];
     sensores: Sensor[];
-    reactivos_solidos: ReactivoSolido[];
-    reactivos_liquidos: ReactivoLiquido[];
+    reactivos: Reactivo[];
     materiales: Materiales[];
     equipos: Equipos[];
     error: string | null;
@@ -19,8 +18,7 @@ interface MaterialesState {
 export const useStoreItems = create<MaterialesState>((set) => ({
     kits: [],
     sensores: [],
-    reactivos_solidos: [],
-    reactivos_liquidos: [],
+    reactivos: [],
     materiales: [],
     equipos: [],
     error: null,
@@ -59,7 +57,7 @@ export const useStoreItems = create<MaterialesState>((set) => ({
           const item = currentList.find(item => item.id_item === id);
           if (!item) return state;
 
-          const cantidadMaxima = parseInt(item.cantidad);
+          const cantidadMaxima = item.cantidad;
           const cantidadActual = parseInt(item.cantidadActual || "1");
           const newQuantity = cantidadActual + change;
 
@@ -73,17 +71,17 @@ export const useStoreItems = create<MaterialesState>((set) => ({
             };
           }
 
-          if (newQuantity < 0.1 && newQuantity !== 0) {
+          if (newQuantity < 1 && newQuantity !== 0) {
             return {
               ...state,
-              error: "La cantidad no puede ser menor a 0.1"
+              error: "La cantidad no puede ser menor a 1"
             };
           }
 
           if (newQuantity === 0) {
             return {
               ...state,
-              error: "La cantidad no puede ser menor a 0.1",
+              error: "La cantidad no puede ser menor a 1",
               [tipoKey]: currentList.map(item =>
                 item.id_item === id
                   ? { ...item, cantidadActual: newQuantity.toString() }

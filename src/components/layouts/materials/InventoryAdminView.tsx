@@ -9,7 +9,7 @@ import MaterialActions from "./MaterialActions";
 import type { Material } from "@/types/MaterialesTypes";
 
 interface Props {
-  viewType: "reactivos-solidos" | "reactivos-liquidos" | "materiales" | "sensores" | "kits" | "equipos";
+  viewType: "reactivos" | "materiales" | "sensores" | "kits" | "equipos";
 }
 
 export default function InventoryAdminView({ viewType }: Props) {
@@ -17,22 +17,21 @@ export default function InventoryAdminView({ viewType }: Props) {
   const [editing, setEditing] = useState<Material | null>(null);
 
   const columns = [
-    ...baseColumns,
-    {
-      id: "actions",
-      header: () => (
-        <div className="text-center w-full">Acciones</div>
-      ),
-      cell: ({ row }: { row: any }) => (
-        <div className="flex justify-center">
-          <MaterialActions
-            material={row.original}
-            onEdit={(m) => setEditing(m)}
-          />
-        </div>
-      ),
-      size: 10,
-    },
+    ...baseColumns.map(col =>
+      col.id === "actions"
+        ? {
+            ...col,
+            cell: ({ row }: { row: any }) => (
+              <div className="flex justify-center">
+                <MaterialActions
+                  material={row.original}
+                  onEdit={(m) => setEditing(m)}
+                />
+              </div>
+            ),
+          }
+        : col
+    ),
   ];
 
   return (
