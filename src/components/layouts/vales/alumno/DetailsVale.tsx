@@ -18,6 +18,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import statusStyles from "../statusStyles";
+import { getUnidad } from "@/lib/utils";
 
 interface ValeDetailsDisplayProps {
   data: ValeAlumnoDetails;
@@ -81,20 +82,22 @@ export default function ValeDetailsDisplay({
           </div>
           <div>
             <h3 className="font-medium text-sm text-gray-500 pb-2">Fechas</h3>
-            <div className="space-y-2 pl-2 text-sm">
-              <p>
-                <span className="text-gray-500">Solicitada:</span>
-                {data.fecha_solicitadaVale}
-              </p>
-              <p>
-                <span className="text-gray-600">Inicio:</span>
-                {data.fecha_inicio}
-              </p>
-              <p>
-                <span className="text-gray-500">Fin:</span>
-                {data.fecha_fin}
-              </p>
-            </div>
+            <table className="w-full text-sm">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                <tr>
+                  <td className="py-2 text-gray-500">Solicitada</td>
+                  <td className="py-2">{data.fecha_solicitadaVale}</td>
+                </tr>
+                <tr>
+                  <td className="py-2 text-gray-500">Inicio</td>
+                  <td className="py-2">{data.fecha_inicio}</td>
+                </tr>
+                <tr>
+                  <td className="py-2 text-gray-500">Fin</td>
+                  <td className="py-2">{data.fecha_fin}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>
@@ -112,7 +115,7 @@ export default function ValeDetailsDisplay({
               {data.practica.nombre_practica} #{data.practica.id_practica}
             </p>
             <p>
-              <span className="text-gray-600">Profesor: </span>
+              <span className="text-gray-500">Profesor: </span>
               {data.practica.nombre_profesor}
             </p>
           </div>
@@ -130,30 +133,29 @@ export default function ValeDetailsDisplay({
                     <AccordionTrigger className="py-2">
                       <div className="flex items-center justify-between w-full pr-4">
                         <span>{material.nombre_item}</span>
-                        <Badge className="ml-2">
+                        <Badge className=" text-xs w-24 text-center items-center justify-center">
                           {material.cantidad_material}{" "}
-                          {material.tipo_item === "solidos"
-                            ? "gr"
-                            : material.tipo_item === "liquidos"
-                            ? "ml"
-                            : ""}
+                          {getUnidad(material.tipo_item)}
                         </Badge>
                       </div>
                     </AccordionTrigger>
                     <AccordionContent className="pb-3">
                       <div className="space-y-2 text-sm">
                         <p>
-                          <span className="text-gray-600">Tipo:</span>{" "}
-                          {material.tipo_item}
+                          <span className="text-gray-500">Tipo:</span>{" "}
+                          {material.tipo_item === "reactivos-liquidos" ||
+                          material.tipo_item === "reactivos-solidos"
+                            ? "Reactivos"
+                            : material.tipo_item}
                         </p>
                         <p>
-                          <span className="text-gray-600">Disponible:</span>{" "}
+                          <span className="text-gray-500">Disponible:</span>{" "}
                           {material.cantidad_disponible}{" "}
-                          {material.tipo_item === "liquidos" ? "ml" : "g"}
+                          {getUnidad(material.tipo_item)}
                         </p>
                         {material.observacion_item && (
                           <p>
-                            <span className="text-gray-600">Observación:</span>{" "}
+                            <span className="text-gray-500">Observación:</span>{" "}
                             {material.observacion_item}
                           </p>
                         )}

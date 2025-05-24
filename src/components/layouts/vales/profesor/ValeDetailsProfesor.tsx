@@ -11,6 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { ValeProfesorDetails } from "@/types/ValeTypes";
 import statusStyles from "../statusStyles";
+import { getUnidad } from "@/lib/utils";
 
 interface PracticaAsignadaDisplayProps {
   data: ValeProfesorDetails;
@@ -47,20 +48,6 @@ export default function PracticaAsignadaDetails({
     );
   };
 
-  const getUnidad = (tipoItem: string) => {
-    switch (tipoItem.toLowerCase()) {
-      case "reactivos-solidos":
-        return "g";
-      case "reactivos-liquidos":
-        return "mL";
-      case "kits":
-        return "und";
-      case "sensores":
-        return "und";
-      default:
-        return "";
-    }
-  };
   console.log(data);
   return (
     <div className="space-y-6 pt-2">
@@ -104,16 +91,18 @@ export default function PracticaAsignadaDetails({
 
           <div>
             <h3 className="font-medium text-sm text-gray-500 pb-2">Fechas</h3>
-            <div className="space-y-2 pl-2 text-sm">
-              <p>
-                <span className="text-gray-500 mr-2">Asignada:</span>
-                {data.fecha_asignada}
-              </p>
-              <p>
-                <span className="text-gray-500 mr-2">Entrega:</span>
-                {data.fecha_entrega}
-              </p>
-            </div>
+            <table className="w-full text-sm">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                <tr>
+                  <td className="py-2 text-gray-500">Asignada</td>
+                  <td className="py-2">{data.fecha_asignada}</td>
+                </tr>
+                <tr>
+                  <td className="py-2 text-gray-500">Entrega</td>
+                  <td className="py-2">{data.fecha_entrega}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>
@@ -146,29 +135,32 @@ export default function PracticaAsignadaDetails({
                   <AccordionContent className="pb-3">
                     <div className="space-y-2 text-sm">
                       <p>
-                        <span className="text-gray-600">Tipo:</span>{" "}
-                        {item.tipo_item}
+                        <span className="text-gray-500">Tipo:</span>{" "}
+                        {item.tipo_item === "reactivos-liquidos" ||
+                        item.tipo_item === "reactivos-solidos"
+                          ? "Reactivos"
+                          : item.tipo_item}
                       </p>
                       <p>
-                        <span className="text-gray-600">Característica:</span>{" "}
+                        <span className="text-gray-500">Característica:</span>{" "}
                         {item.especial || "No tiene"}
                       </p>
                       <p>
-                        <span className="text-gray-600">Disponible:</span>{" "}
+                        <span className="text-gray-500">Disponible:</span>{" "}
                         {item.cantidad_disponible} {getUnidad(item.tipo_item)}
                       </p>
                       <p>
-                        <span className="text-gray-600">Ubicación:</span>{" "}
+                        <span className="text-gray-500">Ubicación:</span>{" "}
                         {item.ubicacion}
                       </p>
                       <p>
-                        <span className="text-gray-600">
+                        <span className="text-gray-500">
                           Cantidad solicitada:
                         </span>{" "}
                         {item.cantidad_unitaria} {getUnidad(item.tipo_item)}
                       </p>
                       <p>
-                        <span className="text-gray-600">Contable:</span>{" "}
+                        <span className="text-gray-500">Contable:</span>{" "}
                         {item.contable ? "Sí" : "No"}
                       </p>
                     </div>
