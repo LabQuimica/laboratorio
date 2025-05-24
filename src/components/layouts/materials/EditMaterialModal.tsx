@@ -132,11 +132,18 @@ export default function EditMaterialModal({ mat, open, onClose }: Props) {
             <Controller
               name="cantidad"
               control={control}
-              rules={{ required: "La cantidad es obligatoria" }}
+              rules={{
+                required: "La cantidad es obligatoria",
+                min: {
+                  value: 0,
+                  message: "La cantidad no puede ser negativa",
+                },
+              }}
               render={({ field }) => (
                 <Input
                   type="number"
                   step="1"
+                  min={0}
                   {...field}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 />
