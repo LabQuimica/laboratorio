@@ -65,7 +65,7 @@ const MaterialesReview = () => {
                         <div className="flex items-center mx-2 px-2">
                             <input 
                                 type="number"
-                                min={0.1}
+                                min={1}
                                 value={material.cantidadActual ?? ''}
                                 onChange={
                                     (e) => {
@@ -151,7 +151,7 @@ const MaterialesReview = () => {
         if (materialesFiltrados.length === 0) {
             toast({
                 title: "Error",
-                description: "No se pueden crear prácticas sin materiales válidos (con cantidad menor a 0.1).",
+                description: "No se pueden crear prácticas sin materiales válidos (con cantidad menor a 1).",
                 variant: "destructive",
             });
             return;
