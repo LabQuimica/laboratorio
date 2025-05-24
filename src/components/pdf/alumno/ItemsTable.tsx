@@ -70,7 +70,12 @@ const ItemsTable = ({ items }: { items: ValeAlumnoDetailsMateriale[] }) => {
                 <Text>{item.nombre_item}</Text>
               </View>
               <View style={[styles.cell, styles.lessMaxWidth]}>
-                <Text>{item.tipo_item}</Text>
+                <Text>
+                  {item.tipo_item === "reactivos-liquidos" ||
+                  item.tipo_item === "reactivos-solidos"
+                    ? "Reactivos"
+                    : item.tipo_item}
+                </Text>
               </View>
               <View style={[styles.cell]}>
                 <Text>

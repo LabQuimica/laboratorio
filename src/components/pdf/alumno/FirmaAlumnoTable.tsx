@@ -26,6 +26,9 @@ const FirmaAlumnoTable = ({ boleta, nombreAlumno }: Props) => {
         <View style={[styles.cell, styles.headerCell]}>
           <Text>FIRMA</Text>
         </View>
+        <View style={[styles.cell, styles.headerCell]}>
+          <Text>Equipo</Text>
+        </View>
       </View>
 
       <View style={styles.row}>
@@ -35,7 +38,11 @@ const FirmaAlumnoTable = ({ boleta, nombreAlumno }: Props) => {
         <View style={[styles.cell, styles.cellText]}>
           <Text>{nombreAlumno}</Text>
         </View>
-        <View style={[styles.cell]}>
+        <View style={[styles.cell, styles.cellText]}>
+          <Text> </Text>
+          <Text> </Text>
+        </View>
+        <View style={[styles.cell, styles.cellText]}>
           <Text> </Text>
           <Text> </Text>
         </View>

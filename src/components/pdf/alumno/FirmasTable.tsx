@@ -12,6 +12,9 @@ const FirmasTable = ({ items }: { items: string }) => {
         <View style={[styles.cell, styles.headerCell]}>
           <Text>Vo.Bo</Text>
         </View>
+        <View style={[styles.cell, styles.headerCell]}>
+          <Text>Vo.Bo</Text>
+        </View>
       </View>
 
       <View style={styles.row}>
@@ -23,15 +26,24 @@ const FirmasTable = ({ items }: { items: string }) => {
           <Text> </Text>
           <Text> </Text>
         </View>
+        <View style={styles.cell}>
+          <Text> </Text>
+          <Text> </Text>
+        </View>
       </View>
 
       <View style={styles.row}>
-        <View style={[styles.cell, styles.headerCell]}>
-          <Text style={[styles.bold, styles.cellText]}>Docente</Text>
+        <View style={[styles.cell]}>
+          <Text style={[styles.cellText]}>Docente</Text>
           <Text>{items}</Text>
         </View>
-        <View style={[styles.cell, styles.headerCell]}>
+        <View style={[styles.cell]}>
           <Text style={[styles.cellText]}>Responsable del laboratorio</Text>
+          <Text style={[styles.cellText, styles.bold]}>Entrega</Text>
+        </View>
+        <View style={[styles.cell]}>
+          <Text style={[styles.cellText]}>Responsable del laboratorio</Text>
+          <Text style={[styles.cellText, styles.bold]}>Recepción</Text>
         </View>
       </View>
     </View>

@@ -43,7 +43,6 @@ const PDFAlumno = ({ data }: MyDocumentProps) => {
           <Image src="/images/upiit.png" style={styles.rightImage} />
         </View>
         <Text style={[styles.subtitle, styles.centerSubtitle]}>
-          Vale de préstamo para <Text style={styles.bold}>alumno</Text> -
           Laboratorio de Química
         </Text>
 
@@ -58,10 +57,10 @@ const PDFAlumno = ({ data }: MyDocumentProps) => {
               <Text>{data.practica.nombre_semestre}</Text>
             </View>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-              <Text>Carrera</Text>
+              <Text>Grupo</Text>
             </View>
             <View style={[styles.cell, styles.cellText]}>
-              <Text>Ingeniería Biotecnológica</Text>
+              <Text>{data.practica.semestre}</Text>
             </View>
           </View>
 
@@ -74,38 +73,32 @@ const PDFAlumno = ({ data }: MyDocumentProps) => {
               <Text>{data.practica.nombre_profesor}</Text>
             </View>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-              <Text>Grupo y Unidad</Text>
+              <Text>Fecha de Solicitud</Text>
             </View>
             <View style={styles.cell}>
-              <Text>{`${data.practica.semestre}`}</Text>
+              <Text>{`${getCurrentDateTime()}`}</Text>
             </View>
           </View>
 
           {/* Tercera fila */}
-          {/* <View style={styles.row}>
+          <View style={styles.row}>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-              <Text>Fecha y hora</Text>
+              <Text>Nombre de la práctica</Text>
             </View>
             <View style={[styles.cell]}>
-              <Text>{`De: ${data.fecha_inicio}`}</Text>
-              <Text>{`A: ${data.fecha_fin}`}</Text>
+              <Text>{data.practica.nombre_practica}</Text>
             </View>
             <View style={[styles.cell, styles.headerCell, styles.maxWidth]}>
-              <Text>Fecha de solicitud</Text>
+              <Text>Fecha de práctica</Text>
             </View>
             <View style={[styles.cell, styles.cellText]}>
-              <Text>{getCurrentDateTime()}</Text>
+              <Text>{data.fecha_inicio}</Text>
             </View>
-          </View> */}
+          </View>
         </View>
         <View style={styles.container}>
           <ItemsTable items={data.practica.materiales} />
           <View style={styles.flex} />
-          <Text style={[styles.subtitle, styles.centerSubtitle]}>
-            Tlaxcala, Tlaxcala a {new Date().getDate()} de{" "}
-            {new Date().toLocaleString("es-ES", { month: "long" })} de{" "}
-            {new Date().getFullYear()}{" "}
-          </Text>
           <FirmasTable items={data.practica.nombre_profesor} />
           <FirmaAlumnoTable
             boleta={data.boleta}
