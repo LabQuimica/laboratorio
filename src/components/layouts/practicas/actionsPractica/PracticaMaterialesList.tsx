@@ -120,7 +120,7 @@ const PracticaMaterialesList = ({
     let errorMessage = "";
 
     if (value < 0.1) {
-      errorMessage = "La cantidad mínima debe ser 0.1";
+      errorMessage = "La cantidad mínima es 1";
     } else if (value > maxQuantity) {
       errorMessage = `La máxima cantidad disponible es ${maxQuantity}`;
     }
@@ -163,8 +163,8 @@ const PracticaMaterialesList = ({
                         />
                         <Input
                           type="number"
-                          min={0.1}
-                          placeholder={material.cantidad}
+                          min={1}
+                          placeholder={`${material.cantidad}`}
                           className="w-1/4 shadow-none outline-transparent placeholder:text-white"
                           onChange={(e) => {
                             const value = e.target.value;

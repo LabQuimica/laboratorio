@@ -7,7 +7,7 @@ import { Material } from '@/types/MaterialesTypes';
 
 interface MaterialComponentProps {
   data: Material[];
-  type: 'reactivos-liquidos' | 'reactivos-solidos' | 'sensores' | 'materiales' | 'equipos';
+  type: 'reactivos' | 'sensores' | 'materiales' | 'equipos';
 }
 
 const MaterialComponent: React.FC<MaterialComponentProps> = ({ data, type }) => {
@@ -25,8 +25,8 @@ const MaterialComponent: React.FC<MaterialComponentProps> = ({ data, type }) => 
                   : item.nombre
                 }
               </CardTitle>
-              <Badge variant={item.status === 1 ? "secondary" : "destructive"}>
-                {item.status === 1 ? "Disponible" : "Agotado"}
+              <Badge variant={item.status ? "secondary" : "destructive"}>
+                {item.status ? "Disponible" : "Agotado"}
               </Badge>
             </div>
           </CardHeader>
@@ -65,7 +65,7 @@ const MaterialComponent: React.FC<MaterialComponentProps> = ({ data, type }) => 
               variant={"secondary"}
               className="w-full dark:text-black disabled:bg-bg-disable-light disabled:text-text-disable-light disabled:dark:bg-bg-disable-dark disabled:dark:text-text-disable-dark"
               onClick={() => addMaterial(type, item)}
-              disabled={item.status === 0}
+              disabled={!item.status}
             >
               Agregar {(type === "sensores" || type === "materiales"
                 ? type.slice(0, -2) 
