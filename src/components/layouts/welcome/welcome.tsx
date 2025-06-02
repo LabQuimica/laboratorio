@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 const ProfesorDashboard = ({ user }: { user: any }) => {
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold">Información para Profesores</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white dark:bg-zinc-800 rounded-lg p-6 shadow-md">
           <h3 className="text-lg font-semibold mb-4">Prácticas asignadas</h3>

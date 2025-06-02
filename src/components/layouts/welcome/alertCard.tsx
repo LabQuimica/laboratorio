@@ -78,6 +78,7 @@ const ItemCard: React.FC<{ item: ItemProps }> = ({ item }) => {
 
 const AlertaInventario: React.FC<{ items: ItemProps[] }> = ({ items }) => {
   const itemsBajoStock = items.filter(item => 
+    // item.cantidad < 30
     (item.cantidad / item.cantidad_maxima) * 100 < 30
   );
 
