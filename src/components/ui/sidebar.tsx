@@ -170,7 +170,7 @@ export const SidebarLink = ({
 }) => {
   const { open, animate } = useSidebar();
   const pathname = usePathname();
-  const isActive = pathname.startsWith(link.href);
+  const isActive = pathname?.startsWith(link.href);
 
   const isImage =
     React.isValidElement(link.icon) &&

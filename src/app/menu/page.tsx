@@ -1,7 +1,5 @@
 import { redirect } from "next/navigation";
 
-export function Welcome() {
+export default function Welcome() {
   redirect("menu/dashboard");
 }
-
-export default Welcome;

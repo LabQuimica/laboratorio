@@ -1,8 +1,9 @@
 "use client";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import DownloadValeProfesorPDF from "@/components/layouts/vales/profesor/PDF/dowloadPDF";
 
-export default function DownloadButton() {
+function DownloadButtonContent() {
   const searchParams = useSearchParams();
   const id_vale = searchParams?.get("id")
     ? Number(searchParams?.get("id"))
@@ -23,5 +24,21 @@ export default function DownloadButton() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function DownloadButton() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-screen bg-background">
+          <div className="text-center p-4">
+            <p className="text-muted-foreground">Cargando...</p>
+          </div>
+        </div>
+      }
+    >
+      <DownloadButtonContent />
+    </Suspense>
   );
 }

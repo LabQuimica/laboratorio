@@ -6,8 +6,8 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/context/UserContext";
 import { login } from "@/services/authService";
-import { motion, AnimatePresence } from "framer-motion";
 import HexagonPattern from "@/components/ui/hexagons";
+import { User } from "@/types/userTypes";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,7 +30,7 @@ export default function LoginPage() {
     try {
       const data = await login(email, password);
       setLoading(false);
-      setUser(data.user);
+      setUser(data.user as User);
       Cookies.set("token", data.token, { expires: 1 });
       localStorage.setItem("user", JSON.stringify(data.user));
       setSuccess("Inicio de sesión exitoso");

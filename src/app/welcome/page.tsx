@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import HexagonPattern from "@/components/ui/hexagons";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function WelcomePage() {
   const router = useRouter();

@@ -11,8 +11,17 @@ interface ManualFileListProps {
   folderId?: string;
 }
 
-const ManualFileList = ({ isSelectionMode, selectedFiles, setSelectedFiles, folderId }: ManualFileListProps) => {
-  const { data: files, isLoading, isError, refetch } = useQuery<Manual[], Error>({
+const ManualFileList = ({
+  isSelectionMode,
+  selectedFiles,
+  setSelectedFiles,
+  folderId,
+}: ManualFileListProps) => {
+  const {
+    data: files,
+    isLoading,
+    isError,
+  } = useQuery<Manual[], Error>({
     queryKey: ["manualFiles", folderId],
     queryFn: () => fetchManualFile(folderId),
   });
@@ -30,9 +39,9 @@ const ManualFileList = ({ isSelectionMode, selectedFiles, setSelectedFiles, fold
   }
 
   const toggleFileSelection = (fileId: string) => {
-    setSelectedFiles(prev => 
+    setSelectedFiles((prev) =>
       prev.includes(fileId)
-        ? prev.filter(id => id !== fileId)
+        ? prev.filter((id) => id !== fileId)
         : [...prev, fileId]
     );
   };
@@ -40,9 +49,9 @@ const ManualFileList = ({ isSelectionMode, selectedFiles, setSelectedFiles, fold
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {files.map((file) => (
-        <ManualFile 
-          key={file.id} 
-          file={file} 
+        <ManualFile
+          key={file.id}
+          file={file}
           isSelectionMode={isSelectionMode}
           isSelected={selectedFiles.includes(file.id)}
           onToggleSelection={() => toggleFileSelection(file.id)}

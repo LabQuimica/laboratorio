@@ -19,7 +19,7 @@ function ValeNavigation() {
             variant="outline"
             onClick={() => router.push("/menu/vale/profesor")}
             className={
-              pathname.includes("profesor")
+              pathname?.includes("profesor")
                 ? "bg-black text-white dark:bg-white dark:text-black"
                 : ""
             }
@@ -30,7 +30,7 @@ function ValeNavigation() {
             variant="outline"
             onClick={() => router.push("/menu/vale/alumno")}
             className={
-              pathname.includes("alumno")
+              pathname?.includes("alumno")
                 ? "bg-black text-white dark:bg-white dark:text-black"
                 : ""
             }
