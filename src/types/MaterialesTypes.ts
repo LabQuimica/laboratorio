@@ -12,6 +12,7 @@ export interface Material {
     fecha_modificacion: string;
     marca: string;
     cantidadActual?: string;
+    contable?: boolean;
     fk_marca_item: number;
 }
 
