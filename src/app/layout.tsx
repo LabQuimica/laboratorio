@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang="es">
       <body className={"bg-background font-sans antialiased h-screen"}>
         <ClientProviders>{children}</ClientProviders>
       </body>
