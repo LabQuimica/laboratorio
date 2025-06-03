@@ -12,6 +12,7 @@ interface MaterialesState {
     addMaterial: (tipo: string, material: Material) => void;
     removeMaterial: (tipo: string, id: number) => void;
     updateMaterialQuantity: (tipo: string, id: number, change: number) => void;
+    updateMaterialContable: (tipo: string, id: number, contable: boolean) => void;
     setError: (error: string | null) => void;
 }
 
@@ -26,7 +27,7 @@ export const useStoreItems = create<MaterialesState>((set) => ({
     setError: (error) => set({ error }),
 
     addMaterial: (tipo, material) => set((state) => {
-        const tipoKey = tipo as keyof Omit<MaterialesState, 'addMaterial' | 'removeMaterial' | 'updateMaterialQuantity'>;
+        const tipoKey = tipo as keyof Omit<MaterialesState, 'addMaterial' | 'removeMaterial' | 'updateMaterialQuantity' | 'updateMaterialContable' | 'setError'>;
         const existingMaterials = state[tipoKey] as Material[];
 
         const materialExiste = existingMaterials.some(m => m.id_item === material.id_item);
@@ -35,12 +36,12 @@ export const useStoreItems = create<MaterialesState>((set) => ({
 
         return {
             ...state,
-            [tipoKey]: [...existingMaterials, { ...material, cantidadActual: "1" }],
+            [tipoKey]: [...existingMaterials, { ...material, cantidadActual: "1", contable: false }],
         };
     }),
 
     removeMaterial: (tipo, id) => set((state) => {
-        const tipoKey = tipo as keyof Omit<MaterialesState, 'addMaterial' | 'removeMaterial' | 'updateMaterialQuantity'>;
+        const tipoKey = tipo as keyof Omit<MaterialesState, 'addMaterial' | 'removeMaterial' | 'updateMaterialQuantity' | 'updateMaterialContable' | 'setError'>;
         const materialsArray = state[tipoKey] as Material[];
         
         return {
@@ -49,9 +50,23 @@ export const useStoreItems = create<MaterialesState>((set) => ({
         };
     }),
 
+    updateMaterialContable: (tipo, id, contable) => set((state) => {
+        const tipoKey = tipo as keyof Omit<MaterialesState, 'addMaterial' | 'removeMaterial' | 'updateMaterialQuantity' | 'updateMaterialContable' | 'setError'>;
+        const currentList = state[tipoKey] as Material[];
+        
+        return {
+            ...state,
+            [tipoKey]: currentList.map(item =>
+                item.id_item === id
+                    ? { ...item, contable }
+                    : item
+            ),
+        };
+    }),
+
     updateMaterialQuantity: (tipo, id, change) => {
         set((state) => {
-          const tipoKey = tipo as keyof Omit<MaterialesState, 'addMaterial' | 'removeMaterial' | 'updateMaterialQuantity'>;
+          const tipoKey = tipo as keyof Omit<MaterialesState, 'addMaterial' | 'removeMaterial' | 'updateMaterialQuantity' | 'updateMaterialContable' | 'setError'>;
           const currentList = state[tipoKey] as Material[];
 
           const item = currentList.find(item => item.id_item === id);
